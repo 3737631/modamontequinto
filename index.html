@@ -193,6 +193,79 @@
         }
         .drawer .checkout-btn:hover { background: #333; }
 
+        .manifesto {
+            background: #0D0D11; color: #fff; padding: 5rem 2rem; margin: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .manifesto .bg-text {
+            position: absolute; inset: 0; opacity: 0.04; pointer-events: none;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 25vw; font-weight: 900; letter-spacing: -2px; user-select: none; text-transform: uppercase;
+        }
+        .manifesto .inner { max-width: 700px; position: relative; z-index: 1; }
+        .manifesto .label {
+            font-size: 10px; color: #aaa; font-family: monospace; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase;
+        }
+        .manifesto .quote {
+            font-size: 1.3rem; font-weight: 300; letter-spacing: 0px;
+            text-transform: uppercase; color: #f0f0f0; line-height: 1.4; margin: 1.5rem 0;
+        }
+        .manifesto .line { height: 1px; width: 80px; background: rgba(255,255,255,0.15); margin: 1rem auto; }
+        .manifesto .footer-text {
+            font-size: 9px; font-family: monospace; color: #888; letter-spacing: 3px; text-transform: uppercase;
+        }
+
+        .shipping-section {
+            padding: 5rem 4rem; background: #fff; border-top: 1px solid #eee;
+        }
+        .shipping-section .grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;
+        }
+        .shipping-section .col h4 {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem;
+            color: #111; font-weight: 700;
+        }
+        .shipping-section .col p { font-size: 0.75rem; color: #666; line-height: 1.6; }
+        .shipping-section .info-item {
+            display: flex; gap: 10px; margin-bottom: 1rem; font-size: 10px;
+            font-family: monospace; text-transform: uppercase; color: #888; letter-spacing: 0.5px;
+        }
+        .shipping-section .info-item svg { flex-shrink: 0; margin-top: 2px; }
+        .shipping-section .info-item .title {
+            color: #111; font-weight: 600; display: block;
+            font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 1px;
+        }
+        .shipping-section .info-item .desc { color: #888; }
+        .newsletter-form { display: flex; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-top: 1rem; background: #fafafa; }
+        .newsletter-form input {
+            flex: 1; padding: 0.7rem; border: none; outline: none; font-size: 0.7rem;
+            font-family: monospace; text-transform: uppercase; background: transparent;
+        }
+        .newsletter-form input:focus { background: #fff; }
+        .newsletter-form button {
+            background: #111; color: #fff; border: none; padding: 0 1rem;
+            cursor: pointer; transition: background 0.2s; display: flex; align-items: center;
+        }
+        .newsletter-form button:hover { background: #333; }
+        .newsletter-msg { font-size: 8px; color: #16a34a; font-weight: 700; letter-spacing: 2px; margin-top: 0.5rem; display: none; }
+        .newsletter-msg.show { display: block; }
+        .seal {
+            background: #F8F8FA; border: 1px solid #eee; border-radius: 16px;
+            padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
+            font-family: monospace; font-size: 9px; text-transform: uppercase; color: #888;
+        }
+        .seal .head { display: flex; justify-content: space-between; align-items: flex-start; }
+        .seal .head span:first-child { font-weight: 700; color: #222; font-size: 11px; font-family: 'Inter', sans-serif; }
+        .seal .body { margin: 1rem 0; line-height: 1.8; }
+        .seal .body .bold { color: #111; font-weight: 700; font-family: 'Inter', sans-serif; margin-top: 0.5rem; display: block; }
+        .seal .stripe {
+            height: 20px; width: 100%; position: relative; overflow: hidden; opacity: 0.12;
+            background: repeating-linear-gradient(-45deg, #000, #000 6px, transparent 6px, transparent 12px);
+        }
+
         .contact-section {
             padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee;
         }
@@ -257,6 +330,8 @@
             .catalog-item .info .ref { min-width: auto; }
             .catalog-item .info .status { display: none; }
             .drawer { width: 100%; right: -100%; }
+            .manifesto .quote { font-size: 1rem; }
+            .shipping-section .grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-section { padding: 3rem 1.5rem; }
             .contact-section .inner { grid-template-columns: 1fr; gap: 2rem; }
             footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
@@ -322,6 +397,64 @@
         <img id="modalImage" src="" alt="">
     </div>
     <button class="modal-close" id="modalClose" onclick="closeModal()">✕</button>
+
+    <section class="manifesto">
+        <div class="bg-text">MM-2026</div>
+        <div class="inner">
+            <div class="label">MANIFIESTO INDUSTRIAL</div>
+            <p class="quote">&quot;DEFINIENDO LA ESENCIA DE LA MODA URBANA Y EL DESORDEN SASTRE CONTEMPORÁNEO&quot;</p>
+            <div class="line"></div>
+            <div class="footer-text">RED DE DISTRIBUCIÓN DIRECTA MODA MONTEQUINTO</div>
+        </div>
+    </section>
+
+    <section class="shipping-section">
+        <div class="grid">
+            <div class="col">
+                <h4>RED DE LOGÍSTICA DIRECTA</h4>
+                <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div><span class="title">CENTRO DE OPERACIONES</span><span class="desc">SEVILLA, ESPAÑA — ENVIADO DESDE MONTEQUINTO</span></div>
+                </div>
+                <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <div><span class="title">ENVÍOS EXPRESS NACIONALES</span><span class="desc">ENTREGA EN 24/48 HORAS // ENVÍO GRATUITO PENÍNSULA</span></div>
+                </div>
+                <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <div><span class="title">CAMBIOS Y DEVOLUCIONES</span><span class="desc">HASTA 14 DÍAS PARA DEVOLUCIÓN DE ENTRADAS EXCLUSIVAS</span></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <h4>CORRESPONDENCIA DIGITAL</h4>
+                <p style="font-size:0.75rem;color:#888;line-height:1.6;margin-bottom:1rem;text-transform:none;">Regístrate para recibir preventas privadas, documentación de lanzamientos y drops exclusivos de edición limitada.</p>
+                <div class="newsletter-form">
+                    <input type="email" id="newsletterEmail" placeholder="DESTINATARIO@DOMINIO.COM">
+                    <button onclick="subscribeNewsletter()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </button>
+                </div>
+                <div class="newsletter-msg" id="newsletterMsg">REGISTRO DE SISTEMA CONFIRMADO. REVISA TU BANDEJA.</div>
+            </div>
+
+            <div class="col">
+                <div class="seal">
+                    <div class="head">
+                        <span>SELLO MONTEQUINTO™</span>
+                        <span>MM-2026</span>
+                    </div>
+                    <div class="body">
+                        <div>REGISTRO DE DISEÑO: MM-2026-SV</div>
+                        <div>DISTRIBUCIÓN: PENINSULAR &amp; GLOBAL</div>
+                        <div>COLECCIÓN: SISTEMAS DE DESORDEN</div>
+                        <div class="bold">TODOS LOS DERECHOS PRESERVADOS</div>
+                    </div>
+                    <div class="stripe"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="contact-section" id="contactSection">
         <div class="inner">
@@ -542,6 +675,16 @@ function sendContactSec() {
     document.getElementById('secName').value = '';
     document.getElementById('secEmail').value = '';
     document.getElementById('secMsg').value = '';
+}
+
+// === NEWSLETTER ===
+function subscribeNewsletter() {
+    const email = document.getElementById('newsletterEmail').value.trim();
+    const msg = document.getElementById('newsletterMsg');
+    if (!email || !email.includes('@')) { alert('Introduce un email válido.'); return; }
+    msg.classList.add('show');
+    document.getElementById('newsletterEmail').value = '';
+    setTimeout(() => { msg.classList.remove('show'); }, 4000);
 }
 
 // === INIT ===
