@@ -858,15 +858,23 @@ function searchProducts(query) {
     const track = document.getElementById('testimonialTrack');
     const dots = document.querySelectorAll('#testimonialDots span');
     if (!track || !dots.length) return;
-    let idx = 0;
+    let idx = 0, startX = 0, isDragging = false;
     function goTo(i) {
-        idx = i;
+        idx = Math.max(0, Math.min(i, dots.length - 1));
         track.style.transform = `translateX(-${idx * 100}%)`;
         dots.forEach(d => d.classList.remove('active'));
         dots[idx]?.classList.add('active');
     }
     dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-    setInterval(() => goTo((idx + 1) % dots.length), 4000);
+    let interval = setInterval(() => goTo((idx + 1) % dots.length), 4000);
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDragging = true; clearInterval(interval); }, { passive: true });
+    track.addEventListener('touchmove', e => { if (!isDragging) return; e.preventDefault(); }, { passive: false });
+    track.addEventListener('touchend', e => {
+        if (!isDragging) return; isDragging = false;
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? idx + 1 : idx - 1);
+        interval = setInterval(() => goTo((idx + 1) % dots.length), 4000);
+    });
 })();
 
 // === INIT ===
