@@ -5,28 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moda Montequinto | Sevilla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Antonio:wght@700&family=JetBrains+Mono:wght@400;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-        :root { --accent: #c7a45a; --accent-hover: #b8943e; }
+        :root { --border: #1a1a1a; --text-muted: #666; }
+
+        /* === TRANSITION OVERLAY === */
+        .transition-overlay {
+            position: fixed; inset: 0; z-index: 999; display: grid;
+            grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr);
+            pointer-events: none;
+        }
+        .transition-overlay .box {
+            background: #000; transform: scaleY(0); transform-origin: center bottom;
+        }
+        .transition-overlay.open { pointer-events: all; }
 
         header {
             display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1.5rem 4rem;
-            position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
-            z-index: 100; border-bottom: 1px solid #eee;
+            position: sticky; top: 0; background: rgba(0,0,0,0.97); backdrop-filter: blur(12px);
+            z-index: 100; border-bottom: 1px solid var(--border);
             font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;
         }
-        header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.85rem; cursor: pointer; }
+        header .logo { font-weight: 700; text-align: center; letter-spacing: 4px; font-size: 0.85rem; cursor: pointer; transition: opacity 0.3s; }
         header .logo:hover { opacity: 0.5; }
-        .header-left { cursor: pointer; }
+        .header-left { cursor: pointer; color: #fff; }
         .header-left:hover { opacity: 0.5; }
-        .cart-trigger { cursor: pointer; text-align: right; }
+        .cart-trigger { cursor: pointer; text-align: right; color: #fff; }
         .cart-trigger:hover { opacity: 0.5; }
 
         .hero {
             height: 80vh; display: flex; flex-direction: column; align-items: center;
-            justify-content: center; background: #fff; text-align: center; padding: 2rem;
+            justify-content: center; background: #000; text-align: center; padding: 2rem;
         }
         .hero-gooey {
             position: relative; display: flex; align-items: center; justify-content: center;
@@ -38,180 +49,172 @@
         }
         .hero-gooey .goo-text span {
             position: absolute; display: inline-block; text-align: center; user-select: none;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 5rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
-            line-height: 1.1; color: #111; opacity: 0;
+            font-family: 'Antonio', sans-serif;
+            font-size: 5rem; font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase;
+            line-height: 1; color: #fff; opacity: 0;
         }
         .hero-gooey .goo-text .g1 { opacity: 1; }
         .hero-gooey .goo-text .g2 { opacity: 0; }
         .hero-final {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 5rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
-            color: #111; line-height: 1.1; display: none;
+            font-family: 'Antonio', sans-serif;
+            font-size: 5rem; font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase;
+            color: #fff; line-height: 1; display: none;
         }
-        .hero-desc { margin-top: 2.5rem; font-size: 0.75rem; color: #bbb; letter-spacing: 3px; text-transform: uppercase; max-width: 500px; opacity: 0; animation: heroIn 1s 0.3s forwards; }
+        .hero-desc { margin-top: 2.5rem; font-size: 0.75rem; color: #444; letter-spacing: 4px; text-transform: uppercase; max-width: 500px; opacity: 0; animation: heroIn 1s 0.3s forwards; }
         @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
         .carousel-section {
-            padding: 2rem 0; background: #fff; border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee; overflow: hidden; position: relative;
+            padding: 2rem 0; background: #000; border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); overflow: hidden; position: relative;
         }
-        .carousel-track { display: flex; width: max-content; animation: scrollMarquee 40s linear infinite; }
+        .carousel-track { display: flex; width: max-content; animation: scrollMarquee 60s linear infinite; }
         .carousel-track:hover { animation-play-state: paused; }
         .carousel-item { width: 260px; margin: 0 8px; flex-shrink: 0; cursor: pointer; position: relative; }
-        .carousel-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f5f5f5; border-radius: 4px; transition: transform 0.4s; }
-        .carousel-item:hover img { transform: scale(1.02); }
+        .carousel-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #111; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .carousel-item:hover img { transform: scale(1.03); }
         .carousel-item .label { display: flex; justify-content: space-between; margin-top: 6px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
-        .carousel-item .label .name { font-weight: 600; color: #111; }
-        .carousel-item .label .price { color: #888; font-family: monospace; }
-        .carousel-item .add-small { font-size: 0.55rem; letter-spacing: 1px; color: #aaa; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid #ddd; display: inline-block; margin-top: 2px; transition: border-color 0.2s, color 0.2s; }
-        .carousel-item .add-small:hover { color: var(--accent); border-color: var(--accent); }
+        .carousel-item .label .name { font-weight: 600; color: #fff; }
+        .carousel-item .label .price { color: #555; font-family: 'JetBrains Mono', monospace; }
+        .carousel-item .add-small { font-size: 0.55rem; letter-spacing: 1px; color: #555; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block; margin-top: 2px; transition: border-color 0.2s, color 0.2s; }
+        .carousel-item .add-small:hover { color: #fff; border-color: #fff; }
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .catalog { padding: 5rem 4rem; background: #fff; max-width: 1280px; margin: 0 auto; }
-        .catalog-header { display: flex; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 2rem; }
-        .catalog-header .label { font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 3px; font-family: monospace; }
-        .catalog-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: #111; }
-        .filter-bar { display: flex; flex-wrap: wrap; gap: 6px; }
-        .filter-btn { padding: 6px 16px; border-radius: 999px; border: 1px solid #ddd; font-size: 10px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; background: #fafafa; color: #666; transition: all 0.2s; }
-        .filter-btn:hover { background: #eee; color: #111; }
-        .filter-btn.active { background: #111; color: #fff; border-color: #111; font-weight: 700; }
+        .catalog { padding: 5rem 4rem; max-width: 1400px; margin: 0 auto; }
+        .catalog-header { display: flex; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .catalog-header .label { font-size: 9px; color: #555; text-transform: uppercase; letter-spacing: 3px; font-family: 'JetBrains Mono', monospace; }
+        .catalog-header h2 { font-family: 'Antonio', sans-serif; font-size: 2.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; color: #fff; line-height: 1; }
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 4px; }
+        .filter-btn { padding: 8px 20px; border: 1px solid var(--border); font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; background: transparent; color: #555; transition: all 0.2s; }
+        .filter-btn:hover { background: #111; color: #fff; }
+        .filter-btn.active { background: #fff; color: #000; border-color: #fff; font-weight: 700; }
 
-        /* === PRODUCT CARDS (GRID) === */
         .catalog-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding-top: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;
         }
         .product-card {
-            opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer; position: relative; border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0;
+            opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; position: relative; overflow: hidden; background: #000; border: 1px solid var(--border); padding: 1rem;
         }
         .product-card.active { opacity: 1; transform: translateY(0); }
+        .product-card:hover { border-color: #fff; }
         .product-card .img-wrap {
-            position: relative; overflow: hidden; aspect-ratio: 3/4; background: #f8f8f8;
+            position: relative; overflow: hidden; aspect-ratio: 3/4; background: #111;
         }
-        .product-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .product-card:hover .img-wrap img { transform: scale(1.04); }
+        .product-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .product-card:hover .img-wrap img { transform: scale(1.05); }
         .product-card .img-wrap .hover-info {
-            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
             display: flex; flex-direction: column; justify-content: flex-end; padding: 1.2rem;
-            opacity: 0; transition: opacity 0.35s;
+            opacity: 0; transition: opacity 0.4s;
         }
         .product-card:hover .img-wrap .hover-info { opacity: 1; }
-        .product-card .hover-info .pcat { font-size: 8px; font-family: monospace; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 2px; }
+        .product-card .hover-info .pcat { font-size: 8px; font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 2px; }
         .product-card .hover-info .pname { font-size: 0.85rem; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin: 4px 0; }
-        .product-card .hover-info .pprice { font-size: 0.9rem; font-weight: 700; color: var(--accent); font-family: monospace; }
+        .product-card .hover-info .pprice { font-size: 0.9rem; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
         .product-card .hover-info .padd {
-            margin-top: 8px; padding: 6px 0; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
-            color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px;
-            text-align: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; background: transparent;
+            margin-top: 8px; padding: 8px 0; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
+            color: #000; border: none; text-align: center; cursor: pointer; transition: background 0.2s; background: #fff;
         }
-        .product-card .hover-info .padd:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-        .product-card .hover-info .padd.added { background: #22c55e; border-color: #22c55e; }
+        .product-card .hover-info .padd:hover { background: #ccc; }
+        .product-card .hover-info .padd.added { background: #22c55e; color: #000; }
         .product-card .pcode {
             position: absolute; top: 10px; right: 10px; z-index: 2;
-            background: rgba(0,0,0,0.7); color: #fff; font-size: 7px; font-family: monospace;
-            padding: 2px 6px; border-radius: 3px; letter-spacing: 1px;
+            background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 7px; font-family: 'JetBrains Mono', monospace;
+            padding: 2px 6px; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.1);
         }
-        .product-card .pinfo { padding: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
-        .product-card .pinfo .left .brand { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; }
-        .product-card .pinfo .left .name { font-size: 0.75rem; font-weight: 600; color: #111; margin-top: 2px; }
-        .product-card .pinfo .price { font-size: 0.8rem; font-weight: 700; color: #111; font-family: monospace; }
+        .product-card .pinfo { padding: 0.8rem 0.8rem 0.2rem; display: flex; justify-content: space-between; align-items: center; }
+        .product-card .pinfo .left .brand { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #555; font-family: 'JetBrains Mono', monospace; }
+        .product-card .pinfo .left .name { font-size: 0.75rem; font-weight: 600; color: #fff; margin-top: 2px; }
+        .product-card .pinfo .price { font-size: 0.8rem; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
 
-        .empty-msg { padding: 4rem 0; text-align: center; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; color: #bbb; }
+        .empty-msg { padding: 4rem 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; color: #555; }
 
-        /* === TOAST === */
         .toast-container {
             position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
             display: flex; flex-direction: column; gap: 8px; pointer-events: none;
         }
         .toast {
-            background: #111; color: #fff; padding: 0.8rem 1.2rem; border-radius: 8px;
-            font-size: 0.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            transform: translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: all; display: flex; align-items: center; gap: 8px; min-width: 240px;
+            background: #fff; color: #000; padding: 0.8rem 1.2rem;
+            font-size: 0.75rem; transform: translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: all; display: flex; align-items: center; gap: 8px; min-width: 240px; border: 1px solid var(--border);
         }
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast .check { color: #22c55e; font-size: 1rem; }
 
-        /* === OVERLAY === */
         .catalog-overlay {
-            position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 400;
+            position: fixed; inset: 0; background: #000; z-index: 400;
             display: flex; flex-direction: column; padding: 3rem 4rem;
             opacity: 0; pointer-events: none; transition: opacity 0.5s ease; overflow-y: auto;
         }
         .catalog-overlay.open { opacity: 1; pointer-events: all; }
-        .catalog-overlay .overlay-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; margin-bottom: 2rem; }
-        .catalog-overlay .overlay-head h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-        .catalog-overlay .overlay-head button { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888; }
-        .catalog-overlay .overlay-head button:hover { color: #000; }
+        .catalog-overlay .overlay-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        .catalog-overlay .overlay-head h2 { font-family: 'Antonio', sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; }
+        .catalog-overlay .overlay-head button { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #555; }
+        .catalog-overlay .overlay-head button:hover { color: #fff; }
         .catalog-overlay .overlay-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
         .catalog-overlay .overlay-item { cursor: pointer; }
-        .catalog-overlay .overlay-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #f5f5f5; border-radius: 4px; transition: transform 0.4s; }
-        .catalog-overlay .overlay-item:hover img { transform: scale(1.02); }
+        .catalog-overlay .overlay-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #111; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .catalog-overlay .overlay-item:hover img { transform: scale(1.03); }
         .catalog-overlay .overlay-item .olabel { display: flex; justify-content: space-between; margin-top: 6px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
-        .catalog-overlay .overlay-item .olabel .oname { font-weight: 600; color: #111; }
-        .catalog-overlay .overlay-item .olabel .oprice { color: #888; font-family: monospace; }
+        .catalog-overlay .overlay-item .olabel .oname { font-weight: 600; color: #fff; }
+        .catalog-overlay .overlay-item .olabel .oprice { color: #555; font-family: 'JetBrains Mono', monospace; }
 
-        /* === DRAWER === */
-        .drawer-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .drawer-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
         .drawer-backdrop.open { opacity: 1; pointer-events: all; }
         .drawer {
             position: fixed; top: 0; right: -440px; width: 440px; height: 100%;
-            background: #fff; z-index: 200; box-shadow: -4px 0 30px rgba(0,0,0,0.08);
+            background: #000; z-index: 200; border-left: 1px solid var(--border);
             transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 2rem 1.5rem; display: flex; flex-direction: column; overflow-y: auto;
         }
         .drawer.open { right: 0; }
-        .drawer .close-btn { align-self: flex-end; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #888; }
-        .drawer .close-btn:hover { color: #000; }
-        .drawer h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
-        .drawer .cart-item { display: flex; align-items: center; gap: 12px; padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; }
-        .drawer .cart-item .thumb { width: 50px; height: 60px; object-fit: cover; border-radius: 4px; background: #f5f5f5; }
+        .drawer .close-btn { align-self: flex-end; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #555; }
+        .drawer .close-btn:hover { color: #fff; }
+        .drawer h2 { font-family: 'Antonio', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: -0.02em; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .drawer .cart-item { display: flex; align-items: center; gap: 12px; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+        .drawer .cart-item .thumb { width: 50px; height: 60px; object-fit: cover; background: #111; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         .drawer .cart-item .info { flex: 1; }
-        .drawer .cart-item .info .iname { font-size: 0.75rem; font-weight: 600; color: #111; }
-        .drawer .cart-item .info .iprice { font-size: 0.7rem; color: #888; font-family: monospace; margin-top: 2px; }
+        .drawer .cart-item .info .iname { font-size: 0.75rem; font-weight: 600; color: #fff; }
+        .drawer .cart-item .info .iprice { font-size: 0.7rem; color: #555; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
         .drawer .cart-item .qty { display: flex; align-items: center; gap: 6px; }
-        .drawer .cart-item .qty button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ddd; background: #fff; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #111; transition: all 0.2s; }
-        .drawer .cart-item .qty button:hover { border-color: #111; }
-        .drawer .cart-item .qty span { font-size: 0.8rem; font-weight: 600; min-width: 20px; text-align: center; }
-        .drawer .cart-item .remove-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1rem; padding: 4px; }
-        .drawer .cart-item .remove-btn:hover { color: #e00; }
-        .drawer .empty-msg { color: #aaa; font-size: 0.8rem; font-family: monospace; text-align: center; padding: 3rem 0; }
-        .drawer .cart-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid #eee; }
-        .drawer .cart-footer .total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; }
-        .drawer .cart-footer .checkout-btn { margin-top: 0.8rem; width: 100%; padding: 0.9rem; background: #111; color: #fff; border: none; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
-        .drawer .cart-footer .checkout-btn:hover { background: #333; }
+        .drawer .cart-item .qty button { width: 24px; height: 24px; border: 1px solid #333; background: transparent; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #fff; transition: all 0.2s; }
+        .drawer .cart-item .qty button:hover { border-color: #fff; }
+        .drawer .cart-item .qty span { font-size: 0.8rem; font-weight: 600; min-width: 20px; text-align: center; color: #fff; }
+        .drawer .cart-item .remove-btn { background: none; border: none; color: #555; cursor: pointer; font-size: 1rem; padding: 4px; }
+        .drawer .cart-item .remove-btn:hover { color: #ff4444; }
+        .drawer .empty-msg { color: #555; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; text-align: center; padding: 3rem 0; }
+        .drawer .cart-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .drawer .cart-footer .total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; color: #fff; }
+        .drawer .cart-footer .checkout-btn { margin-top: 0.8rem; width: 100%; padding: 0.9rem; background: #fff; color: #000; border: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+        .drawer .cart-footer .checkout-btn:hover { background: #ccc; }
 
-        .contact-form label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #888; display: block; margin-bottom: 0.3rem; }
-        .contact-form input, .contact-form textarea { width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem; outline: none; transition: border 0.2s; }
-        .contact-form input:focus, .contact-form textarea:focus { border-color: #111; }
+        .contact-form label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #555; display: block; margin-bottom: 0.3rem; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem; outline: none; transition: border 0.2s; background: transparent; color: #fff; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #fff; }
         .contact-form textarea { min-height: 100px; resize: vertical; }
-        .contact-form button { background: #111; color: #fff; border: none; padding: 0.8rem 2rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s; }
-        .contact-form button:hover { background: #333; }
+        .contact-form button { background: #fff; color: #000; border: none; padding: 0.8rem 2rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+        .contact-form button:hover { background: #ccc; }
 
-        /* === TESTIMONIALS === */
-        .testimonials { padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee; }
+        .testimonials { padding: 5rem 4rem; background: #000; border-top: 1px solid var(--border); }
         .testimonials .inner { max-width: 1000px; margin: 0 auto; text-align: center; }
-        .testimonials .inner h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .testimonials .inner .sub { font-size: 0.6rem; color: #aaa; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2.5rem; }
+        .testimonials .inner h3 { font-family: 'Antonio', sans-serif; font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: #fff; }
+        .testimonials .inner .sub { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2.5rem; font-family: 'JetBrains Mono', monospace; }
         .testimonials .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: left; }
-        .testimonials .card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 1.5rem; }
-        .testimonials .card .stars { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; }
-        .testimonials .card blockquote { font-size: 0.8rem; color: #555; line-height: 1.6; margin: 0.8rem 0; font-style: italic; }
-        .testimonials .card .author { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
-        .testimonials .card .author strong { color: #111; }
+        .testimonials .card { border: 1px solid var(--border); padding: 1.5rem; }
+        .testimonials .card .stars { color: #555; font-size: 0.8rem; letter-spacing: 2px; }
+        .testimonials .card blockquote { font-size: 0.8rem; color: #ccc; line-height: 1.6; margin: 0.8rem 0; }
+        .testimonials .card .author { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #666; }
+        .testimonials .card .author strong { color: #fff; }
 
-        /* === MANIFIESTO === */
-        .manifesto { background: #0D0D11; color: #fff; padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
-        .manifesto .bg-text { position: absolute; inset: 0; opacity: 0.04; pointer-events: none; display: flex; justify-content: center; align-items: center; font-size: 25vw; font-weight: 900; letter-spacing: -2px; user-select: none; text-transform: uppercase; }
+        .manifesto { background: #000; color: #fff; padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .manifesto .bg-text { position: absolute; inset: 0; opacity: 0.03; pointer-events: none; display: flex; justify-content: center; align-items: center; font-size: 25vw; font-weight: 700; letter-spacing: -0.02em; user-select: none; text-transform: uppercase; font-family: 'Antonio', sans-serif; color: #fff; }
         .manifesto .inner { max-width: 700px; position: relative; z-index: 1; }
-        .manifesto .label { font-size: 10px; color: #aaa; font-family: monospace; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
-        .manifesto .quote { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 500; text-transform: uppercase; color: #f0f0f0; line-height: 1.4; margin: 1.5rem 0; letter-spacing: 0.5px; }
+        .manifesto .label { font-size: 10px; color: #555; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
+        .manifesto .quote { font-family: 'Antonio', sans-serif; font-size: 1.6rem; font-weight: 700; text-transform: uppercase; color: #f0f0f0; line-height: 1.2; margin: 1.5rem 0; letter-spacing: -0.02em; }
         .manifesto .line { height: 1px; width: 80px; background: rgba(255,255,255,0.15); margin: 1rem auto; }
-        .manifesto .footer-text { font-size: 9px; font-family: monospace; color: #888; letter-spacing: 3px; text-transform: uppercase; }
+        .manifesto .footer-text { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: #555; letter-spacing: 3px; text-transform: uppercase; }
 
-        /* === SHIPPING === */
-        .shipping-section { padding: 5rem 4rem; background: #fff; border-top: 1px solid #eee; }
+        .shipping-section { padding: 5rem 4rem; background: #000; border-top: 1px solid var(--border); }
         .shipping-section .grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
         .shipping-col {
             opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
@@ -219,70 +222,83 @@
         .shipping-col.revealed { opacity: 1; transform: translateY(0); }
         .shipping-col:nth-child(2) { transition-delay: 0.12s; }
         .shipping-col:nth-child(3) { transition-delay: 0.24s; }
-        .shipping-section .col h4 { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.2rem; color: #111; font-weight: 700; }
-        .shipping-section .col p { font-size: 0.75rem; color: #666; line-height: 1.6; }
-        .shipping-section .info-item { display: flex; gap: 10px; margin-bottom: 0.7rem; font-size: 9px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: #888; letter-spacing: 0.5px; line-height: 1.5; }
+        .shipping-section .col h4 { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.2rem; color: #fff; font-weight: 700; }
+        .shipping-section .col p { font-size: 0.75rem; color: #555; line-height: 1.6; }
+        .shipping-section .info-item { display: flex; gap: 10px; margin-bottom: 0.7rem; font-size: 9px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: #666; letter-spacing: 0.5px; line-height: 1.5; }
         .shipping-section .info-item svg { flex-shrink: 0; margin-top: 1px; }
-        .newsletter-form { border-bottom: 1px solid #ddd; display: flex; margin-top: 0.8rem; padding-bottom: 4px; transition: border-color 0.2s; }
-        .newsletter-form:focus-within { border-color: #111; }
-        .newsletter-form input { flex: 1; padding: 0.5rem 0; border: none; outline: none; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; background: transparent; letter-spacing: 1px; }
-        .newsletter-form button { background: none; border: none; cursor: pointer; padding: 0 0 0 8px; color: #111; display: flex; align-items: center; }
-        .newsletter-msg { font-size: 7px; color: #16a34a; font-weight: 700; letter-spacing: 2px; margin-top: 0.6rem; display: none; font-family: 'JetBrains Mono', monospace; }
+        .newsletter-form { border-bottom: 1px solid #333; display: flex; margin-top: 0.8rem; padding-bottom: 4px; transition: border-color 0.2s; }
+        .newsletter-form:focus-within { border-color: #fff; }
+        .newsletter-form input { flex: 1; padding: 0.5rem 0; border: none; outline: none; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; background: transparent; letter-spacing: 1px; color: #fff; }
+        .newsletter-form input::placeholder { color: #444; }
+        .newsletter-form button { background: none; border: none; cursor: pointer; padding: 0 0 0 8px; color: #fff; display: flex; align-items: center; }
+        .newsletter-msg { font-size: 7px; color: #22c55e; font-weight: 700; letter-spacing: 2px; margin-top: 0.6rem; display: none; font-family: 'JetBrains Mono', monospace; }
         .newsletter-msg.show { display: block; }
         .seal {
-            background: rgba(248,248,250,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; padding: 1.5rem;
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem;
             display: flex; flex-direction: column; justify-content: space-between;
-            font-family: 'JetBrains Mono', monospace; font-size: 8px; text-transform: uppercase; color: #888;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            font-family: 'JetBrains Mono', monospace; font-size: 8px; text-transform: uppercase; color: #666;
         }
         .seal .head { display: flex; justify-content: space-between; align-items: flex-start; }
-        .seal .head span:first-child { font-weight: 700; color: #222; font-size: 10px; font-family: 'Inter', sans-serif; }
+        .seal .head span:first-child { font-weight: 700; color: #fff; font-size: 10px; font-family: 'Inter', sans-serif; }
         .seal .body { margin: 1rem 0; line-height: 2; }
-        .seal .body .bold { color: #111; font-weight: 700; font-family: 'Inter', sans-serif; margin-top: 0.5rem; display: block; letter-spacing: 1px; }
-        .seal .stripe { height: 20px; width: 100%; overflow: hidden; opacity: 0.08; background: repeating-linear-gradient(-45deg, #000, #000 6px, transparent 6px, transparent 12px); }
+        .seal .body .bold { color: #ccc; font-weight: 700; font-family: 'Inter', sans-serif; margin-top: 0.5rem; display: block; letter-spacing: 1px; }
+        .seal .stripe { height: 20px; width: 100%; overflow: hidden; opacity: 0.06; background: repeating-linear-gradient(-45deg, #fff, #fff 6px, transparent 6px, transparent 12px); }
 
-        .contact-section { padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee; }
+        .contact-section { padding: 5rem 4rem; background: #000; border-top: 1px solid var(--border); }
         .contact-section .inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-        .contact-section .info-col h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: #aaa; margin-bottom: 1rem; }
-        .contact-section .info-col h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 1.5rem; line-height: 1.2; }
+        .contact-section .info-col h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: #555; margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
+        .contact-section .info-col h2 { font-family: 'Antonio', sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.1; color: #fff; }
         .contact-section .info-col p { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
-        .contact-section .info-col .detail { font-size: 0.75rem; color: #444; margin-bottom: 0.3rem; font-family: monospace; }
-        .contact-section .info-col .detail strong { text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px; color: #999; font-family: 'Inter', sans-serif; }
-        .contact-section form input, .contact-section form textarea { width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem; outline: none; transition: border 0.2s; background: #fff; }
-        .contact-section form input:focus, .contact-section form textarea:focus { border-color: var(--accent); }
+        .contact-section .info-col .detail { font-size: 0.75rem; color: #ccc; margin-bottom: 0.3rem; font-family: 'JetBrains Mono', monospace; }
+        .contact-section .info-col .detail strong { text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px; color: #555; font-family: 'Inter', sans-serif; }
+        .contact-section form label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #555; display: block; margin-bottom: 0.8rem; }
+        .contact-section form input, .contact-section form textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem; outline: none; transition: border 0.2s; background: transparent; color: #fff; }
+        .contact-section form input:focus, .contact-section form textarea:focus { border-color: #fff; }
         .contact-section form textarea { min-height: 120px; resize: vertical; }
-        .contact-section form button { background: var(--accent); color: #fff; border: none; padding: 0.8rem 2.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s; }
-        .contact-section form button:hover { background: var(--accent-hover); }
+        .contact-section form button { background: #fff; color: #000; border: none; padding: 0.8rem 2.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+        .contact-section form button:hover { background: #ccc; }
 
-        footer { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; padding: 3rem 4rem; background: #111; color: #eee; font-size: 0.7rem; }
-        footer .col h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #fff; margin-bottom: 1rem; }
-        footer .col p { color: #888; line-height: 1.6; font-size: 0.65rem; }
-        footer .col a { display: block; color: #888; text-decoration: none; font-size: 0.65rem; margin-bottom: 0.4rem; transition: color 0.2s; cursor: pointer; }
-        footer .col a:hover { color: var(--accent); }
+        footer { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; padding: 4rem; background: #000; color: #eee; font-size: 0.7rem; border-top: 1px solid var(--border); }
+        footer .col h4 { font-family: 'Antonio', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; color: #fff; margin-bottom: 1rem; }
+        footer .col p { color: #555; line-height: 1.6; font-size: 0.7rem; }
+        footer .col .info-item { display: flex; gap: 10px; margin-bottom: 0.7rem; font-size: 9px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: #666; letter-spacing: 0.5px; line-height: 1.5; }
+        footer .col .info-item svg { flex-shrink: 0; margin-top: 1px; }
+        footer .col a { display: block; color: #555; text-decoration: none; font-size: 0.65rem; margin-bottom: 0.4rem; transition: color 0.2s; cursor: pointer; }
+        footer .col a:hover { color: #fff; }
         footer .col .social { display: flex; gap: 10px; margin-top: 0.8rem; }
-        footer .col .social span { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: pointer; transition: border-color 0.2s; color: #888; }
-        footer .col .social span:hover { border-color: var(--accent); color: var(--accent); }
+        footer .col .social span { width: 32px; height: 32px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: pointer; transition: border-color 0.2s; color: #555; }
+        footer .col .social span:hover { border-color: #fff; color: #fff; }
+        footer .sello-mini {
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem; margin-top: 0.8rem;
+            font-family: 'JetBrains Mono', monospace; font-size: 8px; text-transform: uppercase; color: #666;
+        }
+        footer .sello-mini .head { display: flex; justify-content: space-between; }
+        footer .sello-mini .head span:first-child { color: #fff; font-size: 9px; font-family: 'Inter', sans-serif; }
+        footer .sello-mini .stripe { height: 16px; margin-top: 1rem; opacity: 0.06; background: repeating-linear-gradient(-45deg, #fff, #fff 6px, transparent 6px, transparent 12px); }
 
-        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 300; display: none; align-items: center; justify-content: center; padding: 2rem; cursor: pointer; }
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 300; display: none; align-items: center; justify-content: center; padding: 2rem; cursor: pointer; }
         .modal-backdrop.open { display: flex; }
-        .modal-backdrop img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; cursor: default; }
+        .modal-backdrop img { max-width: 90vw; max-height: 90vh; object-fit: contain; cursor: default; }
         .modal-close { position: fixed; top: 2rem; right: 2rem; z-index: 301; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; display: none; }
         .modal-close.open { display: block; }
 
         @media (max-width: 768px) {
             header { padding: 1rem 1.5rem; }
             .hero { height: 60vh; }
-            .hero-gooey .goo-text span, .hero-final { font-size: 2.4rem; letter-spacing: 2px; }
+            .hero-gooey .goo-text span, .hero-final { font-size: 2.4rem; letter-spacing: -0.02em; }
             .hero-gooey { height: 70px; }
             .carousel-item { width: 180px; }
             .catalog { padding: 3rem 1.5rem; }
-            .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem; }
+            .product-card { padding: 0.6rem; }
             .product-card .pcode { font-size: 6px; }
             .testimonials .grid { grid-template-columns: 1fr; }
             .shipping-section .grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-section .inner { grid-template-columns: 1fr; gap: 2rem; }
-            footer { grid-template-columns: 1fr 1fr; padding: 2rem 1.5rem; }
+            footer { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; }
             .drawer { width: 100%; right: -100%; }
             .catalog-overlay { padding: 2rem 1.5rem; }
             .manifesto .quote { font-size: 1rem; }
@@ -290,6 +306,7 @@
     </style>
 </head>
 <body>
+    <div class="transition-overlay" id="transitionOverlay"></div>
 
     <header>
         <div class="header-left" onclick="toggleDrawer('contact')">Catálogo / Contacto</div>
@@ -470,8 +487,19 @@
 
     <footer>
         <div class="col">
-            <h4>MODA MONTEQUINTO</h4>
-            <p>Moda urbana con esencia andaluza. Distribución directa desde Sevilla, España.</p>
+            <h4>LOGÍSTICA</h4>
+            <div class="info-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div><span class="title">CENTRO DE OPERACIONES</span><span class="desc">SEVILLA, ESPAÑA</span></div>
+            </div>
+            <div class="info-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <div><span class="title">ENVÍOS 24/48H</span><span class="desc">GRATUITO PENÍNSULA</span></div>
+            </div>
+            <div class="info-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div><span class="title">DEVOLUCIONES</span><span class="desc">HASTA 14 DÍAS</span></div>
+            </div>
             <div class="social">
                 <span>IG</span>
                 <span>FB</span>
@@ -479,24 +507,26 @@
             </div>
         </div>
         <div class="col">
-            <h4>Tienda</h4>
-            <a onclick="activarAnimacion()">Catálogo</a>
-            <a onclick="toggleDrawer('cart')">Carrito</a>
-            <a onclick="document.getElementById('contactSection').scrollIntoView({behavior:'smooth'})">Contacto</a>
+            <h4>NEWSLETTER</h4>
+            <p>Acceso privado a preventas y drops exclusivos.</p>
+            <div class="newsletter-form">
+                <input type="email" id="footerNewsletterEmail" placeholder="TU@EMAIL.COM">
+                <button onclick="subscribeFooterNewsletter()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></button>
+            </div>
+            <div class="newsletter-msg" id="footerNewsletterMsg">REGISTRO CONFIRMADO</div>
         </div>
         <div class="col">
-            <h4>Políticas</h4>
-            <a onclick="alert('Envíos nacionales: 24/48h. Gratuito en península.')">Envíos</a>
-            <a onclick="alert('Devoluciones hasta 14 días.')">Devoluciones</a>
-            <a onclick="alert('Todos los derechos reservados.')">Privacidad</a>
-        </div>
-        <div class="col">
-            <h4>Horario</h4>
-            <p>Lun–Sab: 10:00 – 20:00</p>
-            <p style="margin-top:0.5rem;">Sevilla, España</p>
+            <h4>SELLO MONTEQUINTO</h4>
+            <div class="sello-mini">
+                <div class="head"><span>MM-2026</span><span>ED. LIMITADA</span></div>
+                <div class="stripe"></div>
+            </div>
+            <p style="margin-top:1rem;">Lun–Sab: 10:00 – 20:00</p>
+            <p>Sevilla, España</p>
         </div>
     </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 const PRODUCTS = [
     { id: 1, code: "LV001", name: "Zapatillas LV Trainer", category: "FOOTWEAR", price: 710, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" },
@@ -514,7 +544,7 @@ const PRODUCTS = [
 const categories = ["ALL", "HOODIES", "OUTERWEAR", "FOOTWEAR"];
 let currentCategory = "ALL";
 
-// === HERO GOOEY ANIMATION (cycles once, settles on MODA MONTEQUINTO) ===
+// === HERO GOOEY ANIMATION (GSAP timeline, settles on MODA MONTEQUINTO) ===
 (function() {
     const texts = ["COLECCIÓN 2026", "SEVILLA", "EDICIÓN LIMITADA", "MODA MONTEQUINTO"];
     const el1 = document.getElementById("goo1");
@@ -522,80 +552,42 @@ let currentCategory = "ALL";
     const gooWrap = document.getElementById("gooWrap");
     const finalEl = document.getElementById("heroFinal");
     const heroGooey = document.getElementById("heroGooey");
-    if (!el1 || !el2) return;
-
-    let textIndex = 0;
-    let morphTime = 2.2;
-    let cooldownTime = 1.2;
-    let time = new Date();
-    let morph = 0;
-    let cooldown = 0;
-    const maxCycles = texts.length - 1;
-    let settled = false;
+    if (!el1 || !el2 || typeof gsap === 'undefined') return;
 
     function setMorph(fraction) {
-        const b1 = Math.min(10 / (fraction + 0.05) - 2, 60);
-        const b2 = Math.min(10 / (1 - fraction + 0.05) - 2, 60);
+        const b1 = Math.min(8 / (fraction + 0.08) - 2, 40);
+        const b2 = Math.min(8 / (1 - fraction + 0.08) - 2, 40);
         el2.style.filter = `blur(${b1}px)`;
-        el2.style.opacity = `${Math.min(fraction * 1.8, 1) * 100}%`;
+        el2.style.opacity = Math.min(fraction * 1.5, 1);
         el1.style.filter = `blur(${b2}px)`;
-        el1.style.opacity = `${Math.min((1 - fraction) * 1.8, 1) * 100}%`;
-    }
-
-    function doCooldown() {
-        morph = 0;
-        el2.style.filter = ""; el2.style.opacity = "100%";
-        el1.style.filter = ""; el1.style.opacity = "0%";
-    }
-
-    function doMorph() {
-        morph -= cooldown;
-        cooldown = 0;
-        let fraction = morph / morphTime;
-        if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
-        setMorph(fraction);
+        el1.style.opacity = Math.min((1 - fraction) * 1.5, 1);
     }
 
     function settle() {
-        settled = true;
         el1.textContent = "MODA MONTEQUINTO";
         el2.style.display = "none";
         el1.style.filter = "none";
         el1.style.opacity = "1";
         el1.style.position = "static";
         gooWrap.style.filter = "none";
-        setTimeout(() => {
+        gsap.to(heroGooey, { opacity: 0, duration: 0.5, delay: 0.6, onComplete: () => {
             heroGooey.style.display = "none";
             finalEl.style.display = "block";
-            finalEl.style.animation = "heroIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards";
-        }, 600);
+            gsap.fromTo(finalEl, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" });
+        }});
     }
 
-    function animate() {
-        if (settled) return;
-        requestAnimationFrame(animate);
-        const newTime = new Date();
-        const shouldInc = cooldown > 0;
-        const dt = (newTime.getTime() - time.getTime()) / 1000;
-        time = newTime;
-        cooldown -= dt;
-        if (cooldown <= 0) {
-            if (shouldInc) {
-                textIndex++;
-                if (textIndex >= maxCycles) { settle(); return; }
-                el1.textContent = texts[textIndex];
-                el2.textContent = texts[textIndex + 1];
-            }
-            doMorph();
-        } else { doCooldown(); }
+    el1.textContent = texts[0];
+    el2.textContent = texts[1];
+
+    const tl = gsap.timeline({ delay: 0.6 });
+    for (let i = 0; i < texts.length - 1; i++) {
+        if (i > 0) tl.call(() => { el1.textContent = texts[i]; el2.textContent = texts[i + 1]; });
+        tl.to({}, { duration: 2.2, ease: "none", onUpdate: function() { setMorph(this.progress()); } });
+        tl.call(() => { setMorph(1); el2.style.filter = ""; el2.style.opacity = "1"; el1.style.filter = ""; el1.style.opacity = "0"; });
+        tl.to({}, { duration: 1.5 });
     }
-    setTimeout(() => {
-        textIndex = 0;
-        el1.textContent = texts[0];
-        el2.textContent = texts[1];
-        cooldown = 0.01;
-        animate();
-    }, 600);
+    tl.call(settle);
 })();
 
 // === CARRUSEL ===
@@ -643,22 +635,46 @@ function setFilter(cat) {
     currentCategory = cat;
     renderFilters();
     renderCatalog(cat);
-    setTimeout(() => {
-        document.querySelectorAll('.product-card').forEach((el, i) => setTimeout(() => el.classList.add('active'), i * 100));
-    }, 50);
+    setTimeout(() => animateCards(), 50);
 }
 
-// === LOGO STAGGER + OVERLAY ===
-function activarAnimacion() {
-    const items = document.querySelectorAll('.product-card');
-    items.forEach(el => el.classList.remove('active'));
-    void document.body.offsetHeight;
-    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    items.forEach((item, index) => setTimeout(() => item.classList.add('active'), index * 100));
-    setTimeout(openCatalogOverlay, 700);
-}
+// === TRANSITION OVERLAY + LOGO CLICK (GSAP) ===
+(function() {
+    const overlay = document.getElementById('transitionOverlay');
+    if (!overlay) return;
+    let boxesHTML = '';
+    for (let i = 0; i < 100; i++) boxesHTML += '<div class="box"></div>';
+    overlay.innerHTML = boxesHTML;
+    const boxes = overlay.querySelectorAll('.box');
 
-document.getElementById('mainLogo').addEventListener('click', activarAnimacion);
+    window.activarAnimacion = function() {
+        const catalogEl = document.getElementById('catalog');
+        if (!catalogEl) return;
+        overlay.classList.add('open');
+        gsap.set(boxes, { scaleY: 0, transformOrigin: 'center bottom' });
+        gsap.to(boxes, {
+            scaleY: 1, duration: 0.4, stagger: 0.015, ease: 'power4.in',
+            onComplete: () => {
+                catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                gsap.to(boxes, {
+                    scaleY: 0, duration: 0.4, stagger: 0.015, ease: 'power4.out', delay: 0.3,
+                    onComplete: () => { overlay.classList.remove('open'); }
+                });
+                setTimeout(openCatalogOverlay, 900);
+            }
+        });
+    };
+    document.getElementById('mainLogo').addEventListener('click', () => window.activarAnimacion());
+})();
+
+// === CARD ENTRANCE ANIMATION (GSAP) ===
+function animateCards() {
+    const cards = document.querySelectorAll('.product-card');
+    if (!cards.length || typeof gsap === 'undefined') return;
+    gsap.fromTo(cards, { opacity: 0, y: 40 }, {
+        opacity: 1, y: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out'
+    });
+}
 
 // === OVERLAY ===
 function openCatalogOverlay() {
@@ -793,6 +809,15 @@ function subscribeNewsletter() {
     setTimeout(() => msg.classList.remove('show'), 4000);
 }
 
+function subscribeFooterNewsletter() {
+    const email = document.getElementById('footerNewsletterEmail').value.trim();
+    const msg = document.getElementById('footerNewsletterMsg');
+    if (!email || !email.includes('@')) { alert('Introduce un email válido.'); return; }
+    msg.classList.add('show');
+    document.getElementById('footerNewsletterEmail').value = '';
+    setTimeout(() => msg.classList.remove('show'), 4000);
+}
+
 // === SHIPPING SCROLL REVEAL ===
 const shipObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
@@ -803,7 +828,7 @@ document.querySelectorAll('.shipping-col').forEach(el => shipObserver.observe(el
 renderCarousel();
 renderFilters();
 renderCatalog("ALL");
-setTimeout(() => { document.querySelectorAll('.product-card').forEach((el, i) => setTimeout(() => el.classList.add('active'), i * 100)); }, 400);
+setTimeout(() => animateCards(), 400);
 </script>
 </body>
 </html>
