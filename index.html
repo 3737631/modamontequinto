@@ -17,6 +17,8 @@
             font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;
         }
         header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.85rem; }
+        .header-left { cursor: pointer; }
+        .header-left:hover { text-decoration: underline; }
         .cart-trigger { cursor: pointer; text-align: right; }
         .cart-trigger:hover { text-decoration: underline; }
 
@@ -193,6 +195,114 @@
             border-top: 1px solid #eee; background: #fff;
         }
 
+        /* === DRAWERS (CART + CONTACT) === */
+        .drawer-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 199;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+        .drawer {
+            position: fixed; top: 0; right: -400px; width: 400px; height: 100%;
+            background: #fff; z-index: 200; box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+            transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 2.5rem 2rem; display: flex; flex-direction: column;
+            overflow-y: auto;
+        }
+        .drawer.open { right: 0; }
+        .drawer .close-btn {
+            align-self: flex-end; background: none; border: none; font-size: 1.4rem;
+            cursor: pointer; margin-bottom: 0.5rem; color: #888;
+        }
+        .drawer .close-btn:hover { color: #000; }
+        .drawer h2 { font-weight: 500; font-size: 1.1rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .drawer .empty-msg { color: #aaa; font-size: 0.8rem; font-family: monospace; }
+        .drawer .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.8rem;
+        }
+        .drawer .cart-item .remove {
+            color: #ccc; cursor: pointer; font-size: 0.9rem; margin-left: 8px;
+        }
+        .drawer .cart-item .remove:hover { color: #e00; }
+        .drawer .cart-total {
+            margin-top: auto; font-weight: 700; font-size: 1.1rem;
+            padding-top: 1.5rem; border-top: 1px solid #eee;
+            display: flex; justify-content: space-between;
+        }
+        .drawer .checkout-btn {
+            margin-top: 1rem; width: 100%; padding: 0.9rem;
+            background: #111; color: #fff; border: none; border-radius: 6px;
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; font-family: inherit; transition: background 0.2s;
+        }
+        .drawer .checkout-btn:hover { background: #333; }
+
+        .contact-form { margin-top: 1rem; }
+        .contact-form label {
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: #888; display: block; margin-bottom: 0.3rem;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
+            font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
+            outline: none; transition: border 0.2s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus { border-color: #111; }
+        .contact-form textarea { min-height: 100px; resize: vertical; }
+        .contact-form button {
+            background: #111; color: #fff; border: none; padding: 0.8rem 2rem;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s;
+        }
+        .contact-form button:hover { background: #333; }
+
+        /* === CONTACT SECTION (footer) === */
+        .contact-section {
+            padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee;
+        }
+        .contact-section .inner {
+            max-width: 800px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+        }
+        .contact-section .info-col h3 {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
+            color: #aaa; margin-bottom: 1rem;
+        }
+        .contact-section .info-col h2 {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px;
+            margin-bottom: 1.5rem; line-height: 1.2;
+        }
+        .contact-section .info-col p {
+            font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem;
+        }
+        .contact-section .info-col .detail {
+            font-size: 0.75rem; color: #444; margin-bottom: 0.5rem;
+            font-family: monospace;
+        }
+        .contact-section .info-col .detail strong {
+            text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px;
+            color: #999; font-family: 'Inter', sans-serif;
+        }
+        .contact-form-section input,
+        .contact-form-section textarea {
+            width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
+            font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
+            outline: none; transition: border 0.2s; background: #fff;
+        }
+        .contact-form-section input:focus,
+        .contact-form-section textarea:focus { border-color: #111; }
+        .contact-form-section textarea { min-height: 120px; resize: vertical; }
+        .contact-form-section button {
+            background: #111; color: #fff; border: none; padding: 0.8rem 2.5rem;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s;
+        }
+        .contact-form-section button:hover { background: #333; }
+
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
             header { padding: 1rem 1.5rem; }
@@ -204,6 +314,9 @@
             .catalog-item .thumb { width: 40px; height: 40px; }
             .catalog-item .info { grid-template-columns: 1fr; gap: 0.3rem; }
             .catalog-item .info .ref { min-width: auto; }
+            .drawer { width: 100%; right: -100%; }
+            .contact-section { padding: 3rem 1.5rem; }
+            .contact-section .inner { grid-template-columns: 1fr; gap: 2rem; }
             footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
         }
     </style>
@@ -223,10 +336,37 @@
 
     <!-- HEADER -->
     <header>
-        <div>Catálogo / Contacto</div>
+        <div class="header-left" onclick="toggleDrawer('contact')">Catálogo / Contacto</div>
         <div class="logo">MODA MONTEQUINTO</div>
-        <div class="cart-trigger">Carrito (0)</div>
+        <div class="cart-trigger" onclick="toggleDrawer('cart')">Carrito (<span id="cart-count">0</span>)</div>
     </header>
+
+    <!-- DRAWER BACKDROP -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeAllDrawers()"></div>
+
+    <!-- CART DRAWER -->
+    <div class="drawer" id="cartDrawer">
+        <button class="close-btn" onclick="closeAllDrawers()">✕</button>
+        <h2>Tu Carrito</h2>
+        <div id="cartItems"><p class="empty-msg">No hay productos aún.</p></div>
+        <div class="cart-total"><span>Total</span><span id="cartTotal">0 €</span></div>
+        <button class="checkout-btn" onclick="alert('Pedido simulado — gracias por tu compra')">Finalizar Pedido</button>
+    </div>
+
+    <!-- CONTACT DRAWER -->
+    <div class="drawer" id="contactDrawer">
+        <button class="close-btn" onclick="closeAllDrawers()">✕</button>
+        <h2>Contacto</h2>
+        <div class="contact-form">
+            <label>Nombre</label>
+            <input type="text" id="contactName" placeholder="Tu nombre">
+            <label>Email</label>
+            <input type="email" id="contactEmail" placeholder="tu@email.com">
+            <label>Mensaje</label>
+            <textarea id="contactMsg" placeholder="Escribe tu mensaje..."></textarea>
+            <button onclick="sendContact()">Enviar Mensaje</button>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -264,10 +404,32 @@
     </div>
     <button class="modal-close" id="modalClose" onclick="closeModal()">✕</button>
 
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contactSection">
+        <div class="inner">
+            <div class="info-col">
+                <h3>CONTACTO</h3>
+                <h2>Hablemos sobre<br>tu estilo</h2>
+                <p>Estamos en Sevilla. Escríbenos para consultar disponibilidad, tallas o hacer un pedido personalizado.</p>
+                <div class="detail"><strong>Email</strong> hola@modamontequinto.com</div>
+                <div class="detail"><strong>WhatsApp</strong> +34 600 123 456</div>
+                <div class="detail"><strong>Horario</strong> Lun–Sab 10:00 – 20:00</div>
+                <div class="detail"><strong>Ubicación</strong> Sevilla, España</div>
+            </div>
+            <div class="contact-form-section">
+                <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:#888;display:block;margin-bottom:0.8rem;">Envíanos un mensaje</label>
+                <input type="text" placeholder="Tu nombre" id="secName">
+                <input type="email" placeholder="tu@email.com" id="secEmail">
+                <textarea placeholder="Escribe tu mensaje..." id="secMsg"></textarea>
+                <button onclick="sendContactSec()">Enviar Mensaje</button>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
         <div>© 2026 Moda Montequinto</div>
-        <div>Instagram / WhatsApp</div>
+        <div onclick="toggleDrawer('contact')" style="cursor:pointer;">Instagram / WhatsApp</div>
         <div>Sevilla, España</div>
     </footer>
 
@@ -352,7 +514,6 @@
         let html = '';
         for (let r = 0; r < reps; r++) {
             PRODUCTS.forEach(p => {
-                const totalStock = Object.values(p.stock).reduce((a, b) => a + b, 0);
                 html += `
                     <div class="carousel-item" onclick="openModal('${p.image}')">
                         <img src="${p.image}" alt="${p.name}" loading="lazy">
@@ -361,7 +522,7 @@
                             <div class="cat">${p.category}</div>
                             <div class="name">${p.name}</div>
                             <div class="price">$${p.price} USD</div>
-                            <div class="explore">[ EXPLORE ]</div>
+                            <div class="explore" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">[ ADD TO CART ]</div>
                         </div>
                     </div>`;
             });
@@ -390,9 +551,10 @@
                         <div class="ref">REF: ${p.code} <span class="cat">| ${p.category}</span></div>
                         <div class="name">${p.name}</div>
                         <div class="status" style="color:${statusColor}">${status}</div>
-                        <div style="text-align:right;display:flex;align-items:center;gap:12px;">
+                        <div style="text-align:right;display:flex;align-items:center;gap:8px;">
                             <span class="price">$${p.price} USD</span>
-                            <span class="view-btn" onclick="event.stopPropagation(); openModal('${p.image}')">VIEW +</span>
+                            <span class="view-btn" onclick="event.stopPropagation(); openModal('${p.image}')">VIEW</span>
+                            <span class="view-btn" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">ADD +</span>
                         </div>
                     </div>
                 </div>`;
@@ -411,6 +573,96 @@
         currentCategory = cat;
         renderFilters();
         renderCatalog(cat);
+    }
+
+    // === CART STATE ===
+    let cartItems = [];
+
+    function addToCart(name, price) {
+        cartItems.push({ name, price });
+        updateCartUI();
+        openDrawer('cart');
+    }
+
+    function removeFromCart(index) {
+        cartItems.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        document.getElementById('cart-count').textContent = cartItems.length;
+        const container = document.getElementById('cartItems');
+        if (cartItems.length === 0) {
+            container.innerHTML = '<p class="empty-msg">No hay productos aún.</p>';
+            document.getElementById('cartTotal').textContent = '0 €';
+            return;
+        }
+        container.innerHTML = cartItems.map((item, i) =>
+            `<div class="cart-item">
+                <span>${item.name}</span>
+                <span>${item.price} € <span class="remove" onclick="removeFromCart(${i})">✕</span></span>
+            </div>`
+        ).join('');
+        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+        document.getElementById('cartTotal').textContent = total + ' €';
+    }
+
+    // === DRAWERS ===
+    let activeDrawer = null;
+
+    function toggleDrawer(name) {
+        if (activeDrawer === name) {
+            closeAllDrawers();
+        } else {
+            openDrawer(name);
+        }
+    }
+
+    function openDrawer(name) {
+        closeAllDrawers();
+        activeDrawer = name;
+        const el = document.getElementById(name + 'Drawer');
+        if (el) el.classList.add('open');
+        document.getElementById('drawerBackdrop').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAllDrawers() {
+        activeDrawer = null;
+        document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+        document.getElementById('drawerBackdrop').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // === CONTACT DRAWER ===
+    function sendContact() {
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const msg = document.getElementById('contactMsg').value.trim();
+        if (!name || !email || !msg) { alert('Por favor completa todos los campos.'); return; }
+        alert('Mensaje enviado. Te responderemos pronto a ' + email);
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMsg').value = '';
+        closeAllDrawers();
+    }
+
+    function sendContactSec() {
+        const name = document.getElementById('secName').value.trim();
+        const email = document.getElementById('secEmail').value.trim();
+        const msg = document.getElementById('secMsg').value.trim();
+        if (!name || !email || !msg) { alert('Por favor completa todos los campos.'); return; }
+        alert('Mensaje enviado. Te responderemos pronto a ' + email);
+        document.getElementById('secName').value = '';
+        document.getElementById('secEmail').value = '';
+        document.getElementById('secMsg').value = '';
+    }
+
+    // === ADD TO CART FROM CATALOG / CAROUSEL ===
+    // We override the onclick on carousel items to add a "add to cart" option
+    function addCarouselToCart(code) {
+        const p = PRODUCTS.find(pr => pr.code === code);
+        if (p) addToCart(p.name, p.price);
     }
 
     // === MODAL ===
