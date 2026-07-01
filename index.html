@@ -3,26 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODA MONTEQUINTO — Colección 2026</title>
+    <title>Moda Montequinto | Sevilla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-        :root { --black: #000; --white: #fff; --grey: #f7f7f7; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', Helvetica, sans-serif; background: var(--white); overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-        header { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; position: sticky; top: 0; background: var(--white); z-index: 100; border-bottom: 1px solid #eee; }
-        header .logo { font-weight: 600; letter-spacing: 3px; font-size: 0.9rem; }
+        .hero-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: url('https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg') center/cover no-repeat;
+            opacity: 0.35;
+        }
 
-        .hero { display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 0 4rem; min-height: 85vh; align-items: center; }
-        .hero h1 { font-size: 3rem; font-weight: 400; line-height: 1.1; margin-bottom: 1rem; }
-        .hero-img { width: 100%; object-fit: contain; }
+        header {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 2rem 4rem;
+            position: sticky; top: 0; background: #fff; z-index: 100; border-bottom: 1px solid #eee;
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+        }
+        header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.9rem; }
+        .cart-trigger { cursor: pointer; text-align: right; }
+        .cart-trigger:hover { text-decoration: underline; }
 
-        .section-title { padding: 4rem 4rem 2rem; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #888; }
+        .hero {
+            height: 85vh; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
+            padding: 0 4rem; opacity: 0; animation: intro 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes intro {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero img { width: 100%; object-fit: contain; }
+        .hero .left { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+        .hero .right { text-align: right; }
+        .hero .right .price { font-size: 1.5rem; font-weight: 600; display: block; margin: 0.5rem 0; }
+        .add-btn {
+            background: none; border: none; border-bottom: 1px solid #000;
+            font: inherit; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; padding: 0; color: inherit;
+        }
+        .add-btn:hover { opacity: 0.5; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; padding: 0 4rem 6rem; }
+        .section-title {
+            padding: 4rem 4rem 1.5rem; font-size: 0.7rem; letter-spacing: 3px;
+            text-transform: uppercase; color: #888; background: #fff;
+        }
+
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem; padding: 0 4rem 6rem; background: #fff;
+        }
         .product-card { cursor: pointer; }
-        .product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: var(--grey); transition: opacity 0.3s; }
-        .product-card img:hover { opacity: 0.85; }
+        .product-card img {
+            width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block;
+            background: #f7f7f7; transition: transform 0.5s;
+        }
+        .product-card:hover img { transform: scale(1.02); }
         .product-card .info { padding: 1rem 0; }
         .product-card .info .brand { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #888; }
         .product-card .info .name { font-size: 0.85rem; font-weight: 400; margin: 0.3rem 0; }
@@ -31,55 +66,83 @@
         .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .marquee { overflow: hidden; white-space: nowrap; padding: 4rem 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin: 0 0 4rem; }
+        .marquee {
+            overflow: hidden; white-space: nowrap; padding: 4rem 0; background: #fff;
+            border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+        }
         .marquee-track { display: inline-block; animation: scroll 25s linear infinite; }
         .marquee-track img { width: 280px; height: 280px; object-fit: cover; margin-right: 20px; }
-
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        footer { display: flex; justify-content: space-between; padding: 2rem 4rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888; border-top: 1px solid #eee; }
+        footer {
+            display: flex; justify-content: space-between; padding: 2rem 4rem;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888;
+            border-top: 1px solid #eee; background: #fff;
+        }
+
+        .cart-overlay {
+            position: fixed; top: 0; right: -400px; width: 400px; height: 100%;
+            background: #fff; z-index: 200; box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 3rem 2rem; display: flex; flex-direction: column;
+        }
+        .cart-overlay.open { right: 0; }
+        .cart-overlay .close-btn {
+            align-self: flex-end; background: none; border: none; font-size: 1.5rem;
+            cursor: pointer; margin-bottom: 2rem;
+        }
+        .cart-overlay h2 { font-weight: 400; margin-bottom: 2rem; }
+        .cart-overlay .empty-msg { color: #888; font-size: 0.85rem; }
+        .cart-overlay .total { margin-top: auto; font-weight: 600; font-size: 1.2rem; padding-top: 2rem; border-top: 1px solid #eee; }
+        .cart-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 199; opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .cart-backdrop.open { opacity: 1; pointer-events: all; }
 
         @media (max-width: 768px) {
             header, .hero, .section-title, .product-grid, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .hero { grid-template-columns: 1fr; min-height: auto; gap: 2rem; text-align: center; }
-            .hero h1 { font-size: 2rem; }
+            .hero { grid-template-columns: 1fr; height: auto; min-height: 70vh; gap: 2rem; text-align: center; }
+            .hero .right { text-align: center; }
             .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .cart-overlay { width: 100%; right: -100%; }
         }
     </style>
 </head>
 <body>
 
+    <div class="hero-bg"></div>
+
     <header>
         <div>Catálogo / Contacto</div>
         <div class="logo">MODA MONTEQUINTO</div>
-        <div>Carrito (0)</div>
+        <div class="cart-trigger" onclick="toggleCart()">Carrito (<span id="cart-count">0</span>)</div>
     </header>
 
     <main>
         <section class="hero">
-            <div class="reveal">C/O 2026<br><span style="font-size:0.6rem;color:#888;">Edición Limitada</span></div>
-            <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" class="hero-img reveal" alt="Louis Vuitton LV Trainer">
-            <div class="reveal" style="text-align:right;">
+            <div class="left">C/O 2026<br><span style="font-size:0.6rem;color:#888;">Edición Limitada</span></div>
+            <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="Zapatillas LV Trainer">
+            <div class="right">
                 <span style="font-size:0.65rem;color:#888;">Louis Vuitton</span><br>
                 Zapatillas LV Trainer<br>
-                <span style="font-weight:600;">$710</span><br>
-                <span style="font-size:0.6rem;border-bottom:1px solid #000;cursor:pointer;">[AÑADIR AL CARRITO]</span>
+                <span class="price">710 €</span>
+                <button class="add-btn" onclick="addToCart('Zapatillas LV Trainer', 710)">[AÑADIR AL CARRITO]</button>
             </div>
         </section>
 
         <p class="section-title reveal">— Colección Completa</p>
 
         <section class="product-grid">
-            <!-- 1. Calzado Negro: LV Trainer -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="Louis Vuitton LV Trainer">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="Zapatillas LV Trainer">
                 <div class="info">
                     <div class="brand">Louis Vuitton</div>
                     <div class="name">Zapatillas LV Trainer</div>
                     <div class="price">710 €</div>
                 </div>
             </div>
-            <!-- 2. Calzado Claro: Nike Waffle -->
             <div class="product-card reveal">
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="Nike Waffle">
                 <div class="info">
@@ -88,16 +151,14 @@
                     <div class="price">120 €</div>
                 </div>
             </div>
-            <!-- 3. Calzado Azul: Nike Air Max Plus TN -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="Nike Air Max Plus TN">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="Nike TN">
                 <div class="info">
                     <div class="brand">Nike</div>
                     <div class="name">Nike TN</div>
                     <div class="price">160 €</div>
                 </div>
             </div>
-            <!-- 4. Sudadera Lacoste granate -->
             <div class="product-card reveal">
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="Sudadera Lacoste">
                 <div class="info">
@@ -106,54 +167,48 @@
                     <div class="price">95 €</div>
                 </div>
             </div>
-            <!-- 5. Polo Lacoste rayas (blanco, amarillo, negro, rojo) -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="Polo Lacoste Rayas">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="Polo Lacoste">
                 <div class="info">
                     <div class="brand">Lacoste</div>
                     <div class="name">Polo Lacoste</div>
                     <div class="price">75 €</div>
                 </div>
             </div>
-            <!-- 6. Camiseta básica negra Lacoste -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="Camiseta negra Lacoste">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="Camiseta Lacoste Negra">
                 <div class="info">
                     <div class="brand">Lacoste</div>
                     <div class="name">Camiseta Lacoste Negra</div>
                     <div class="price">45 €</div>
                 </div>
             </div>
-            <!-- 7. Polo Lacoste rayas (blanco, verde, amarillo, rojo) -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="Polo Lacoste Rayas">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="Polo Lacoste">
                 <div class="info">
                     <div class="brand">Lacoste</div>
                     <div class="name">Polo Lacoste</div>
                     <div class="price">75 €</div>
                 </div>
             </div>
-            <!-- 8. Camiseta técnica Asics Navy -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="Camiseta Asics">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="Camiseta Entreno Asics">
                 <div class="info">
                     <div class="brand">Asics</div>
                     <div class="name">Camiseta Entreno Asics</div>
                     <div class="price">55 €</div>
                 </div>
             </div>
-            <!-- 9. Camiseta gris HG -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="Camiseta HG">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="Camiseta Hugo Boss">
                 <div class="info">
                     <div class="brand">Hugo Boss</div>
                     <div class="name">Camiseta Gris</div>
                     <div class="price">35 €</div>
                 </div>
             </div>
-            <!-- 10. Camiseta básica gris Lacoste -->
             <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="Camiseta gris Lacoste">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="Camiseta Lacoste Gris">
                 <div class="info">
                     <div class="brand">Lacoste</div>
                     <div class="name">Camiseta Lacoste Gris</div>
@@ -174,7 +229,6 @@
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="">
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="">
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="">
-                <!-- Duplicado para loop infinito -->
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="">
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="">
                 <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="">
@@ -195,7 +249,49 @@
         <div>Sevilla, España</div>
     </footer>
 
+    <div class="cart-backdrop" id="cart-backdrop" onclick="toggleCart()"></div>
+    <div class="cart-overlay" id="cart-drawer">
+        <button class="close-btn" onclick="toggleCart()">✕</button>
+        <h2>Tu Carrito</h2>
+        <div id="cart-items"><p class="empty-msg">No hay productos aún.</p></div>
+        <div class="total" id="cart-total">Total: 0 €</div>
+    </div>
+
     <script>
+        let cart = [];
+        let cartCount = 0;
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            cartCount++;
+            document.getElementById('cart-count').innerText = cartCount;
+            renderCart();
+            if (!document.getElementById('cart-drawer').classList.contains('open')) {
+                toggleCart();
+            }
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open');
+            document.getElementById('cart-backdrop').classList.toggle('open');
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="empty-msg">No hay productos aún.</p>';
+            } else {
+                container.innerHTML = cart.map((item, i) =>
+                    `<div style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #eee;font-size:0.85rem;">
+                        <span>${item.name}</span>
+                        <span>${item.price} €</span>
+                    </div>`
+                ).join('');
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = 'Total: ' + total + ' €';
+        }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
         }, { threshold: 0.1 });
