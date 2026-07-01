@@ -52,7 +52,7 @@
         }
         .hero-gooey {
             position: relative; display: flex; align-items: center; justify-content: center;
-            height: 120px; width: 100%; margin-bottom: 0.5rem;
+            height: 160px; width: 100%; margin-bottom: 0.5rem;
         }
         .hero-gooey .goo-text {
             display: flex; align-items: center; justify-content: center;
@@ -66,11 +66,6 @@
         }
         .hero-gooey .goo-text .g1 { opacity: 1; }
         .hero-gooey .goo-text .g2 { opacity: 0; }
-        .hero-final {
-            font-family: 'Tenor Sans', sans-serif;
-            font-size: 5rem; letter-spacing: 4px; text-transform: uppercase;
-            color: #fff; line-height: 1; display: none;
-        }
         @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
         .carousel-section {
@@ -304,7 +299,8 @@
             .header-left, .header-right { gap: 0.8rem; }
             .search-input-wrap.open { width: 200px; }
             .hero { height: 60vh; }
-            .hero-gooey .goo-text span, .hero-final { font-size: 2.4rem; }
+            .hero-gooey .goo-text span { font-size: 2.4rem; }
+            .hero-gooey { height: 100px; }
             .hero-gooey { height: 70px; }
             .carousel-item { width: 160px; }
             .catalog { padding: 3rem 1.5rem; }
@@ -395,7 +391,6 @@
                 <span class="g2" id="goo2">SEVILLA</span>
             </div>
         </div>
-        <div class="hero-final" id="heroFinal">MODA MONTEQUINTO</div>
     </section>
 
     <section class="carousel-section">
@@ -593,8 +588,8 @@ let currentCategory = "ALL";
     }
 
     function settle() {
-        el1.textContent = "MODA MONTEQUINTO";
         el2.style.display = "none";
+        el1.innerHTML = "MODA<br>MONTEQUINTO";
         el1.style.filter = "none";
         el1.style.opacity = "1";
         gooWrap.style.filter = "none";
@@ -608,7 +603,7 @@ let currentCategory = "ALL";
         if (i > 0) tl.call(() => { el1.textContent = texts[i]; el2.textContent = texts[i + 1]; });
         tl.to({}, { duration: 0.6, ease: "power2.inOut", onUpdate: function() { setMorph(this.progress()); } });
         tl.call(() => { setMorph(1); el2.style.filter = ""; el2.style.opacity = "1"; el1.style.filter = ""; el1.style.opacity = "0"; });
-        tl.to({}, { duration: 0.5 });
+        if (i < texts.length - 2) tl.to({}, { duration: 0.5 });
     }
     tl.call(settle);
 })();
@@ -767,7 +762,7 @@ function updateCartUI() {
     footer.style.display = 'block';
     container.innerHTML = cart.map((item, i) => `
         <div class="cart-item">
-            <span class="thumb" style="display:flex;align-items:center;justify-content:center;background:#111;border-radius:8px;width:50px;height:60px;font-size:1.5rem;">👟</span>
+            <span class="thumb" style="display:flex;align-items:center;justify-content:center;background:#111;border-radius:8px;width:50px;height:60px;font-size:0.6rem;color:#555;text-transform:uppercase;letter-spacing:1px;">MM</span>
             <div class="info">
                 <div class="iname">${item.name}</div>
                 <div class="iprice">${item.price} €</div>
