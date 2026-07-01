@@ -9,7 +9,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-        /* === HEADER === */
         header {
             display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1.5rem 4rem;
             position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
@@ -18,88 +17,71 @@
         }
         header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.85rem; }
         .header-left { cursor: pointer; }
-        .header-left:hover { text-decoration: underline; }
+        .header-left:hover { opacity: 0.5; }
         .cart-trigger { cursor: pointer; text-align: right; }
-        .cart-trigger:hover { text-decoration: underline; }
+        .cart-trigger:hover { opacity: 0.5; }
 
-        /* === HERO (blanco, independiente) === */
         .hero {
             height: 80vh; display: flex; flex-direction: column; align-items: center;
             justify-content: center; background: #fff; text-align: center; padding: 2rem;
         }
+        .hero-main {
+            font-size: 5rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase;
+            color: #111; line-height: 1.1; opacity: 0; transform: translateY(20px);
+            animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes heroIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
         .hero-sub {
-            font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
-            color: #aaa; margin-bottom: 2rem; font-weight: 400;
+            margin-top: 1.5rem; font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase;
+            color: #999; font-weight: 400; height: 1.2rem; position: relative;
         }
-        .gooey-wrap {
-            position: relative; display: flex; align-items: center; justify-content: center;
-            height: 200px; width: 100%;
+        .hero-sub span {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            transition: opacity 0.6s ease; white-space: nowrap;
         }
-        .gooey-text {
-            display: flex; align-items: center; justify-content: center;
-            filter: url(#goo);
-        }
-        .gooey-text span {
-            position: absolute; display: inline-block; text-align: center; user-select: none;
-            font-size: 4.5rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase;
-            line-height: 1.1; color: #111;
-        }
+        .hero-sub span.hidden { opacity: 0; }
         .hero-desc {
-            margin-top: 2rem; font-size: 0.75rem; color: #888;
-            letter-spacing: 2px; text-transform: uppercase; max-width: 500px;
+            margin-top: 2.5rem; font-size: 0.75rem; color: #bbb;
+            letter-spacing: 3px; text-transform: uppercase; max-width: 500px;
+            opacity: 0; animation: heroIn 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* === CARRUSEL LOOKBOOK === */
         .carousel-section {
-            background: #000; padding: 1.5rem 0; border-top: 1px solid #222;
-            border-bottom: 1px solid #222; overflow: hidden; position: relative;
-        }
-        .carousel-label {
-            position: absolute; top: 4px; left: 24px; z-index: 10;
-            background: #000; color: #fff; font-size: 7px; font-family: monospace;
-            letter-spacing: 2px; padding: 2px 8px; border: 1px solid rgba(255,255,255,0.15);
-            text-transform: uppercase; font-weight: 700;
+            padding: 2rem 0; background: #fff; border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee; overflow: hidden; position: relative;
         }
         .carousel-track {
-            display: flex; width: max-content; animation: scrollMarquee 30s linear infinite;
-            padding: 8px 0;
+            display: flex; width: max-content; animation: scrollMarquee 40s linear infinite;
         }
         .carousel-track:hover { animation-play-state: paused; }
         .carousel-item {
-            width: 220px; aspect-ratio: 3/4; background: #121212;
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
-            overflow: hidden; cursor: pointer; flex-shrink: 0; margin: 0 10px;
-            transition: border-color 0.3s; position: relative;
+            width: 260px; margin: 0 8px; flex-shrink: 0; cursor: pointer; position: relative;
         }
-        .carousel-item:hover { border-color: #555; }
         .carousel-item img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.7s, brightness 0.7s;
+            width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+            background: #f5f5f5; border-radius: 4px; transition: opacity 0.3s;
         }
-        .carousel-item:hover img { transform: scale(1.05); filter: brightness(1.1); }
-        .carousel-info {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
-            opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column;
-            justify-content: flex-end; padding: 14px;
+        .carousel-item:hover img { opacity: 0.85; }
+        .carousel-item .label {
+            display: flex; justify-content: space-between; margin-top: 6px;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;
         }
-        .carousel-item:hover .carousel-info { opacity: 1; }
-        .carousel-info .cat { font-size: 8px; font-family: monospace; color: #999; text-transform: uppercase; letter-spacing: 1px; }
-        .carousel-info .name { font-size: 10px; font-weight: 700; color: #fff; text-transform: uppercase; margin-top: 2px; }
-        .carousel-info .price { font-size: 9px; font-family: monospace; color: #ccc; margin-top: 4px; }
-        .carousel-info .explore { font-size: 7px; font-family: monospace; color: #fff; text-decoration: underline; letter-spacing: 1px; margin-top: 4px; }
-        .carousel-ref {
-            position: absolute; top: 8px; right: 8px;
-            background: rgba(0,0,0,0.8); color: #fff; font-size: 6px; font-family: monospace;
-            padding: 2px 6px; border: 1px solid rgba(255,255,255,0.1); letter-spacing: 1px;
+        .carousel-item .label .name { font-weight: 600; color: #111; }
+        .carousel-item .label .price { color: #888; font-family: monospace; }
+        .carousel-item .add-small {
+            font-size: 0.55rem; letter-spacing: 1px; color: #aaa; cursor: pointer;
+            text-transform: uppercase; border-bottom: 1px solid #ddd; display: inline-block;
+            margin-top: 2px; transition: color 0.2s;
         }
+        .carousel-item .add-small:hover { color: #111; border-color: #111; }
 
         @keyframes scrollMarquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        /* === CATÁLOGO === */
         .catalog {
             padding: 5rem 4rem; background: #fff; max-width: 1280px; margin: 0 auto;
         }
@@ -108,16 +90,12 @@
             border-bottom: 1px solid #eee; padding-bottom: 2rem; margin-bottom: 0;
         }
         .catalog-header .label {
-            font-size: 9px; color: #aaa; text-transform: uppercase;
-            letter-spacing: 3px; font-family: monospace;
+            font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 3px; font-family: monospace;
         }
         .catalog-header h2 {
-            font-size: 1.8rem; font-weight: 900; text-transform: uppercase;
-            letter-spacing: -0.5px; color: #111;
+            font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; color: #111;
         }
-        .filter-bar {
-            display: flex; flex-wrap: wrap; gap: 6px;
-        }
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 6px; }
         .filter-btn {
             padding: 6px 16px; border-radius: 999px; border: 1px solid #ddd;
             font-size: 10px; font-family: monospace; text-transform: uppercase;
@@ -129,17 +107,17 @@
 
         .catalog-list { border-top: 1px solid #eee; }
         .catalog-item {
-            display: grid; grid-template-columns: 60px 1fr; gap: 1rem;
-            padding: 1rem 0; border-bottom: 1px solid #f0f0f0;
+            display: grid; grid-template-columns: 52px 1fr; gap: 0.8rem;
+            padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0;
             cursor: pointer; transition: all 0.3s; align-items: center;
         }
         .catalog-item:hover { padding-left: 0.5rem; padding-right: 0.5rem; background: #fafafa; }
         .catalog-item .thumb {
-            width: 50px; height: 50px; border-radius: 8px; object-fit: cover;
+            width: 46px; height: 46px; border-radius: 4px; object-fit: cover;
             background: #f5f5f5; border: 1px solid #eee;
         }
         .catalog-item .info {
-            display: grid; grid-template-columns: auto 1fr auto auto; gap: 1rem;
+            display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 0.8rem;
             align-items: center; font-size: 0.75rem;
         }
         .catalog-item .info .ref {
@@ -147,55 +125,35 @@
             text-transform: uppercase; letter-spacing: 1px; min-width: 100px;
         }
         .catalog-item .info .ref .cat { color: #ccc; }
-        .catalog-item .info .name {
-            font-size: 0.8rem; font-weight: 500; color: #222;
-        }
+        .catalog-item .info .name { font-size: 0.8rem; font-weight: 500; color: #222; }
         .catalog-item .info .status {
-            font-family: monospace; font-size: 9px; text-transform: uppercase;
-            letter-spacing: 1px; color: #999; min-width: 80px;
+            font-family: monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #999; min-width: 80px;
         }
         .catalog-item .info .price {
-            font-family: monospace; font-weight: 700; font-size: 0.8rem;
-            color: #111; min-width: 70px; text-align: right;
+            font-family: monospace; font-weight: 700; font-size: 0.8rem; color: #111; min-width: 70px; text-align: right;
         }
-        .catalog-item .info .view-btn {
-            font-size: 9px; font-family: monospace; text-transform: uppercase;
-            letter-spacing: 1px; border: 1px solid #ddd; border-radius: 999px;
-            padding: 4px 14px; background: #fff; color: #888; cursor: pointer;
-            transition: all 0.2s; white-space: nowrap;
+        .catalog-item .info .btn {
+            font-size: 8px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px;
+            border: 1px solid #ddd; border-radius: 999px; padding: 4px 12px; background: #fff;
+            color: #888; cursor: pointer; transition: all 0.2s; white-space: nowrap;
         }
-        .catalog-item .info .view-btn:hover { border-color: #111; color: #111; }
-        .empty-msg {
-            padding: 4rem 0; text-align: center; font-family: monospace;
-            font-size: 0.7rem; text-transform: uppercase; color: #bbb;
-        }
+        .catalog-item .info .btn:hover { border-color: #111; color: #111; }
+        .catalog-item .info .btn-add { border-color: #111; color: #111; background: #fff; }
+        .catalog-item .info .btn-add:hover { background: #111; color: #fff; }
+        .empty-msg { padding: 4rem 0; text-align: center; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; color: #bbb; }
 
-        /* === MODAL === */
         .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            z-index: 300; display: none; align-items: center; justify-content: center;
-            padding: 2rem; cursor: pointer;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 300;
+            display: none; align-items: center; justify-content: center; padding: 2rem; cursor: pointer;
         }
         .modal-backdrop.open { display: flex; }
-        .modal-backdrop img {
-            max-width: 90vw; max-height: 90vh; object-fit: contain;
-            border-radius: 8px; cursor: default;
-        }
+        .modal-backdrop img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; cursor: default; }
         .modal-close {
-            position: fixed; top: 2rem; right: 2rem; z-index: 301;
-            background: none; border: none; color: #fff; font-size: 2rem;
-            cursor: pointer; display: none;
+            position: fixed; top: 2rem; right: 2rem; z-index: 301; background: none;
+            border: none; color: #fff; font-size: 2rem; cursor: pointer; display: none;
         }
         .modal-close.open { display: block; }
 
-        /* === FOOTER === */
-        footer {
-            display: flex; justify-content: space-between; padding: 2rem 4rem;
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #888;
-            border-top: 1px solid #eee; background: #fff;
-        }
-
-        /* === DRAWERS (CART + CONTACT) === */
         .drawer-backdrop {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); z-index: 199;
@@ -204,11 +162,10 @@
         .drawer-backdrop.open { opacity: 1; pointer-events: all; }
 
         .drawer {
-            position: fixed; top: 0; right: -400px; width: 400px; height: 100%;
-            background: #fff; z-index: 200; box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+            position: fixed; top: 0; right: -420px; width: 420px; height: 100%;
+            background: #fff; z-index: 200; box-shadow: -4px 0 24px rgba(0,0,0,0.06);
             transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 2.5rem 2rem; display: flex; flex-direction: column;
-            overflow-y: auto;
+            padding: 2.5rem 2rem; display: flex; flex-direction: column; overflow-y: auto;
         }
         .drawer.open { right: 0; }
         .drawer .close-btn {
@@ -222,9 +179,7 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.8rem;
         }
-        .drawer .cart-item .remove {
-            color: #ccc; cursor: pointer; font-size: 0.9rem; margin-left: 8px;
-        }
+        .drawer .cart-item .remove { color: #ccc; cursor: pointer; margin-left: 8px; }
         .drawer .cart-item .remove:hover { color: #e00; }
         .drawer .cart-total {
             margin-top: auto; font-weight: 700; font-size: 1.1rem;
@@ -232,26 +187,48 @@
             display: flex; justify-content: space-between;
         }
         .drawer .checkout-btn {
-            margin-top: 1rem; width: 100%; padding: 0.9rem;
-            background: #111; color: #fff; border: none; border-radius: 6px;
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; font-family: inherit; transition: background 0.2s;
+            margin-top: 1rem; width: 100%; padding: 0.9rem; background: #111; color: #fff;
+            border: none; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s;
         }
         .drawer .checkout-btn:hover { background: #333; }
 
-        .contact-form { margin-top: 1rem; }
+        .contact-section {
+            padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee;
+        }
+        .contact-section .inner {
+            max-width: 800px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+        }
+        .contact-section .info-col h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: #aaa; margin-bottom: 1rem; }
+        .contact-section .info-col h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 1.5rem; line-height: 1.2; }
+        .contact-section .info-col p { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+        .contact-section .info-col .detail { font-size: 0.75rem; color: #444; margin-bottom: 0.3rem; font-family: monospace; }
+        .contact-section .info-col .detail strong { text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px; color: #999; font-family: 'Inter', sans-serif; }
+        .contact-section form input, .contact-section form textarea {
+            width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
+            font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
+            outline: none; transition: border 0.2s; background: #fff;
+        }
+        .contact-section form input:focus, .contact-section form textarea:focus { border-color: #111; }
+        .contact-section form textarea { min-height: 120px; resize: vertical; }
+        .contact-section form button {
+            background: #111; color: #fff; border: none; padding: 0.8rem 2.5rem;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s;
+        }
+        .contact-section form button:hover { background: #333; }
+
         .contact-form label {
             font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px;
             color: #888; display: block; margin-bottom: 0.3rem;
         }
-        .contact-form input,
-        .contact-form textarea {
+        .contact-form input, .contact-form textarea {
             width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
             font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
             outline: none; transition: border 0.2s;
         }
-        .contact-form input:focus,
-        .contact-form textarea:focus { border-color: #111; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #111; }
         .contact-form textarea { min-height: 100px; resize: vertical; }
         .contact-form button {
             background: #111; color: #fff; border: none; padding: 0.8rem 2rem;
@@ -260,60 +237,25 @@
         }
         .contact-form button:hover { background: #333; }
 
-        /* === CONTACT SECTION (footer) === */
-        .contact-section {
-            padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee;
+        footer {
+            display: flex; justify-content: space-between; padding: 2rem 4rem;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #888;
+            border-top: 1px solid #eee; background: #fff;
         }
-        .contact-section .inner {
-            max-width: 800px; margin: 0 auto; display: grid;
-            grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
-        }
-        .contact-section .info-col h3 {
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
-            color: #aaa; margin-bottom: 1rem;
-        }
-        .contact-section .info-col h2 {
-            font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px;
-            margin-bottom: 1.5rem; line-height: 1.2;
-        }
-        .contact-section .info-col p {
-            font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem;
-        }
-        .contact-section .info-col .detail {
-            font-size: 0.75rem; color: #444; margin-bottom: 0.5rem;
-            font-family: monospace;
-        }
-        .contact-section .info-col .detail strong {
-            text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px;
-            color: #999; font-family: 'Inter', sans-serif;
-        }
-        .contact-form-section input,
-        .contact-form-section textarea {
-            width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
-            font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
-            outline: none; transition: border 0.2s; background: #fff;
-        }
-        .contact-form-section input:focus,
-        .contact-form-section textarea:focus { border-color: #111; }
-        .contact-form-section textarea { min-height: 120px; resize: vertical; }
-        .contact-form-section button {
-            background: #111; color: #fff; border: none; padding: 0.8rem 2.5rem;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s;
-        }
-        .contact-form-section button:hover { background: #333; }
+        footer span { cursor: pointer; }
+        footer span:hover { color: #111; }
 
-        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             header { padding: 1rem 1.5rem; }
             .hero { height: 60vh; }
-            .gooey-text span { font-size: 2.2rem; letter-spacing: 3px; }
-            .carousel-item { width: 160px; }
+            .hero-main { font-size: 2.4rem; letter-spacing: 3px; }
+            .carousel-item { width: 180px; }
             .catalog { padding: 3rem 1.5rem; }
-            .catalog-item { grid-template-columns: 44px 1fr; gap: 0.75rem; }
-            .catalog-item .thumb { width: 40px; height: 40px; }
-            .catalog-item .info { grid-template-columns: 1fr; gap: 0.3rem; }
+            .catalog-item { grid-template-columns: 40px 1fr; gap: 0.6rem; }
+            .catalog-item .thumb { width: 36px; height: 36px; }
+            .catalog-item .info { grid-template-columns: 1fr 1fr; gap: 0.3rem; }
             .catalog-item .info .ref { min-width: auto; }
+            .catalog-item .info .status { display: none; }
             .drawer { width: 100%; right: -100%; }
             .contact-section { padding: 3rem 1.5rem; }
             .contact-section .inner { grid-template-columns: 1fr; gap: 2rem; }
@@ -323,37 +265,22 @@
 </head>
 <body>
 
-    <!-- SVG FILTER GOO -->
-    <svg style="position:absolute;width:0;height:0;" aria-hidden="true">
-        <defs>
-            <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
-                <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo" />
-                <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-        </defs>
-    </svg>
-
-    <!-- HEADER -->
     <header>
         <div class="header-left" onclick="toggleDrawer('contact')">Catálogo / Contacto</div>
         <div class="logo">MODA MONTEQUINTO</div>
         <div class="cart-trigger" onclick="toggleDrawer('cart')">Carrito (<span id="cart-count">0</span>)</div>
     </header>
 
-    <!-- DRAWER BACKDROP -->
     <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeAllDrawers()"></div>
 
-    <!-- CART DRAWER -->
     <div class="drawer" id="cartDrawer">
         <button class="close-btn" onclick="closeAllDrawers()">✕</button>
         <h2>Tu Carrito</h2>
         <div id="cartItems"><p class="empty-msg">No hay productos aún.</p></div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">0 €</span></div>
-        <button class="checkout-btn" onclick="alert('Pedido simulado — gracias por tu compra')">Finalizar Pedido</button>
+        <button class="checkout-btn" onclick="alert('Gracias por tu compra. Te contactaremos pronto.')">Finalizar Pedido</button>
     </div>
 
-    <!-- CONTACT DRAWER -->
     <div class="drawer" id="contactDrawer">
         <button class="close-btn" onclick="closeAllDrawers()">✕</button>
         <h2>Contacto</h2>
@@ -368,27 +295,20 @@
         </div>
     </div>
 
-    <!-- HERO -->
     <section class="hero">
-        <div class="hero-sub">Sevilla · Colección 2026</div>
-        <div class="gooey-wrap">
-            <div class="gooey-text" id="gooeyContainer">
-                <span id="gooeyText1">MODA MONTEQUINTO</span>
-                <span id="gooeyText2">SEVILLA</span>
-            </div>
+        <div class="hero-main">MODA MONTEQUINTO</div>
+        <div class="hero-sub" id="heroSub">
+            <span id="sub1" style="opacity:1;">SEVILLA</span>
+            <span id="sub2" class="hidden">COLECCIÓN 2026</span>
+            <span id="sub3" class="hidden">EDICIÓN LIMITADA</span>
         </div>
-        <div class="hero-desc">Edición limitada — Moda urbana con esencia andaluza</div>
+        <div class="hero-desc">Moda urbana con esencia andaluza</div>
     </section>
 
-    <!-- CARRUSEL LOOKBOOK -->
     <section class="carousel-section">
-        <div class="carousel-label">LIVE COLLECTION CAROUSEL // AUTO SCROLL</div>
-        <div class="carousel-track" id="carouselTrack">
-            <!-- Los items se generan por JS -->
-        </div>
+        <div class="carousel-track" id="carouselTrack"></div>
     </section>
 
-    <!-- CATÁLOGO -->
     <section class="catalog" id="catalog">
         <div class="catalog-header">
             <div class="label">LOOKBOOK / CATALOG</div>
@@ -398,13 +318,11 @@
         <div class="catalog-list" id="catalogList"></div>
     </section>
 
-    <!-- MODAL -->
     <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()">
         <img id="modalImage" src="" alt="">
     </div>
     <button class="modal-close" id="modalClose" onclick="closeModal()">✕</button>
 
-    <!-- CONTACT SECTION -->
     <section class="contact-section" id="contactSection">
         <div class="inner">
             <div class="info-col">
@@ -416,273 +334,220 @@
                 <div class="detail"><strong>Horario</strong> Lun–Sab 10:00 – 20:00</div>
                 <div class="detail"><strong>Ubicación</strong> Sevilla, España</div>
             </div>
-            <div class="contact-form-section">
+            <form>
                 <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:#888;display:block;margin-bottom:0.8rem;">Envíanos un mensaje</label>
                 <input type="text" placeholder="Tu nombre" id="secName">
                 <input type="email" placeholder="tu@email.com" id="secEmail">
                 <textarea placeholder="Escribe tu mensaje..." id="secMsg"></textarea>
-                <button onclick="sendContactSec()">Enviar Mensaje</button>
-            </div>
+                <button type="button" onclick="sendContactSec()">Enviar Mensaje</button>
+            </form>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <div>© 2026 Moda Montequinto</div>
-        <div onclick="toggleDrawer('contact')" style="cursor:pointer;">Instagram / WhatsApp</div>
+        <span onclick="toggleDrawer('contact')">Instagram / WhatsApp</span>
         <div>Sevilla, España</div>
     </footer>
 
-    <script>
-    // === PRODUCT DATA ===
-    const PRODUCTS = [
-        { id: 1, code: "LV001", name: "Zapatillas LV Trainer", category: "FOOTWEAR", price: 710, stock: { S: 1, M: 3, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" },
-        { id: 2, code: "NK001", name: "Nike Waffle", category: "FOOTWEAR", price: 120, stock: { S: 2, M: 4, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" },
-        { id: 3, code: "NK002", name: "Nike TN", category: "FOOTWEAR", price: 160, stock: { S: 0, M: 2, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" },
-        { id: 4, code: "LC001", name: "Sudadera Lacoste", category: "HOODIES", price: 95, stock: { S: 3, M: 5, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" },
-        { id: 5, code: "LC002", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" },
-        { id: 6, code: "LC003", name: "Camiseta Lacoste Negra", category: "OUTERWEAR", price: 45, stock: { S: 5, M: 8, L: 4 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" },
-        { id: 7, code: "LC004", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 2, M: 4, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" },
-        { id: 8, code: "AS001", name: "Camiseta Entreno Asics", category: "OUTERWEAR", price: 55, stock: { S: 1, M: 3, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" },
-        { id: 9, code: "HB001", name: "Camiseta Gris", category: "OUTERWEAR", price: 35, stock: { S: 6, M: 9, L: 5 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" },
-        { id: 10, code: "LC005", name: "Camiseta Lacoste Gris", category: "OUTERWEAR", price: 45, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" }
-    ];
+<script>
+const PRODUCTS = [
+    { id: 1, code: "LV001", name: "Zapatillas LV Trainer", category: "FOOTWEAR", price: 710, stock: { S: 1, M: 3, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" },
+    { id: 2, code: "NK001", name: "Nike Waffle", category: "FOOTWEAR", price: 120, stock: { S: 2, M: 4, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" },
+    { id: 3, code: "NK002", name: "Nike TN", category: "FOOTWEAR", price: 160, stock: { S: 0, M: 2, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" },
+    { id: 4, code: "LC001", name: "Sudadera Lacoste", category: "HOODIES", price: 95, stock: { S: 3, M: 5, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" },
+    { id: 5, code: "LC002", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" },
+    { id: 6, code: "LC003", name: "Camiseta Lacoste Negra", category: "OUTERWEAR", price: 45, stock: { S: 5, M: 8, L: 4 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" },
+    { id: 7, code: "LC004", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 2, M: 4, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" },
+    { id: 8, code: "AS001", name: "Camiseta Entreno Asics", category: "OUTERWEAR", price: 55, stock: { S: 1, M: 3, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" },
+    { id: 9, code: "HB001", name: "Camiseta Gris Hugo Boss", category: "OUTERWEAR", price: 35, stock: { S: 6, M: 9, L: 5 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" },
+    { id: 10, code: "LC005", name: "Camiseta Lacoste Gris", category: "OUTERWEAR", price: 45, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" }
+];
 
-    const categories = ["ALL", "HOODIES", "OUTERWEAR", "FOOTWEAR"];
-    let currentCategory = "ALL";
+const categories = ["ALL", "HOODIES", "OUTERWEAR", "FOOTWEAR"];
+let currentCategory = "ALL";
 
-    // === GOOEYTEXT ===
-    (function() {
-        const texts = ["MODA MONTEQUINTO", "SEVILLA"];
-        const el1 = document.getElementById("gooeyText1");
-        const el2 = document.getElementById("gooeyText2");
-        if (!el1 || !el2) return;
-
-        let textIndex = 0;
-        const morphTime = 3;
-        const cooldownTime = 1.5;
-        let time = new Date();
-        let morph = 0;
-        let cooldown = cooldownTime;
-
-        function setMorph(fraction) {
-            el2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-            el2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-            fraction = 1 - fraction;
-            el1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-            el1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-        }
-
-        function doCooldown() {
-            morph = 0;
-            el2.style.filter = ""; el2.style.opacity = "100%";
-            el1.style.filter = ""; el1.style.opacity = "0%";
-        }
-
-        function doMorph() {
-            morph -= cooldown;
-            cooldown = 0;
-            let fraction = morph / morphTime;
-            if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
-            setMorph(fraction);
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            const newTime = new Date();
-            const shouldInc = cooldown > 0;
-            const dt = (newTime.getTime() - time.getTime()) / 1000;
-            time = newTime;
-            cooldown -= dt;
-            if (cooldown <= 0) {
-                if (shouldInc) {
-                    textIndex = (textIndex + 1) % texts.length;
-                    el1.textContent = texts[textIndex % texts.length];
-                    el2.textContent = texts[(textIndex + 1) % texts.length];
+// === HERO SUBTITLE FADE ===
+(function() {
+    const subs = ["SEVILLA", "COLECCIÓN 2026", "EDICIÓN LIMITADA", "SEVILLA"];
+    let idx = 0;
+    const el1 = document.getElementById("sub1");
+    const el2 = document.getElementById("sub2");
+    const el3 = document.getElementById("sub3");
+    const all = [el1, el2, el3];
+    if (!el1) return;
+    setInterval(() => {
+        idx = (idx + 1) % subs.length;
+        all.forEach((el, i) => {
+            if (el) {
+                if (i === idx) {
+                    el.textContent = subs[idx];
+                    el.classList.remove("hidden");
+                } else {
+                    el.classList.add("hidden");
                 }
-                doMorph();
-            } else { doCooldown(); }
-        }
-        animate();
-    })();
+            }
+        });
+    }, 2500);
+})();
 
-    // === RENDER CARRUSEL ===
-    function renderCarousel() {
-        const track = document.getElementById('carouselTrack');
-        if (!track) return;
-        const reps = 4;
-        let html = '';
-        for (let r = 0; r < reps; r++) {
-            PRODUCTS.forEach(p => {
-                html += `
-                    <div class="carousel-item" onclick="openModal('${p.image}')">
-                        <img src="${p.image}" alt="${p.name}" loading="lazy">
-                        <div class="carousel-ref">REF ${p.code}</div>
-                        <div class="carousel-info">
-                            <div class="cat">${p.category}</div>
-                            <div class="name">${p.name}</div>
-                            <div class="price">$${p.price} USD</div>
-                            <div class="explore" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">[ ADD TO CART ]</div>
-                        </div>
-                    </div>`;
-            });
-        }
-        track.innerHTML = html;
-    }
-
-    // === RENDER CATÁLOGO ===
-    function renderCatalog(category) {
-        const list = document.getElementById('catalogList');
-        const filtered = category === 'ALL' ? PRODUCTS : PRODUCTS.filter(p => p.category === category);
-
-        if (filtered.length === 0) {
-            list.innerHTML = '<div class="empty-msg">No articles found in this segment.</div>';
-            return;
-        }
-
-        list.innerHTML = filtered.map(p => {
-            const totalStock = Object.values(p.stock).reduce((a, b) => a + b, 0);
-            const status = totalStock === 0 ? '[ ARCHIVED ]' : '[ AVAILABLE ]';
-            const statusColor = totalStock === 0 ? '#bbb' : '#999';
-            return `
-                <div class="catalog-item" onclick="openModal('${p.image}')">
-                    <img class="thumb" src="${p.image}" alt="${p.name}" loading="lazy">
-                    <div class="info">
-                        <div class="ref">REF: ${p.code} <span class="cat">| ${p.category}</span></div>
-                        <div class="name">${p.name}</div>
-                        <div class="status" style="color:${statusColor}">${status}</div>
-                        <div style="text-align:right;display:flex;align-items:center;gap:8px;">
-                            <span class="price">$${p.price} USD</span>
-                            <span class="view-btn" onclick="event.stopPropagation(); openModal('${p.image}')">VIEW</span>
-                            <span class="view-btn" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">ADD +</span>
-                        </div>
+// === CARRUSEL ===
+function renderCarousel() {
+    const track = document.getElementById('carouselTrack');
+    if (!track) return;
+    let html = '';
+    for (let r = 0; r < 3; r++) {
+        PRODUCTS.forEach(p => {
+            html += `
+                <div class="carousel-item">
+                    <img src="${p.image}" alt="${p.name}" loading="lazy" onclick="openModal('${p.image}')">
+                    <div class="label">
+                        <span class="name">${p.name}</span>
+                        <span class="price">${p.price} €</span>
                     </div>
+                    <span class="add-small" onclick="addToCart('${p.name}', ${p.price})">[ + Añadir ]</span>
                 </div>`;
-        }).join('');
+        });
     }
+    track.innerHTML = html;
+}
 
-    // === RENDER FILTROS ===
-    function renderFilters() {
-        const bar = document.getElementById('filterBar');
-        bar.innerHTML = categories.map(cat =>
-            `<button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`
-        ).join('');
+// === CATÁLOGO ===
+function renderCatalog(category) {
+    const list = document.getElementById('catalogList');
+    const filtered = category === 'ALL' ? PRODUCTS : PRODUCTS.filter(p => p.category === category);
+    if (filtered.length === 0) {
+        list.innerHTML = '<div class="empty-msg">No articles found in this segment.</div>';
+        return;
     }
+    list.innerHTML = filtered.map(p => {
+        const totalStock = Object.values(p.stock).reduce((a, b) => a + b, 0);
+        const status = totalStock === 0 ? '[ ARCHIVED ]' : '[ AVAILABLE ]';
+        return `
+            <div class="catalog-item" onclick="openModal('${p.image}')">
+                <img class="thumb" src="${p.image}" alt="${p.name}" loading="lazy">
+                <div class="info">
+                    <div class="ref">REF: ${p.code} <span class="cat">| ${p.category}</span></div>
+                    <div class="name">${p.name}</div>
+                    <div class="status" style="color:${totalStock === 0 ? '#bbb' : '#999'}">${status}</div>
+                    <span class="price">${p.price} €</span>
+                    <span class="btn btn-add" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">+ Añadir</span>
+                </div>
+            </div>`;
+    }).join('');
+}
 
-    function setFilter(cat) {
-        currentCategory = cat;
-        renderFilters();
-        renderCatalog(cat);
-    }
+function renderFilters() {
+    const bar = document.getElementById('filterBar');
+    bar.innerHTML = categories.map(cat =>
+        `<button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`
+    ).join('');
+}
 
-    // === CART STATE ===
-    let cartItems = [];
-
-    function addToCart(name, price) {
-        cartItems.push({ name, price });
-        updateCartUI();
-        openDrawer('cart');
-    }
-
-    function removeFromCart(index) {
-        cartItems.splice(index, 1);
-        updateCartUI();
-    }
-
-    function updateCartUI() {
-        document.getElementById('cart-count').textContent = cartItems.length;
-        const container = document.getElementById('cartItems');
-        if (cartItems.length === 0) {
-            container.innerHTML = '<p class="empty-msg">No hay productos aún.</p>';
-            document.getElementById('cartTotal').textContent = '0 €';
-            return;
-        }
-        container.innerHTML = cartItems.map((item, i) =>
-            `<div class="cart-item">
-                <span>${item.name}</span>
-                <span>${item.price} € <span class="remove" onclick="removeFromCart(${i})">✕</span></span>
-            </div>`
-        ).join('');
-        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
-        document.getElementById('cartTotal').textContent = total + ' €';
-    }
-
-    // === DRAWERS ===
-    let activeDrawer = null;
-
-    function toggleDrawer(name) {
-        if (activeDrawer === name) {
-            closeAllDrawers();
-        } else {
-            openDrawer(name);
-        }
-    }
-
-    function openDrawer(name) {
-        closeAllDrawers();
-        activeDrawer = name;
-        const el = document.getElementById(name + 'Drawer');
-        if (el) el.classList.add('open');
-        document.getElementById('drawerBackdrop').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeAllDrawers() {
-        activeDrawer = null;
-        document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
-        document.getElementById('drawerBackdrop').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    // === CONTACT DRAWER ===
-    function sendContact() {
-        const name = document.getElementById('contactName').value.trim();
-        const email = document.getElementById('contactEmail').value.trim();
-        const msg = document.getElementById('contactMsg').value.trim();
-        if (!name || !email || !msg) { alert('Por favor completa todos los campos.'); return; }
-        alert('Mensaje enviado. Te responderemos pronto a ' + email);
-        document.getElementById('contactName').value = '';
-        document.getElementById('contactEmail').value = '';
-        document.getElementById('contactMsg').value = '';
-        closeAllDrawers();
-    }
-
-    function sendContactSec() {
-        const name = document.getElementById('secName').value.trim();
-        const email = document.getElementById('secEmail').value.trim();
-        const msg = document.getElementById('secMsg').value.trim();
-        if (!name || !email || !msg) { alert('Por favor completa todos los campos.'); return; }
-        alert('Mensaje enviado. Te responderemos pronto a ' + email);
-        document.getElementById('secName').value = '';
-        document.getElementById('secEmail').value = '';
-        document.getElementById('secMsg').value = '';
-    }
-
-    // === ADD TO CART FROM CATALOG / CAROUSEL ===
-    // We override the onclick on carousel items to add a "add to cart" option
-    function addCarouselToCart(code) {
-        const p = PRODUCTS.find(pr => pr.code === code);
-        if (p) addToCart(p.name, p.price);
-    }
-
-    // === MODAL ===
-    function openModal(src) {
-        document.getElementById('modalImage').src = src;
-        document.getElementById('modalBackdrop').classList.add('open');
-        document.getElementById('modalClose').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.getElementById('modalBackdrop').classList.remove('open');
-        document.getElementById('modalClose').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    // === INIT ===
-    renderCarousel();
+function setFilter(cat) {
+    currentCategory = cat;
     renderFilters();
-    renderCatalog("ALL");
-    </script>
+    renderCatalog(cat);
+}
+
+// === MODAL ===
+function openModal(src) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('modalBackdrop').classList.add('open');
+    document.getElementById('modalClose').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('open');
+    document.getElementById('modalClose').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// === CART ===
+let cartItems = [];
+
+function addToCart(name, price) {
+    cartItems.push({ name, price });
+    updateCartUI();
+    openDrawer('cart');
+}
+
+function removeFromCart(index) {
+    cartItems.splice(index, 1);
+    updateCartUI();
+}
+
+function updateCartUI() {
+    document.getElementById('cart-count').textContent = cartItems.length;
+    const container = document.getElementById('cartItems');
+    if (cartItems.length === 0) {
+        container.innerHTML = '<p class="empty-msg">No hay productos aún.</p>';
+        document.getElementById('cartTotal').textContent = '0 €';
+        return;
+    }
+    container.innerHTML = cartItems.map((item, i) =>
+        `<div class="cart-item">
+            <span>${item.name}</span>
+            <span>${item.price} € <span class="remove" onclick="removeFromCart(${i})">✕</span></span>
+        </div>`
+    ).join('');
+    const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+    document.getElementById('cartTotal').textContent = total + ' €';
+}
+
+// === DRAWERS ===
+let activeDrawer = null;
+
+function toggleDrawer(name) {
+    if (activeDrawer === name) { closeAllDrawers(); return; }
+    openDrawer(name);
+}
+
+function openDrawer(name) {
+    document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+    activeDrawer = name;
+    const el = document.getElementById(name + 'Drawer');
+    if (el) el.classList.add('open');
+    document.getElementById('drawerBackdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAllDrawers() {
+    activeDrawer = null;
+    document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+    document.getElementById('drawerBackdrop').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// === CONTACT DRAWER ===
+function sendContact() {
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const msg = document.getElementById('contactMsg').value.trim();
+    if (!name || !email || !msg) { alert('Completa todos los campos.'); return; }
+    alert('Mensaje enviado. Te responderemos a ' + email);
+    document.getElementById('contactName').value = '';
+    document.getElementById('contactEmail').value = '';
+    document.getElementById('contactMsg').value = '';
+    closeAllDrawers();
+}
+
+function sendContactSec() {
+    const name = document.getElementById('secName').value.trim();
+    const email = document.getElementById('secEmail').value.trim();
+    const msg = document.getElementById('secMsg').value.trim();
+    if (!name || !email || !msg) { alert('Completa todos los campos.'); return; }
+    alert('Mensaje enviado. Te responderemos a ' + email);
+    document.getElementById('secName').value = '';
+    document.getElementById('secEmail').value = '';
+    document.getElementById('secMsg').value = '';
+}
+
+// === INIT ===
+renderCarousel();
+renderFilters();
+renderCatalog("ALL");
+</script>
 </body>
 </html>
