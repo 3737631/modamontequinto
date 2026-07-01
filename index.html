@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODA MONTEQUINTO — Colección 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        :root { --black: #000; --white: #fff; --grey: #f7f7f7; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', Helvetica, sans-serif; background: var(--white); overflow-x: hidden; }
+
+        header { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; position: sticky; top: 0; background: var(--white); z-index: 100; border-bottom: 1px solid #eee; }
+        header .logo { font-weight: 600; letter-spacing: 3px; font-size: 0.9rem; }
+
+        .hero { display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 0 4rem; min-height: 85vh; align-items: center; }
+        .hero h1 { font-size: 3rem; font-weight: 400; line-height: 1.1; margin-bottom: 1rem; }
+        .hero-img { width: 100%; object-fit: contain; }
+
+        .section-title { padding: 4rem 4rem 2rem; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #888; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; padding: 0 4rem 6rem; }
+        .product-card { cursor: pointer; }
+        .product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: var(--grey); transition: opacity 0.3s; }
+        .product-card img:hover { opacity: 0.85; }
+        .product-card .info { padding: 1rem 0; }
+        .product-card .info .brand { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #888; }
+        .product-card .info .name { font-size: 0.85rem; font-weight: 400; margin: 0.3rem 0; }
+        .product-card .info .price { font-size: 0.8rem; font-weight: 600; }
+
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .marquee { overflow: hidden; white-space: nowrap; padding: 4rem 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin: 0 0 4rem; }
+        .marquee-track { display: inline-block; animation: scroll 25s linear infinite; }
+        .marquee-track img { width: 280px; height: 280px; object-fit: cover; margin-right: 20px; }
+
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        footer { display: flex; justify-content: space-between; padding: 2rem 4rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888; border-top: 1px solid #eee; }
+
+        @media (max-width: 768px) {
+            header, .hero, .section-title, .product-grid, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .hero { grid-template-columns: 1fr; min-height: auto; gap: 2rem; text-align: center; }
+            .hero h1 { font-size: 2rem; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>Catálogo / Contacto</div>
+        <div class="logo">MODA MONTEQUINTO</div>
+        <div>Carrito (0)</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="reveal">C/O 2026<br><span style="font-size:0.6rem;color:#888;">Edición Limitada</span></div>
+            <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" class="hero-img reveal" alt="Louis Vuitton LV Trainer">
+            <div class="reveal" style="text-align:right;">
+                <span style="font-size:0.65rem;color:#888;">Louis Vuitton</span><br>
+                LV Trainer<br>
+                <span style="font-weight:600;">$710</span><br>
+                <span style="font-size:0.6rem;border-bottom:1px solid #000;cursor:pointer;">[AÑADIR AL CARRITO]</span>
+            </div>
+        </section>
+
+        <p class="section-title reveal">— Colección Completa</p>
+
+        <section class="product-grid">
+            <!-- 1. Calzado Negro: LV Trainer -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="Louis Vuitton LV Trainer">
+                <div class="info">
+                    <div class="brand">Louis Vuitton</div>
+                    <div class="name">LV Trainer — Negro</div>
+                    <div class="price">710 €</div>
+                </div>
+            </div>
+            <!-- 2. Calzado Claro: Nike Waffle -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="Nike Waffle">
+                <div class="info">
+                    <div class="brand">Nike</div>
+                    <div class="name">Waffle — Crema / Beige</div>
+                    <div class="price">120 €</div>
+                </div>
+            </div>
+            <!-- 3. Calzado Azul: Nike Air Max Plus TN -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="Nike Air Max Plus TN">
+                <div class="info">
+                    <div class="brand">Nike</div>
+                    <div class="name">Air Max Plus (TN) "Swoosh" — Azul</div>
+                    <div class="price">160 €</div>
+                </div>
+            </div>
+            <!-- 4. Sudadera Lacoste granate -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="Sudadera Lacoste">
+                <div class="info">
+                    <div class="brand">Lacoste</div>
+                    <div class="name">Sudadera con Capucha — Granate</div>
+                    <div class="price">95 €</div>
+                </div>
+            </div>
+            <!-- 5. Polo Lacoste rayas (blanco, amarillo, negro, rojo) -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="Polo Lacoste Rayas">
+                <div class="info">
+                    <div class="brand">Lacoste</div>
+                    <div class="name">Polo Rayas — Blanco / Amarillo / Negro / Rojo</div>
+                    <div class="price">75 €</div>
+                </div>
+            </div>
+            <!-- 6. Camiseta básica negra Lacoste -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="Camiseta negra Lacoste">
+                <div class="info">
+                    <div class="brand">Lacoste</div>
+                    <div class="name">Camiseta Básica Algodón — Negro</div>
+                    <div class="price">45 €</div>
+                </div>
+            </div>
+            <!-- 7. Polo Lacoste rayas (blanco, verde, amarillo, rojo) -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="Polo Lacoste Rayas">
+                <div class="info">
+                    <div class="brand">Lacoste</div>
+                    <div class="name">Polo Rayas — Blanco / Verde / Amarillo / Rojo</div>
+                    <div class="price">75 €</div>
+                </div>
+            </div>
+            <!-- 8. Camiseta técnica Asics Navy -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="Camiseta Asics">
+                <div class="info">
+                    <div class="brand">Asics</div>
+                    <div class="name">Navy Performance Sport — Técnica</div>
+                    <div class="price">55 €</div>
+                </div>
+            </div>
+            <!-- 9. Camiseta gris HG -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="Camiseta HG">
+                <div class="info">
+                    <div class="brand">HG</div>
+                    <div class="name">Camiseta Logo — Gris</div>
+                    <div class="price">35 €</div>
+                </div>
+            </div>
+            <!-- 10. Camiseta básica gris Lacoste -->
+            <div class="product-card reveal">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="Camiseta gris Lacoste">
+                <div class="info">
+                    <div class="brand">Lacoste</div>
+                    <div class="name">Camiseta Básica Algodón — Gris</div>
+                    <div class="price">45 €</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="marquee">
+            <div class="marquee-track">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="">
+                <!-- Duplicado para loop infinito -->
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="">
+                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div>© 2026 Moda Montequinto</div>
+        <div>Instagram / WhatsApp</div>
+        <div>Sevilla, España</div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
