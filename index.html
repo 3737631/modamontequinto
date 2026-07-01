@@ -100,7 +100,8 @@
         .filter-btn.active { background: #fff; color: #000; border-color: #fff; font-weight: 700; }
 
         .catalog-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.2rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 0.8rem;
+            max-width: 900px; margin: 0 auto;
         }
         .product-card {
             opacity: 0; transform: translateY(40px); cursor: pointer;
@@ -592,7 +593,6 @@ let currentCategory = "ALL";
         el2.style.display = "none";
         el1.style.filter = "none";
         el1.style.opacity = "1";
-        el1.style.position = "static";
         gooWrap.style.filter = "none";
     }
 
@@ -627,13 +627,13 @@ function renderCatalog(category) {
     if (filtered.length === 0) { grid.innerHTML = '<div class="empty-msg">No articles found in this segment.</div>'; return; }
     grid.innerHTML = filtered.map(p => `
         <div class="product-card item">
-            <div class="img-wrap" onclick="openModal('${p.image}')">
-                <img src="${p.image}" alt="${p.name}" loading="lazy">
-            </div>
             <div class="info">
                 <div class="brand">${p.code}</div>
                 <div class="name">${p.name}</div>
                 <div class="price">${p.price} €</div>
+            </div>
+            <div class="img-wrap" onclick="openModal('${p.image}')">
+                <img src="${p.image}" alt="${p.name}" loading="lazy">
             </div>
             <span class="padd-small" onclick="event.stopPropagation();addToCart('${p.name}',${p.price})">+ Añadir</span>
         </div>
