@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moda Montequinto | Sevilla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
+
+        :root { --accent: #c7a45a; --accent-hover: #b8943e; }
 
         header {
             display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1.5rem 4rem;
@@ -15,7 +17,8 @@
             z-index: 100; border-bottom: 1px solid #eee;
             font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;
         }
-        header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.85rem; }
+        header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.85rem; cursor: pointer; }
+        header .logo:hover { opacity: 0.5; }
         .header-left { cursor: pointer; }
         .header-left:hover { opacity: 0.5; }
         .cart-trigger { cursor: pointer; text-align: right; }
@@ -26,354 +29,243 @@
             justify-content: center; background: #fff; text-align: center; padding: 2rem;
         }
         .hero-main {
-            font-size: 5rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
             color: #111; line-height: 1.1; opacity: 0; transform: translateY(20px);
             animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes heroIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
         .hero-sub {
             margin-top: 1.5rem; font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase;
             color: #999; font-weight: 400; height: 1.2rem; position: relative;
         }
-        .hero-sub span {
-            position: absolute; left: 50%; transform: translateX(-50%);
-            transition: opacity 0.6s ease; white-space: nowrap;
-        }
+        .hero-sub span { position: absolute; left: 50%; transform: translateX(-50%); transition: opacity 0.6s ease; white-space: nowrap; }
         .hero-sub span.hidden { opacity: 0; }
-        .hero-desc {
-            margin-top: 2.5rem; font-size: 0.75rem; color: #bbb;
-            letter-spacing: 3px; text-transform: uppercase; max-width: 500px;
-            opacity: 0; animation: heroIn 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        .hero-desc { margin-top: 2.5rem; font-size: 0.75rem; color: #bbb; letter-spacing: 3px; text-transform: uppercase; max-width: 500px; opacity: 0; animation: heroIn 1s 0.3s forwards; }
 
         .carousel-section {
             padding: 2rem 0; background: #fff; border-top: 1px solid #eee;
             border-bottom: 1px solid #eee; overflow: hidden; position: relative;
         }
-        .carousel-track {
-            display: flex; width: max-content; animation: scrollMarquee 40s linear infinite;
-        }
+        .carousel-track { display: flex; width: max-content; animation: scrollMarquee 40s linear infinite; }
         .carousel-track:hover { animation-play-state: paused; }
-        .carousel-item {
-            width: 260px; margin: 0 8px; flex-shrink: 0; cursor: pointer; position: relative;
-        }
-        .carousel-item img {
-            width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
-            background: #f5f5f5; border-radius: 4px; transition: opacity 0.3s;
-        }
-        .carousel-item:hover img { opacity: 0.85; }
-        .carousel-item .label {
-            display: flex; justify-content: space-between; margin-top: 6px;
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;
-        }
+        .carousel-item { width: 260px; margin: 0 8px; flex-shrink: 0; cursor: pointer; position: relative; }
+        .carousel-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f5f5f5; border-radius: 4px; transition: transform 0.4s; }
+        .carousel-item:hover img { transform: scale(1.02); }
+        .carousel-item .label { display: flex; justify-content: space-between; margin-top: 6px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
         .carousel-item .label .name { font-weight: 600; color: #111; }
         .carousel-item .label .price { color: #888; font-family: monospace; }
-        .carousel-item .add-small {
-            font-size: 0.55rem; letter-spacing: 1px; color: #aaa; cursor: pointer;
-            text-transform: uppercase; border-bottom: 1px solid #ddd; display: inline-block;
-            margin-top: 2px; transition: color 0.2s;
-        }
-        .carousel-item .add-small:hover { color: #111; border-color: #111; }
+        .carousel-item .add-small { font-size: 0.55rem; letter-spacing: 1px; color: #aaa; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid #ddd; display: inline-block; margin-top: 2px; transition: border-color 0.2s, color 0.2s; }
+        .carousel-item .add-small:hover { color: var(--accent); border-color: var(--accent); }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        @keyframes scrollMarquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .catalog {
-            padding: 5rem 4rem; background: #fff; max-width: 1280px; margin: 0 auto;
-        }
-        .catalog-header {
-            display: flex; flex-direction: column; gap: 1.5rem;
-            border-bottom: 1px solid #eee; padding-bottom: 2rem; margin-bottom: 0;
-        }
-        .catalog-header .label {
-            font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 3px; font-family: monospace;
-        }
-        .catalog-header h2 {
-            font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; color: #111;
-        }
+        .catalog { padding: 5rem 4rem; background: #fff; max-width: 1280px; margin: 0 auto; }
+        .catalog-header { display: flex; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 2rem; }
+        .catalog-header .label { font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 3px; font-family: monospace; }
+        .catalog-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: #111; }
         .filter-bar { display: flex; flex-wrap: wrap; gap: 6px; }
-        .filter-btn {
-            padding: 6px 16px; border-radius: 999px; border: 1px solid #ddd;
-            font-size: 10px; font-family: monospace; text-transform: uppercase;
-            letter-spacing: 1px; cursor: pointer; background: #fafafa;
-            color: #666; transition: all 0.2s;
-        }
+        .filter-btn { padding: 6px 16px; border-radius: 999px; border: 1px solid #ddd; font-size: 10px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; background: #fafafa; color: #666; transition: all 0.2s; }
         .filter-btn:hover { background: #eee; color: #111; }
         .filter-btn.active { background: #111; color: #fff; border-color: #111; font-weight: 700; }
 
-        .catalog-list { border-top: 1px solid #eee; }
-        .catalog-item {
-            opacity: 0; transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        /* === PRODUCT CARDS (GRID) === */
+        .catalog-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding-top: 2rem;
         }
-        .catalog-item.active { opacity: 1; transform: translateY(0); }
-        .catalog-item {
-            display: grid; grid-template-columns: 52px 1fr; gap: 0.8rem;
-            padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0;
-            cursor: pointer; transition: all 0.3s; align-items: center;
+        .product-card {
+            opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; position: relative; border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid #f0f0f0;
         }
-        .catalog-item:hover { padding-left: 0.5rem; padding-right: 0.5rem; background: #fafafa; }
-        .catalog-item .thumb {
-            width: 46px; height: 46px; border-radius: 4px; object-fit: cover;
-            background: #f5f5f5; border: 1px solid #eee;
+        .product-card.active { opacity: 1; transform: translateY(0); }
+        .product-card .img-wrap {
+            position: relative; overflow: hidden; aspect-ratio: 3/4; background: #f8f8f8;
         }
-        .catalog-item .info {
-            display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 0.8rem;
-            align-items: center; font-size: 0.75rem;
+        .product-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .img-wrap img { transform: scale(1.04); }
+        .product-card .img-wrap .hover-info {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 1.2rem;
+            opacity: 0; transition: opacity 0.35s;
         }
-        .catalog-item .info .ref {
-            font-family: monospace; font-size: 9px; color: #aaa;
-            text-transform: uppercase; letter-spacing: 1px; min-width: 100px;
+        .product-card:hover .img-wrap .hover-info { opacity: 1; }
+        .product-card .hover-info .pcat { font-size: 8px; font-family: monospace; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 2px; }
+        .product-card .hover-info .pname { font-size: 0.85rem; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin: 4px 0; }
+        .product-card .hover-info .pprice { font-size: 0.9rem; font-weight: 700; color: var(--accent); font-family: monospace; }
+        .product-card .hover-info .padd {
+            margin-top: 8px; padding: 6px 0; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
+            color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px;
+            text-align: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; background: transparent;
         }
-        .catalog-item .info .ref .cat { color: #ccc; }
-        .catalog-item .info .name { font-size: 0.8rem; font-weight: 500; color: #222; }
-        .catalog-item .info .status {
-            font-family: monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #999; min-width: 80px;
+        .product-card .hover-info .padd:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .product-card .hover-info .padd.added { background: #22c55e; border-color: #22c55e; }
+        .product-card .pcode {
+            position: absolute; top: 10px; right: 10px; z-index: 2;
+            background: rgba(0,0,0,0.7); color: #fff; font-size: 7px; font-family: monospace;
+            padding: 2px 6px; border-radius: 3px; letter-spacing: 1px;
         }
-        .catalog-item .info .price {
-            font-family: monospace; font-weight: 700; font-size: 0.8rem; color: #111; min-width: 70px; text-align: right;
-        }
-        .catalog-item .info .btn {
-            font-size: 8px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px;
-            border: 1px solid #ddd; border-radius: 999px; padding: 4px 12px; background: #fff;
-            color: #888; cursor: pointer; transition: all 0.2s; white-space: nowrap;
-        }
-        .catalog-item .info .btn:hover { border-color: #111; color: #111; }
-        .catalog-item .info .btn-add { border-color: #111; color: #111; background: #fff; }
-        .catalog-item .info .btn-add:hover { background: #111; color: #fff; }
+        .product-card .pinfo { padding: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .product-card .pinfo .left .brand { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; }
+        .product-card .pinfo .left .name { font-size: 0.75rem; font-weight: 600; color: #111; margin-top: 2px; }
+        .product-card .pinfo .price { font-size: 0.8rem; font-weight: 700; color: #111; font-family: monospace; }
+
         .empty-msg { padding: 4rem 0; text-align: center; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; color: #bbb; }
 
-        .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 300;
-            display: none; align-items: center; justify-content: center; padding: 2rem; cursor: pointer;
+        /* === TOAST === */
+        .toast-container {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
+            display: flex; flex-direction: column; gap: 8px; pointer-events: none;
         }
-        .modal-backdrop.open { display: flex; }
-        .modal-backdrop img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; cursor: default; }
-        .modal-close {
-            position: fixed; top: 2rem; right: 2rem; z-index: 301; background: none;
-            border: none; color: #fff; font-size: 2rem; cursor: pointer; display: none;
+        .toast {
+            background: #111; color: #fff; padding: 0.8rem 1.2rem; border-radius: 8px;
+            font-size: 0.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transform: translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: all; display: flex; align-items: center; gap: 8px; min-width: 240px;
         }
-        .modal-close.open { display: block; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast .check { color: #22c55e; font-size: 1rem; }
 
-        /* === CATALOG OVERLAY === */
+        /* === OVERLAY === */
         .catalog-overlay {
             position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 400;
             display: flex; flex-direction: column; padding: 3rem 4rem;
             opacity: 0; pointer-events: none; transition: opacity 0.5s ease; overflow-y: auto;
         }
         .catalog-overlay.open { opacity: 1; pointer-events: all; }
-        .catalog-overlay .overlay-head {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #eee; padding-bottom: 1.5rem; margin-bottom: 2rem;
-        }
-        .catalog-overlay .overlay-head h2 {
-            font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-        }
-        .catalog-overlay .overlay-head button {
-            background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;
-        }
+        .catalog-overlay .overlay-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        .catalog-overlay .overlay-head h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+        .catalog-overlay .overlay-head button { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888; }
         .catalog-overlay .overlay-head button:hover { color: #000; }
-        .catalog-overlay .overlay-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem;
-        }
+        .catalog-overlay .overlay-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
         .catalog-overlay .overlay-item { cursor: pointer; }
-        .catalog-overlay .overlay-item img {
-            width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #f5f5f5; border-radius: 4px;
-            transition: transform 0.4s;
-        }
+        .catalog-overlay .overlay-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #f5f5f5; border-radius: 4px; transition: transform 0.4s; }
         .catalog-overlay .overlay-item:hover img { transform: scale(1.02); }
-        .catalog-overlay .overlay-item .olabel {
-            display: flex; justify-content: space-between; margin-top: 6px;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
-        }
+        .catalog-overlay .overlay-item .olabel { display: flex; justify-content: space-between; margin-top: 6px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
         .catalog-overlay .overlay-item .olabel .oname { font-weight: 600; color: #111; }
         .catalog-overlay .overlay-item .olabel .oprice { color: #888; font-family: monospace; }
 
-        .drawer-backdrop {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 199;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-        }
+        /* === DRAWER === */
+        .drawer-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
         .drawer-backdrop.open { opacity: 1; pointer-events: all; }
-
         .drawer {
-            position: fixed; top: 0; right: -420px; width: 420px; height: 100%;
-            background: #fff; z-index: 200; box-shadow: -4px 0 24px rgba(0,0,0,0.06);
+            position: fixed; top: 0; right: -440px; width: 440px; height: 100%;
+            background: #fff; z-index: 200; box-shadow: -4px 0 30px rgba(0,0,0,0.08);
             transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 2.5rem 2rem; display: flex; flex-direction: column; overflow-y: auto;
+            padding: 2rem 1.5rem; display: flex; flex-direction: column; overflow-y: auto;
         }
         .drawer.open { right: 0; }
-        .drawer .close-btn {
-            align-self: flex-end; background: none; border: none; font-size: 1.4rem;
-            cursor: pointer; margin-bottom: 0.5rem; color: #888;
-        }
+        .drawer .close-btn { align-self: flex-end; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #888; }
         .drawer .close-btn:hover { color: #000; }
-        .drawer h2 { font-weight: 500; font-size: 1.1rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        .drawer .empty-msg { color: #aaa; font-size: 0.8rem; font-family: monospace; }
-        .drawer .cart-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.8rem;
-        }
-        .drawer .cart-item .remove { color: #ccc; cursor: pointer; margin-left: 8px; }
-        .drawer .cart-item .remove:hover { color: #e00; }
-        .drawer .cart-total {
-            margin-top: auto; font-weight: 700; font-size: 1.1rem;
-            padding-top: 1.5rem; border-top: 1px solid #eee;
-            display: flex; justify-content: space-between;
-        }
-        .drawer .checkout-btn {
-            margin-top: 1rem; width: 100%; padding: 0.9rem; background: #111; color: #fff;
-            border: none; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase;
-            letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s;
-        }
-        .drawer .checkout-btn:hover { background: #333; }
+        .drawer h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        .drawer .cart-item { display: flex; align-items: center; gap: 12px; padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; }
+        .drawer .cart-item .thumb { width: 50px; height: 60px; object-fit: cover; border-radius: 4px; background: #f5f5f5; }
+        .drawer .cart-item .info { flex: 1; }
+        .drawer .cart-item .info .iname { font-size: 0.75rem; font-weight: 600; color: #111; }
+        .drawer .cart-item .info .iprice { font-size: 0.7rem; color: #888; font-family: monospace; margin-top: 2px; }
+        .drawer .cart-item .qty { display: flex; align-items: center; gap: 6px; }
+        .drawer .cart-item .qty button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ddd; background: #fff; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #111; transition: all 0.2s; }
+        .drawer .cart-item .qty button:hover { border-color: #111; }
+        .drawer .cart-item .qty span { font-size: 0.8rem; font-weight: 600; min-width: 20px; text-align: center; }
+        .drawer .cart-item .remove-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1rem; padding: 4px; }
+        .drawer .cart-item .remove-btn:hover { color: #e00; }
+        .drawer .empty-msg { color: #aaa; font-size: 0.8rem; font-family: monospace; text-align: center; padding: 3rem 0; }
+        .drawer .cart-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid #eee; }
+        .drawer .cart-footer .total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; }
+        .drawer .cart-footer .checkout-btn { margin-top: 0.8rem; width: 100%; padding: 0.9rem; background: #111; color: #fff; border: none; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+        .drawer .cart-footer .checkout-btn:hover { background: #333; }
 
-        .manifesto {
-            background: #0D0D11; color: #fff; padding: 5rem 2rem; margin: 0;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; position: relative; overflow: hidden;
-        }
-        .manifesto .bg-text {
-            position: absolute; inset: 0; opacity: 0.04; pointer-events: none;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 25vw; font-weight: 900; letter-spacing: -2px; user-select: none; text-transform: uppercase;
-        }
+        .contact-form label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #888; display: block; margin-bottom: 0.3rem; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem; outline: none; transition: border 0.2s; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #111; }
+        .contact-form textarea { min-height: 100px; resize: vertical; }
+        .contact-form button { background: #111; color: #fff; border: none; padding: 0.8rem 2rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s; }
+        .contact-form button:hover { background: #333; }
+
+        /* === TESTIMONIALS === */
+        .testimonials { padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee; }
+        .testimonials .inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+        .testimonials .inner h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .testimonials .inner .sub { font-size: 0.6rem; color: #aaa; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2.5rem; }
+        .testimonials .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: left; }
+        .testimonials .card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 1.5rem; }
+        .testimonials .card .stars { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; }
+        .testimonials .card blockquote { font-size: 0.8rem; color: #555; line-height: 1.6; margin: 0.8rem 0; font-style: italic; }
+        .testimonials .card .author { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+        .testimonials .card .author strong { color: #111; }
+
+        /* === MANIFIESTO === */
+        .manifesto { background: #0D0D11; color: #fff; padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+        .manifesto .bg-text { position: absolute; inset: 0; opacity: 0.04; pointer-events: none; display: flex; justify-content: center; align-items: center; font-size: 25vw; font-weight: 900; letter-spacing: -2px; user-select: none; text-transform: uppercase; }
         .manifesto .inner { max-width: 700px; position: relative; z-index: 1; }
-        .manifesto .label {
-            font-size: 10px; color: #aaa; font-family: monospace; font-weight: 700;
-            letter-spacing: 4px; text-transform: uppercase;
-        }
-        .manifesto .quote {
-            font-size: 1.3rem; font-weight: 300; letter-spacing: 0px;
-            text-transform: uppercase; color: #f0f0f0; line-height: 1.4; margin: 1.5rem 0;
-        }
+        .manifesto .label { font-size: 10px; color: #aaa; font-family: monospace; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
+        .manifesto .quote { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 500; text-transform: uppercase; color: #f0f0f0; line-height: 1.4; margin: 1.5rem 0; letter-spacing: 0.5px; }
         .manifesto .line { height: 1px; width: 80px; background: rgba(255,255,255,0.15); margin: 1rem auto; }
-        .manifesto .footer-text {
-            font-size: 9px; font-family: monospace; color: #888; letter-spacing: 3px; text-transform: uppercase;
-        }
+        .manifesto .footer-text { font-size: 9px; font-family: monospace; color: #888; letter-spacing: 3px; text-transform: uppercase; }
 
-        .shipping-section {
-            padding: 5rem 4rem; background: #fff; border-top: 1px solid #eee;
-        }
-        .shipping-section .grid {
-            max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;
-        }
-        .shipping-section .col h4 {
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem;
-            color: #111; font-weight: 700;
-        }
+        /* === SHIPPING === */
+        .shipping-section { padding: 5rem 4rem; background: #fff; border-top: 1px solid #eee; }
+        .shipping-section .grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+        .shipping-section .col h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem; color: #111; font-weight: 700; }
         .shipping-section .col p { font-size: 0.75rem; color: #666; line-height: 1.6; }
-        .shipping-section .info-item {
-            display: flex; gap: 10px; margin-bottom: 1rem; font-size: 10px;
-            font-family: monospace; text-transform: uppercase; color: #888; letter-spacing: 0.5px;
-        }
+        .shipping-section .info-item { display: flex; gap: 10px; margin-bottom: 1rem; font-size: 10px; font-family: monospace; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
         .shipping-section .info-item svg { flex-shrink: 0; margin-top: 2px; }
-        .shipping-section .info-item .title {
-            color: #111; font-weight: 600; display: block;
-            font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 1px;
-        }
-        .shipping-section .info-item .desc { color: #888; }
+        .shipping-section .info-item .title { color: #111; font-weight: 600; display: block; font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 1px; }
         .newsletter-form { display: flex; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-top: 1rem; background: #fafafa; }
-        .newsletter-form input {
-            flex: 1; padding: 0.7rem; border: none; outline: none; font-size: 0.7rem;
-            font-family: monospace; text-transform: uppercase; background: transparent;
-        }
+        .newsletter-form input { flex: 1; padding: 0.7rem; border: none; outline: none; font-size: 0.7rem; font-family: monospace; text-transform: uppercase; background: transparent; }
         .newsletter-form input:focus { background: #fff; }
-        .newsletter-form button {
-            background: #111; color: #fff; border: none; padding: 0 1rem;
-            cursor: pointer; transition: background 0.2s; display: flex; align-items: center;
-        }
+        .newsletter-form button { background: #111; color: #fff; border: none; padding: 0 1rem; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; }
         .newsletter-form button:hover { background: #333; }
         .newsletter-msg { font-size: 8px; color: #16a34a; font-weight: 700; letter-spacing: 2px; margin-top: 0.5rem; display: none; }
         .newsletter-msg.show { display: block; }
-        .seal {
-            background: #F8F8FA; border: 1px solid #eee; border-radius: 16px;
-            padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
-            font-family: monospace; font-size: 9px; text-transform: uppercase; color: #888;
-        }
+        .seal { background: #F8F8FA; border: 1px solid #eee; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; font-family: monospace; font-size: 9px; text-transform: uppercase; color: #888; }
         .seal .head { display: flex; justify-content: space-between; align-items: flex-start; }
         .seal .head span:first-child { font-weight: 700; color: #222; font-size: 11px; font-family: 'Inter', sans-serif; }
         .seal .body { margin: 1rem 0; line-height: 1.8; }
         .seal .body .bold { color: #111; font-weight: 700; font-family: 'Inter', sans-serif; margin-top: 0.5rem; display: block; }
-        .seal .stripe {
-            height: 20px; width: 100%; position: relative; overflow: hidden; opacity: 0.12;
-            background: repeating-linear-gradient(-45deg, #000, #000 6px, transparent 6px, transparent 12px);
-        }
+        .seal .stripe { height: 20px; width: 100%; overflow: hidden; opacity: 0.12; background: repeating-linear-gradient(-45deg, #000, #000 6px, transparent 6px, transparent 12px); }
 
-        .contact-section {
-            padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee;
-        }
-        .contact-section .inner {
-            max-width: 800px; margin: 0 auto; display: grid;
-            grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
-        }
+        .contact-section { padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee; }
+        .contact-section .inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
         .contact-section .info-col h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: #aaa; margin-bottom: 1rem; }
-        .contact-section .info-col h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 1.5rem; line-height: 1.2; }
+        .contact-section .info-col h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 1.5rem; line-height: 1.2; }
         .contact-section .info-col p { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
         .contact-section .info-col .detail { font-size: 0.75rem; color: #444; margin-bottom: 0.3rem; font-family: monospace; }
         .contact-section .info-col .detail strong { text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px; color: #999; font-family: 'Inter', sans-serif; }
-        .contact-section form input, .contact-section form textarea {
-            width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
-            font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
-            outline: none; transition: border 0.2s; background: #fff;
-        }
-        .contact-section form input:focus, .contact-section form textarea:focus { border-color: #111; }
+        .contact-section form input, .contact-section form textarea { width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem; outline: none; transition: border 0.2s; background: #fff; }
+        .contact-section form input:focus, .contact-section form textarea:focus { border-color: var(--accent); }
         .contact-section form textarea { min-height: 120px; resize: vertical; }
-        .contact-section form button {
-            background: #111; color: #fff; border: none; padding: 0.8rem 2.5rem;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s;
-        }
-        .contact-section form button:hover { background: #333; }
+        .contact-section form button { background: var(--accent); color: #fff; border: none; padding: 0.8rem 2.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s; }
+        .contact-section form button:hover { background: var(--accent-hover); }
 
-        .contact-form label {
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px;
-            color: #888; display: block; margin-bottom: 0.3rem;
-        }
-        .contact-form input, .contact-form textarea {
-            width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px;
-            font-family: 'Inter', sans-serif; font-size: 0.8rem; margin-bottom: 1rem;
-            outline: none; transition: border 0.2s;
-        }
-        .contact-form input:focus, .contact-form textarea:focus { border-color: #111; }
-        .contact-form textarea { min-height: 100px; resize: vertical; }
-        .contact-form button {
-            background: #111; color: #fff; border: none; padding: 0.8rem 2rem;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; font-family: inherit; border-radius: 4px; transition: background 0.2s;
-        }
-        .contact-form button:hover { background: #333; }
+        footer { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; padding: 3rem 4rem; background: #111; color: #eee; font-size: 0.7rem; }
+        footer .col h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #fff; margin-bottom: 1rem; }
+        footer .col p { color: #888; line-height: 1.6; font-size: 0.65rem; }
+        footer .col a { display: block; color: #888; text-decoration: none; font-size: 0.65rem; margin-bottom: 0.4rem; transition: color 0.2s; cursor: pointer; }
+        footer .col a:hover { color: var(--accent); }
+        footer .col .social { display: flex; gap: 10px; margin-top: 0.8rem; }
+        footer .col .social span { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: pointer; transition: border-color 0.2s; color: #888; }
+        footer .col .social span:hover { border-color: var(--accent); color: var(--accent); }
 
-        footer {
-            display: flex; justify-content: space-between; padding: 2rem 4rem;
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #888;
-            border-top: 1px solid #eee; background: #fff;
-        }
-        footer span { cursor: pointer; }
-        footer span:hover { color: #111; }
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 300; display: none; align-items: center; justify-content: center; padding: 2rem; cursor: pointer; }
+        .modal-backdrop.open { display: flex; }
+        .modal-backdrop img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; cursor: default; }
+        .modal-close { position: fixed; top: 2rem; right: 2rem; z-index: 301; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; display: none; }
+        .modal-close.open { display: block; }
 
         @media (max-width: 768px) {
             header { padding: 1rem 1.5rem; }
             .hero { height: 60vh; }
-            .hero-main { font-size: 2.4rem; letter-spacing: 3px; }
+            .hero-main { font-size: 2.4rem; letter-spacing: 2px; }
             .carousel-item { width: 180px; }
             .catalog { padding: 3rem 1.5rem; }
-            .catalog-item { grid-template-columns: 40px 1fr; gap: 0.6rem; }
-            .catalog-item .thumb { width: 36px; height: 36px; }
-            .catalog-item .info { grid-template-columns: 1fr 1fr; gap: 0.3rem; }
-            .catalog-item .info .ref { min-width: auto; }
-            .catalog-item .info .status { display: none; }
-            .drawer { width: 100%; right: -100%; }
-            .manifesto .quote { font-size: 1rem; }
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .product-card .pcode { font-size: 6px; }
+            .testimonials .grid { grid-template-columns: 1fr; }
             .shipping-section .grid { grid-template-columns: 1fr; gap: 2rem; }
-            .contact-section { padding: 3rem 1.5rem; }
             .contact-section .inner { grid-template-columns: 1fr; gap: 2rem; }
-            footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+            footer { grid-template-columns: 1fr 1fr; padding: 2rem 1.5rem; }
+            .drawer { width: 100%; right: -100%; }
+            .catalog-overlay { padding: 2rem 1.5rem; }
+            .manifesto .quote { font-size: 1rem; }
         }
     </style>
 </head>
@@ -381,11 +273,10 @@
 
     <header>
         <div class="header-left" onclick="toggleDrawer('contact')">Catálogo / Contacto</div>
-        <div class="logo">MODA MONTEQUINTO</div>
+        <div class="logo" id="mainLogo">MODA MONTEQUINTO</div>
         <div class="cart-trigger" onclick="toggleDrawer('cart')">Carrito (<span id="cart-count">0</span>)</div>
     </header>
 
-    <!-- CATALOG OVERLAY -->
     <div class="catalog-overlay" id="catalogOverlay">
         <div class="overlay-head">
             <h2>COLECCIÓN 2026</h2>
@@ -399,9 +290,11 @@
     <div class="drawer" id="cartDrawer">
         <button class="close-btn" onclick="closeAllDrawers()">✕</button>
         <h2>Tu Carrito</h2>
-        <div id="cartItems"><p class="empty-msg">No hay productos aún.</p></div>
-        <div class="cart-total"><span>Total</span><span id="cartTotal">0 €</span></div>
-        <button class="checkout-btn" onclick="alert('Gracias por tu compra. Te contactaremos pronto.')">Finalizar Pedido</button>
+        <div id="cartItems"></div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="total"><span>Total</span><span id="cartTotal">0 €</span></div>
+            <button class="checkout-btn" onclick="alert('Gracias por tu compra. Te contactaremos pronto.')">Finalizar Pedido</button>
+        </div>
     </div>
 
     <div class="drawer" id="contactDrawer">
@@ -417,6 +310,8 @@
             <button onclick="sendContact()">Enviar Mensaje</button>
         </div>
     </div>
+
+    <div class="toast-container" id="toastContainer"></div>
 
     <section class="hero">
         <div class="hero-main">MODA MONTEQUINTO</div>
@@ -438,13 +333,37 @@
             <h2>THE 2026 EDITION</h2>
             <div class="filter-bar" id="filterBar"></div>
         </div>
-        <div class="catalog-list" id="catalogList"></div>
+        <div class="catalog-grid" id="catalogGrid"></div>
     </section>
 
     <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()">
         <img id="modalImage" src="" alt="">
     </div>
     <button class="modal-close" id="modalClose" onclick="closeModal()">✕</button>
+
+    <section class="testimonials">
+        <div class="inner">
+            <h3>Lo que dicen en Sevilla</h3>
+            <div class="sub">CLIENTES REALES · MODA REAL</div>
+            <div class="grid">
+                <div class="card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"La calidad de las prendas es excepcional. El trato personalizado marca la diferencia. Volveré sin dudarlo."</blockquote>
+                    <div class="author"><strong>María G.</strong> — Sevilla</div>
+                </div>
+                <div class="card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Envío rapidísimo y el producto exactamente como se veía. Mi sudadera Lacoste favorita."</blockquote>
+                    <div class="author"><strong>Carlos R.</strong> — Dos Hermanas</div>
+                </div>
+                <div class="card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Por fin una tienda online con estilo y cercanía. El proceso de compra fue muy fluido. Recomendado 100%."</blockquote>
+                    <div class="author"><strong>Ana M.</strong> — Montequinto</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="manifesto">
         <div class="bg-text">MM-2026</div>
@@ -473,25 +392,18 @@
                     <div><span class="title">CAMBIOS Y DEVOLUCIONES</span><span class="desc">HASTA 14 DÍAS PARA DEVOLUCIÓN DE ENTRADAS EXCLUSIVAS</span></div>
                 </div>
             </div>
-
             <div class="col">
                 <h4>CORRESPONDENCIA DIGITAL</h4>
                 <p style="font-size:0.75rem;color:#888;line-height:1.6;margin-bottom:1rem;text-transform:none;">Regístrate para recibir preventas privadas, documentación de lanzamientos y drops exclusivos de edición limitada.</p>
                 <div class="newsletter-form">
                     <input type="email" id="newsletterEmail" placeholder="DESTINATARIO@DOMINIO.COM">
-                    <button onclick="subscribeNewsletter()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    </button>
+                    <button onclick="subscribeNewsletter()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></button>
                 </div>
                 <div class="newsletter-msg" id="newsletterMsg">REGISTRO DE SISTEMA CONFIRMADO. REVISA TU BANDEJA.</div>
             </div>
-
             <div class="col">
                 <div class="seal">
-                    <div class="head">
-                        <span>SELLO MONTEQUINTO™</span>
-                        <span>MM-2026</span>
-                    </div>
+                    <div class="head"><span>SELLO MONTEQUINTO™</span><span>MM-2026</span></div>
                     <div class="body">
                         <div>REGISTRO DE DISEÑO: MM-2026-SV</div>
                         <div>DISTRIBUCIÓN: PENINSULAR &amp; GLOBAL</div>
@@ -526,49 +438,60 @@
     </section>
 
     <footer>
-        <div>© 2026 Moda Montequinto</div>
-        <span onclick="toggleDrawer('contact')">Instagram / WhatsApp</span>
-        <div>Sevilla, España</div>
+        <div class="col">
+            <h4>MODA MONTEQUINTO</h4>
+            <p>Moda urbana con esencia andaluza. Distribución directa desde Sevilla, España.</p>
+            <div class="social">
+                <span>IG</span>
+                <span>FB</span>
+                <span>WA</span>
+            </div>
+        </div>
+        <div class="col">
+            <h4>Tienda</h4>
+            <a onclick="activarAnimacion()">Catálogo</a>
+            <a onclick="toggleDrawer('cart')">Carrito</a>
+            <a onclick="document.getElementById('contactSection').scrollIntoView({behavior:'smooth'})">Contacto</a>
+        </div>
+        <div class="col">
+            <h4>Políticas</h4>
+            <a onclick="alert('Envíos nacionales: 24/48h. Gratuito en península.')">Envíos</a>
+            <a onclick="alert('Devoluciones hasta 14 días.')">Devoluciones</a>
+            <a onclick="alert('Todos los derechos reservados.')">Privacidad</a>
+        </div>
+        <div class="col">
+            <h4>Horario</h4>
+            <p>Lun–Sab: 10:00 – 20:00</p>
+            <p style="margin-top:0.5rem;">Sevilla, España</p>
+        </div>
     </footer>
 
 <script>
 const PRODUCTS = [
-    { id: 1, code: "LV001", name: "Zapatillas LV Trainer", category: "FOOTWEAR", price: 710, stock: { S: 1, M: 3, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" },
-    { id: 2, code: "NK001", name: "Nike Waffle", category: "FOOTWEAR", price: 120, stock: { S: 2, M: 4, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" },
-    { id: 3, code: "NK002", name: "Nike TN", category: "FOOTWEAR", price: 160, stock: { S: 0, M: 2, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" },
-    { id: 4, code: "LC001", name: "Sudadera Lacoste", category: "HOODIES", price: 95, stock: { S: 3, M: 5, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" },
-    { id: 5, code: "LC002", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" },
-    { id: 6, code: "LC003", name: "Camiseta Lacoste Negra", category: "OUTERWEAR", price: 45, stock: { S: 5, M: 8, L: 4 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" },
-    { id: 7, code: "LC004", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 2, M: 4, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" },
-    { id: 8, code: "AS001", name: "Camiseta Entreno Asics", category: "OUTERWEAR", price: 55, stock: { S: 1, M: 3, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" },
-    { id: 9, code: "HB001", name: "Camiseta Gris Hugo Boss", category: "OUTERWEAR", price: 35, stock: { S: 6, M: 9, L: 5 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" },
-    { id: 10, code: "LC005", name: "Camiseta Lacoste Gris", category: "OUTERWEAR", price: 45, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" }
+    { id: 1, code: "LV001", name: "Zapatillas LV Trainer", category: "FOOTWEAR", price: 710, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" },
+    { id: 2, code: "NK001", name: "Nike Waffle", category: "FOOTWEAR", price: 120, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" },
+    { id: 3, code: "NK002", name: "Nike TN", category: "FOOTWEAR", price: 160, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" },
+    { id: 4, code: "LC001", name: "Sudadera Lacoste", category: "HOODIES", price: 95, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" },
+    { id: 5, code: "LC002", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" },
+    { id: 6, code: "LC003", name: "Camiseta Lacoste Negra", category: "OUTERWEAR", price: 45, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" },
+    { id: 7, code: "LC004", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" },
+    { id: 8, code: "AS001", name: "Camiseta Entreno Asics", category: "OUTERWEAR", price: 55, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" },
+    { id: 9, code: "HB001", name: "Camiseta Gris Hugo Boss", category: "OUTERWEAR", price: 35, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" },
+    { id: 10, code: "LC005", name: "Camiseta Lacoste Gris", category: "OUTERWEAR", price: 45, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" }
 ];
 
 const categories = ["ALL", "HOODIES", "OUTERWEAR", "FOOTWEAR"];
 let currentCategory = "ALL";
 
-// === HERO SUBTITLE FADE ===
+// === HERO SUBTITLE ===
 (function() {
     const subs = ["SEVILLA", "COLECCIÓN 2026", "EDICIÓN LIMITADA", "SEVILLA"];
     let idx = 0;
-    const el1 = document.getElementById("sub1");
-    const el2 = document.getElementById("sub2");
-    const el3 = document.getElementById("sub3");
-    const all = [el1, el2, el3];
-    if (!el1) return;
+    const all = [document.getElementById("sub1"), document.getElementById("sub2"), document.getElementById("sub3")];
+    if (!all[0]) return;
     setInterval(() => {
         idx = (idx + 1) % subs.length;
-        all.forEach((el, i) => {
-            if (el) {
-                if (i === idx) {
-                    el.textContent = subs[idx];
-                    el.classList.remove("hidden");
-                } else {
-                    el.classList.add("hidden");
-                }
-            }
-        });
+        all.forEach((el, i) => { if (el) { i === idx ? (el.textContent = subs[idx], el.classList.remove("hidden")) : el.classList.add("hidden"); } });
     }, 2500);
 })();
 
@@ -577,158 +500,154 @@ function renderCarousel() {
     const track = document.getElementById('carouselTrack');
     if (!track) return;
     let html = '';
-    for (let r = 0; r < 3; r++) {
-        PRODUCTS.forEach(p => {
-            html += `
-                <div class="carousel-item">
-                    <img src="${p.image}" alt="${p.name}" loading="lazy" onclick="openModal('${p.image}')">
-                    <div class="label">
-                        <span class="name">${p.name}</span>
-                        <span class="price">${p.price} €</span>
-                    </div>
-                    <span class="add-small" onclick="addToCart('${p.name}', ${p.price})">[ + Añadir ]</span>
-                </div>`;
-        });
-    }
+    for (let r = 0; r < 3; r++) PRODUCTS.forEach(p => {
+        html += `<div class="carousel-item"><img src="${p.image}" alt="${p.name}" loading="lazy" onclick="openModal('${p.image}')"><div class="label"><span class="name">${p.name}</span><span class="price">${p.price} €</span></div><span class="add-small" onclick="event.stopPropagation();addToCart('${p.name}',${p.price})">[ + Añadir ]</span></div>`;
+    });
     track.innerHTML = html;
 }
 
-// === CATÁLOGO ===
+// === PRODUCT CARDS ===
 function renderCatalog(category) {
-    const list = document.getElementById('catalogList');
+    const grid = document.getElementById('catalogGrid');
     const filtered = category === 'ALL' ? PRODUCTS : PRODUCTS.filter(p => p.category === category);
-    if (filtered.length === 0) {
-        list.innerHTML = '<div class="empty-msg">No articles found in this segment.</div>';
-        return;
-    }
-    list.innerHTML = filtered.map(p => {
-        const totalStock = Object.values(p.stock).reduce((a, b) => a + b, 0);
-        const status = totalStock === 0 ? '[ ARCHIVED ]' : '[ AVAILABLE ]';
-        return `
-            <div class="catalog-item item" onclick="openModal('${p.image}')">
-                <img class="thumb" src="${p.image}" alt="${p.name}" loading="lazy">
-                <div class="info">
-                    <div class="ref">REF: ${p.code} <span class="cat">| ${p.category}</span></div>
-                    <div class="name">${p.name}</div>
-                    <div class="status" style="color:${totalStock === 0 ? '#bbb' : '#999'}">${status}</div>
-                    <span class="price">${p.price} €</span>
-                    <span class="btn btn-add" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">+ Añadir</span>
+    if (filtered.length === 0) { grid.innerHTML = '<div class="empty-msg">No articles found in this segment.</div>'; return; }
+    grid.innerHTML = filtered.map(p => `
+        <div class="product-card item" onclick="openModal('${p.image}')">
+            <div class="pcode">REF ${p.code}</div>
+            <div class="img-wrap">
+                <img src="${p.image}" alt="${p.name}" loading="lazy">
+                <div class="hover-info">
+                    <div class="pcat">${p.category}</div>
+                    <div class="pname">${p.name}</div>
+                    <div class="pprice">${p.price} €</div>
+                    <div class="padd" onclick="event.stopPropagation();addToCart('${p.name}',${p.price})">+ Añadir</div>
                 </div>
-            </div>`;
-    }).join('');
-}
-
-// === STAGGER ANIMATION ON LOGO CLICK ===
-function activarAnimacion() {
-    const items = document.querySelectorAll('.item');
-    // Reset first
-    items.forEach(el => el.classList.remove('active'));
-    // Force reflow to restart transitions
-    void document.body.offsetHeight;
-    // Scroll to catalog
-    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Stagger in
-    items.forEach((item, index) => {
-        setTimeout(() => { item.classList.add('active'); }, index * 120);
-    });
-    // Also open overlay
-    setTimeout(openCatalogOverlay, 800);
-}
-
-// === CATALOG OVERLAY ===
-function openCatalogOverlay() {
-    const grid = document.getElementById('overlayGrid');
-    grid.innerHTML = PRODUCTS.map(p => `
-        <div class="overlay-item" onclick="closeCatalogOverlay(); openModal('${p.image}')">
-            <img src="${p.image}" alt="${p.name}" loading="lazy">
-            <div class="olabel">
-                <span class="oname">${p.name}</span>
-                <span class="oprice">${p.price} €</span>
+            </div>
+            <div class="pinfo">
+                <div class="left"><div class="brand">${p.code.split(/\d/)[0]}</div><div class="name">${p.name}</div></div>
+                <span class="price">${p.price} €</span>
             </div>
         </div>
     `).join('');
-    document.getElementById('catalogOverlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCatalogOverlay() {
-    document.getElementById('catalogOverlay').classList.remove('open');
-    document.body.style.overflow = '';
 }
 
 function renderFilters() {
     const bar = document.getElementById('filterBar');
-    bar.innerHTML = categories.map(cat =>
-        `<button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`
-    ).join('');
+    bar.innerHTML = categories.map(cat => `<button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`).join('');
 }
 
 function setFilter(cat) {
     currentCategory = cat;
     renderFilters();
     renderCatalog(cat);
-    // Auto-activate new items after filter
     setTimeout(() => {
-        document.querySelectorAll('.item').forEach((el, i) => {
-            setTimeout(() => el.classList.add('active'), i * 100);
-        });
+        document.querySelectorAll('.product-card').forEach((el, i) => setTimeout(() => el.classList.add('active'), i * 100));
     }, 50);
 }
 
-// === MODAL ===
-function openModal(src) {
-    document.getElementById('modalImage').src = src;
-    document.getElementById('modalBackdrop').classList.add('open');
-    document.getElementById('modalClose').classList.add('open');
+// === LOGO STAGGER + OVERLAY ===
+function activarAnimacion() {
+    const items = document.querySelectorAll('.product-card');
+    items.forEach(el => el.classList.remove('active'));
+    void document.body.offsetHeight;
+    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    items.forEach((item, index) => setTimeout(() => item.classList.add('active'), index * 100));
+    setTimeout(openCatalogOverlay, 700);
+}
+
+document.getElementById('mainLogo').addEventListener('click', activarAnimacion);
+
+// === OVERLAY ===
+function openCatalogOverlay() {
+    const grid = document.getElementById('overlayGrid');
+    grid.innerHTML = PRODUCTS.map(p => `<div class="overlay-item" onclick="closeCatalogOverlay();openModal('${p.image}')"><img src="${p.image}" alt="${p.name}" loading="lazy"><div class="olabel"><span class="oname">${p.name}</span><span class="oprice">${p.price} €</span></div></div>`).join('');
+    document.getElementById('catalogOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
 }
+function closeCatalogOverlay() { document.getElementById('catalogOverlay').classList.remove('open'); document.body.style.overflow = ''; }
 
-function closeModal() {
-    document.getElementById('modalBackdrop').classList.remove('open');
-    document.getElementById('modalClose').classList.remove('open');
-    document.body.style.overflow = '';
+// === TOAST ===
+function showToast(name) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<span class="check">✓</span> ¡Añadido! ${name}`;
+    container.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 2500);
 }
 
-// === CART ===
-let cartItems = [];
+// === CART (localStorage) ===
+function getCart() { return JSON.parse(localStorage.getItem('mm_cart') || '[]'); }
+function saveCart(cart) { localStorage.setItem('mm_cart', JSON.stringify(cart)); }
 
 function addToCart(name, price) {
-    cartItems.push({ name, price });
+    let cart = getCart();
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty += 1; } else { cart.push({ name, price, qty: 1 }); }
+    saveCart(cart);
     updateCartUI();
     openDrawer('cart');
+    showToast(name);
+    // Button feedback
+    document.querySelectorAll('.padd').forEach(b => {
+        if (b.closest && b.closest('.product-card') && b.closest('.product-card').querySelector('.pname')?.textContent === name) {
+            b.textContent = '✓ Listo';
+            b.classList.add('added');
+            setTimeout(() => { b.textContent = '+ Añadir'; b.classList.remove('added'); }, 1500);
+        }
+    });
 }
 
-function removeFromCart(index) {
-    cartItems.splice(index, 1);
+function updateQty(name, delta) {
+    let cart = getCart();
+    const idx = cart.findIndex(i => i.name === name);
+    if (idx === -1) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    saveCart(cart);
+    updateCartUI();
+}
+
+function removeItem(name) {
+    let cart = getCart().filter(i => i.name !== name);
+    saveCart(cart);
     updateCartUI();
 }
 
 function updateCartUI() {
-    document.getElementById('cart-count').textContent = cartItems.length;
+    const cart = getCart();
+    document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
     const container = document.getElementById('cartItems');
-    if (cartItems.length === 0) {
+    const footer = document.getElementById('cartFooter');
+    if (cart.length === 0) {
         container.innerHTML = '<p class="empty-msg">No hay productos aún.</p>';
-        document.getElementById('cartTotal').textContent = '0 €';
+        footer.style.display = 'none';
         return;
     }
-    container.innerHTML = cartItems.map((item, i) =>
-        `<div class="cart-item">
-            <span>${item.name}</span>
-            <span>${item.price} € <span class="remove" onclick="removeFromCart(${i})">✕</span></span>
-        </div>`
-    ).join('');
-    const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+    footer.style.display = 'block';
+    container.innerHTML = cart.map((item, i) => `
+        <div class="cart-item">
+            <span class="thumb" style="display:flex;align-items:center;justify-content:center;background:#eee;border-radius:4px;width:50px;height:60px;font-size:1.5rem;">👟</span>
+            <div class="info">
+                <div class="iname">${item.name}</div>
+                <div class="iprice">${item.price} €</div>
+            </div>
+            <div class="qty">
+                <button onclick="updateQty('${item.name}',-1)">−</button>
+                <span>${item.qty}</span>
+                <button onclick="updateQty('${item.name}',1)">+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem('${item.name}')">✕</button>
+        </div>
+    `).join('');
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
     document.getElementById('cartTotal').textContent = total + ' €';
 }
 
 // === DRAWERS ===
 let activeDrawer = null;
-
-function toggleDrawer(name) {
-    if (activeDrawer === name) { closeAllDrawers(); return; }
-    openDrawer(name);
-}
-
+function toggleDrawer(name) { if (activeDrawer === name) { closeAllDrawers(); return; } openDrawer(name); }
 function openDrawer(name) {
     document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
     activeDrawer = name;
@@ -737,7 +656,6 @@ function openDrawer(name) {
     document.getElementById('drawerBackdrop').classList.add('open');
     document.body.style.overflow = 'hidden';
 }
-
 function closeAllDrawers() {
     activeDrawer = null;
     document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
@@ -745,54 +663,38 @@ function closeAllDrawers() {
     document.body.style.overflow = '';
 }
 
-// === CONTACT DRAWER ===
+// === MODAL ===
+function openModal(src) { document.getElementById('modalImage').src = src; document.getElementById('modalBackdrop').classList.add('open'); document.getElementById('modalClose').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal() { document.getElementById('modalBackdrop').classList.remove('open'); document.getElementById('modalClose').classList.remove('open'); document.body.style.overflow = ''; }
+
+// === CONTACT ===
 function sendContact() {
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const msg = document.getElementById('contactMsg').value.trim();
-    if (!name || !email || !msg) { alert('Completa todos los campos.'); return; }
-    alert('Mensaje enviado. Te responderemos a ' + email);
-    document.getElementById('contactName').value = '';
-    document.getElementById('contactEmail').value = '';
-    document.getElementById('contactMsg').value = '';
+    const n = document.getElementById('contactName').value.trim(), e = document.getElementById('contactEmail').value.trim(), m = document.getElementById('contactMsg').value.trim();
+    if (!n || !e || !m) { alert('Completa todos los campos.'); return; }
+    alert('Mensaje enviado. Te responderemos a ' + e);
+    document.getElementById('contactName').value = ''; document.getElementById('contactEmail').value = ''; document.getElementById('contactMsg').value = '';
     closeAllDrawers();
 }
-
 function sendContactSec() {
-    const name = document.getElementById('secName').value.trim();
-    const email = document.getElementById('secEmail').value.trim();
-    const msg = document.getElementById('secMsg').value.trim();
-    if (!name || !email || !msg) { alert('Completa todos los campos.'); return; }
-    alert('Mensaje enviado. Te responderemos a ' + email);
-    document.getElementById('secName').value = '';
-    document.getElementById('secEmail').value = '';
-    document.getElementById('secMsg').value = '';
+    const n = document.getElementById('secName').value.trim(), e = document.getElementById('secEmail').value.trim(), m = document.getElementById('secMsg').value.trim();
+    if (!n || !e || !m) { alert('Completa todos los campos.'); return; }
+    alert('Mensaje enviado. Te responderemos a ' + e);
+    document.getElementById('secName').value = ''; document.getElementById('secEmail').value = ''; document.getElementById('secMsg').value = '';
 }
-
-// === NEWSLETTER ===
 function subscribeNewsletter() {
     const email = document.getElementById('newsletterEmail').value.trim();
     const msg = document.getElementById('newsletterMsg');
     if (!email || !email.includes('@')) { alert('Introduce un email válido.'); return; }
     msg.classList.add('show');
     document.getElementById('newsletterEmail').value = '';
-    setTimeout(() => { msg.classList.remove('show'); }, 4000);
+    setTimeout(() => msg.classList.remove('show'), 4000);
 }
-
-// === LOGO CLICK TRIGGER ===
-document.querySelector('.logo').addEventListener('click', activarAnimacion);
 
 // === INIT ===
 renderCarousel();
 renderFilters();
 renderCatalog("ALL");
-// Auto-activate items on load after a moment
-setTimeout(() => {
-    const items = document.querySelectorAll('.item');
-    items.forEach((el, i) => {
-        setTimeout(() => el.classList.add('active'), i * 100);
-    });
-}, 300);
+setTimeout(() => { document.querySelectorAll('.product-card').forEach((el, i) => setTimeout(() => el.classList.add('active'), i * 100)); }, 400);
 </script>
 </body>
 </html>
