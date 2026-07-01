@@ -5,393 +5,432 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moda Montequinto | Sevilla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-        .hero-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: url('https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg') center/cover no-repeat;
-            opacity: 0.3;
-        }
-
+        /* === HEADER === */
         header {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 2rem 4rem;
-            position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid #eee;
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1.5rem 4rem;
+            position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+            z-index: 100; border-bottom: 1px solid #eee;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;
         }
-        header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.9rem; }
+        header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.85rem; }
         .cart-trigger { cursor: pointer; text-align: right; }
         .cart-trigger:hover { text-decoration: underline; }
 
+        /* === HERO (blanco, independiente) === */
         .hero {
-            height: 85vh; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
-            padding: 0 4rem;
+            height: 80vh; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; background: #fff; text-align: center; padding: 2rem;
         }
-        .hero-img { width: 100%; object-fit: contain; }
-        .hero .left { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
-        .hero .right { text-align: right; }
-        .hero .right .price { font-size: 1.5rem; font-weight: 600; display: block; margin: 0.5rem 0; }
-        .add-btn {
-            background: none; border: none; border-bottom: 1px solid #000;
-            font: inherit; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; padding: 0; color: inherit;
+        .hero-sub {
+            font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+            color: #aaa; margin-bottom: 2rem; font-weight: 400;
         }
-        .add-btn:hover { opacity: 0.5; }
-
-        .gooey-wrapper {
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-            height: 100%;
+        .gooey-wrap {
+            position: relative; display: flex; align-items: center; justify-content: center;
+            height: 200px; width: 100%;
         }
         .gooey-text {
             display: flex; align-items: center; justify-content: center;
             filter: url(#goo);
         }
         .gooey-text span {
-            position: absolute;
-            display: inline-block; text-align: center; user-select: none;
-            font-size: 2.8rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
-            line-height: 1.2;
+            position: absolute; display: inline-block; text-align: center; user-select: none;
+            font-size: 4.5rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase;
+            line-height: 1.1; color: #111;
         }
-        .gooey-text .t1 { color: #111; }
-        .gooey-text .t2 { color: #111; }
-
-        .section-title {
-            padding: 4rem 4rem 1.5rem; font-size: 0.7rem; letter-spacing: 3px;
-            text-transform: uppercase; color: #888; background: #fff;
+        .hero-desc {
+            margin-top: 2rem; font-size: 0.75rem; color: #888;
+            letter-spacing: 2px; text-transform: uppercase; max-width: 500px;
         }
 
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem; padding: 0 4rem 6rem; background: #fff;
+        /* === CARRUSEL LOOKBOOK === */
+        .carousel-section {
+            background: #000; padding: 1.5rem 0; border-top: 1px solid #222;
+            border-bottom: 1px solid #222; overflow: hidden; position: relative;
         }
-        .product-card { cursor: pointer; }
-        .product-card img {
-            width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block;
-            background: #f7f7f7; transition: transform 0.5s;
+        .carousel-label {
+            position: absolute; top: 4px; left: 24px; z-index: 10;
+            background: #000; color: #fff; font-size: 7px; font-family: monospace;
+            letter-spacing: 2px; padding: 2px 8px; border: 1px solid rgba(255,255,255,0.15);
+            text-transform: uppercase; font-weight: 700;
         }
-        .product-card:hover img { transform: scale(1.02); }
-        .product-card .info { padding: 1rem 0; }
-        .product-card .info .brand { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #888; }
-        .product-card .info .name { font-size: 0.85rem; font-weight: 400; margin: 0.3rem 0; }
-        .product-card .info .price { font-size: 0.8rem; font-weight: 600; }
-
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .marquee {
-            overflow: hidden; white-space: nowrap; padding: 4rem 0; background: #fff;
-            border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+        .carousel-track {
+            display: flex; width: max-content; animation: scrollMarquee 30s linear infinite;
+            padding: 8px 0;
         }
-        .marquee-track { display: inline-block; animation: scroll 25s linear infinite; }
-        .marquee-track img { width: 280px; height: 280px; object-fit: cover; margin-right: 20px; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .carousel-track:hover { animation-play-state: paused; }
+        .carousel-item {
+            width: 220px; aspect-ratio: 3/4; background: #121212;
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+            overflow: hidden; cursor: pointer; flex-shrink: 0; margin: 0 10px;
+            transition: border-color 0.3s; position: relative;
+        }
+        .carousel-item:hover { border-color: #555; }
+        .carousel-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s, brightness 0.7s;
+        }
+        .carousel-item:hover img { transform: scale(1.05); filter: brightness(1.1); }
+        .carousel-info {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+            opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column;
+            justify-content: flex-end; padding: 14px;
+        }
+        .carousel-item:hover .carousel-info { opacity: 1; }
+        .carousel-info .cat { font-size: 8px; font-family: monospace; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+        .carousel-info .name { font-size: 10px; font-weight: 700; color: #fff; text-transform: uppercase; margin-top: 2px; }
+        .carousel-info .price { font-size: 9px; font-family: monospace; color: #ccc; margin-top: 4px; }
+        .carousel-info .explore { font-size: 7px; font-family: monospace; color: #fff; text-decoration: underline; letter-spacing: 1px; margin-top: 4px; }
+        .carousel-ref {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(0,0,0,0.8); color: #fff; font-size: 6px; font-family: monospace;
+            padding: 2px 6px; border: 1px solid rgba(255,255,255,0.1); letter-spacing: 1px;
+        }
 
+        @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* === CATÁLOGO === */
+        .catalog {
+            padding: 5rem 4rem; background: #fff; max-width: 1280px; margin: 0 auto;
+        }
+        .catalog-header {
+            display: flex; flex-direction: column; gap: 1.5rem;
+            border-bottom: 1px solid #eee; padding-bottom: 2rem; margin-bottom: 0;
+        }
+        .catalog-header .label {
+            font-size: 9px; color: #aaa; text-transform: uppercase;
+            letter-spacing: 3px; font-family: monospace;
+        }
+        .catalog-header h2 {
+            font-size: 1.8rem; font-weight: 900; text-transform: uppercase;
+            letter-spacing: -0.5px; color: #111;
+        }
+        .filter-bar {
+            display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .filter-btn {
+            padding: 6px 16px; border-radius: 999px; border: 1px solid #ddd;
+            font-size: 10px; font-family: monospace; text-transform: uppercase;
+            letter-spacing: 1px; cursor: pointer; background: #fafafa;
+            color: #666; transition: all 0.2s;
+        }
+        .filter-btn:hover { background: #eee; color: #111; }
+        .filter-btn.active { background: #111; color: #fff; border-color: #111; font-weight: 700; }
+
+        .catalog-list { border-top: 1px solid #eee; }
+        .catalog-item {
+            display: grid; grid-template-columns: 60px 1fr; gap: 1rem;
+            padding: 1rem 0; border-bottom: 1px solid #f0f0f0;
+            cursor: pointer; transition: all 0.3s; align-items: center;
+        }
+        .catalog-item:hover { padding-left: 0.5rem; padding-right: 0.5rem; background: #fafafa; }
+        .catalog-item .thumb {
+            width: 50px; height: 50px; border-radius: 8px; object-fit: cover;
+            background: #f5f5f5; border: 1px solid #eee;
+        }
+        .catalog-item .info {
+            display: grid; grid-template-columns: auto 1fr auto auto; gap: 1rem;
+            align-items: center; font-size: 0.75rem;
+        }
+        .catalog-item .info .ref {
+            font-family: monospace; font-size: 9px; color: #aaa;
+            text-transform: uppercase; letter-spacing: 1px; min-width: 100px;
+        }
+        .catalog-item .info .ref .cat { color: #ccc; }
+        .catalog-item .info .name {
+            font-size: 0.8rem; font-weight: 500; color: #222;
+        }
+        .catalog-item .info .status {
+            font-family: monospace; font-size: 9px; text-transform: uppercase;
+            letter-spacing: 1px; color: #999; min-width: 80px;
+        }
+        .catalog-item .info .price {
+            font-family: monospace; font-weight: 700; font-size: 0.8rem;
+            color: #111; min-width: 70px; text-align: right;
+        }
+        .catalog-item .info .view-btn {
+            font-size: 9px; font-family: monospace; text-transform: uppercase;
+            letter-spacing: 1px; border: 1px solid #ddd; border-radius: 999px;
+            padding: 4px 14px; background: #fff; color: #888; cursor: pointer;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .catalog-item .info .view-btn:hover { border-color: #111; color: #111; }
+        .empty-msg {
+            padding: 4rem 0; text-align: center; font-family: monospace;
+            font-size: 0.7rem; text-transform: uppercase; color: #bbb;
+        }
+
+        /* === MODAL === */
+        .modal-backdrop {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            z-index: 300; display: none; align-items: center; justify-content: center;
+            padding: 2rem; cursor: pointer;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-backdrop img {
+            max-width: 90vw; max-height: 90vh; object-fit: contain;
+            border-radius: 8px; cursor: default;
+        }
+        .modal-close {
+            position: fixed; top: 2rem; right: 2rem; z-index: 301;
+            background: none; border: none; color: #fff; font-size: 2rem;
+            cursor: pointer; display: none;
+        }
+        .modal-close.open { display: block; }
+
+        /* === FOOTER === */
         footer {
             display: flex; justify-content: space-between; padding: 2rem 4rem;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #888;
             border-top: 1px solid #eee; background: #fff;
         }
 
-        .cart-overlay {
-            position: fixed; top: 0; right: -400px; width: 400px; height: 100%;
-            background: #fff; z-index: 200; box-shadow: -4px 0 20px rgba(0,0,0,0.1);
-            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 3rem 2rem; display: flex; flex-direction: column;
-        }
-        .cart-overlay.open { right: 0; }
-        .cart-overlay .close-btn {
-            align-self: flex-end; background: none; border: none; font-size: 1.5rem;
-            cursor: pointer; margin-bottom: 2rem;
-        }
-        .cart-overlay h2 { font-weight: 400; margin-bottom: 2rem; }
-        .cart-overlay .empty-msg { color: #888; font-size: 0.85rem; }
-        .cart-overlay .total { margin-top: auto; font-weight: 600; font-size: 1.2rem; padding-top: 2rem; border-top: 1px solid #eee; }
-        .cart-backdrop {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 199; opacity: 0; pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-        .cart-backdrop.open { opacity: 1; pointer-events: all; }
-
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
-            header, .hero, .section-title, .product-grid, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .hero { grid-template-columns: 1fr; height: auto; min-height: 70vh; gap: 1.5rem; text-align: center; }
-            .hero .right { text-align: center; }
-            .gooey-text span { font-size: 1.8rem; }
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .cart-overlay { width: 100%; right: -100%; }
+            header { padding: 1rem 1.5rem; }
+            .hero { height: 60vh; }
+            .gooey-text span { font-size: 2.2rem; letter-spacing: 3px; }
+            .carousel-item { width: 160px; }
+            .catalog { padding: 3rem 1.5rem; }
+            .catalog-item { grid-template-columns: 44px 1fr; gap: 0.75rem; }
+            .catalog-item .thumb { width: 40px; height: 40px; }
+            .catalog-item .info { grid-template-columns: 1fr; gap: 0.3rem; }
+            .catalog-item .info .ref { min-width: auto; }
+            footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <div class="hero-bg"></div>
-
-    <svg class="absolute h-0 w-0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;">
+    <!-- SVG FILTER GOO -->
+    <svg style="position:absolute;width:0;height:0;" aria-hidden="true">
         <defs>
             <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-                <feColorMatrix
-                    in="blur"
-                    type="matrix"
-                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"
-                    result="goo"
-                />
+                <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo" />
                 <feBlend in="SourceGraphic" in2="goo" />
             </filter>
         </defs>
     </svg>
 
+    <!-- HEADER -->
     <header>
         <div>Catálogo / Contacto</div>
         <div class="logo">MODA MONTEQUINTO</div>
-        <div class="cart-trigger" onclick="toggleCart()">Carrito (<span id="cart-count">0</span>)</div>
+        <div class="cart-trigger">Carrito (0)</div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="left">C/O 2026<br><span style="font-size:0.6rem;color:#888;">Edición Limitada</span></div>
-            <div class="gooey-wrapper">
-                <div class="gooey-text" id="gooeyContainer">
-                    <span class="t1" id="gooeyText1">MODA MONTEQUINTO</span>
-                    <span class="t2" id="gooeyText2">SEVILLA</span>
-                </div>
-            </div>
-            <div class="right">
-                <span style="font-size:0.65rem;color:#888;">Louis Vuitton</span><br>
-                Zapatillas LV Trainer<br>
-                <span class="price">710 €</span>
-                <button class="add-btn" onclick="addToCart('Zapatillas LV Trainer', 710)">[AÑADIR AL CARRITO]</button>
-            </div>
-        </section>
-
-        <p class="section-title reveal">— Colección Completa</p>
-
-        <section class="product-grid">
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="Zapatillas LV Trainer">
-                <div class="info">
-                    <div class="brand">Louis Vuitton</div>
-                    <div class="name">Zapatillas LV Trainer</div>
-                    <div class="price">710 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="Nike Waffle">
-                <div class="info">
-                    <div class="brand">Nike</div>
-                    <div class="name">Nike Waffle</div>
-                    <div class="price">120 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="Nike TN">
-                <div class="info">
-                    <div class="brand">Nike</div>
-                    <div class="name">Nike TN</div>
-                    <div class="price">160 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="Sudadera Lacoste">
-                <div class="info">
-                    <div class="brand">Lacoste</div>
-                    <div class="name">Sudadera Lacoste</div>
-                    <div class="price">95 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="Polo Lacoste">
-                <div class="info">
-                    <div class="brand">Lacoste</div>
-                    <div class="name">Polo Lacoste</div>
-                    <div class="price">75 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="Camiseta Lacoste Negra">
-                <div class="info">
-                    <div class="brand">Lacoste</div>
-                    <div class="name">Camiseta Lacoste Negra</div>
-                    <div class="price">45 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="Polo Lacoste">
-                <div class="info">
-                    <div class="brand">Lacoste</div>
-                    <div class="name">Polo Lacoste</div>
-                    <div class="price">75 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="Camiseta Entreno Asics">
-                <div class="info">
-                    <div class="brand">Asics</div>
-                    <div class="name">Camiseta Entreno Asics</div>
-                    <div class="price">55 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="Camiseta Hugo Boss">
-                <div class="info">
-                    <div class="brand">Hugo Boss</div>
-                    <div class="name">Camiseta Gris</div>
-                    <div class="price">35 €</div>
-                </div>
-            </div>
-            <div class="product-card reveal">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="Camiseta Lacoste Gris">
-                <div class="info">
-                    <div class="brand">Lacoste</div>
-                    <div class="name">Camiseta Lacoste Gris</div>
-                    <div class="price">45 €</div>
-                </div>
-            </div>
-        </section>
-
-        <div class="marquee">
-            <div class="marquee-track">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" alt="">
-                <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" alt="">
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-sub">Sevilla · Colección 2026</div>
+        <div class="gooey-wrap">
+            <div class="gooey-text" id="gooeyContainer">
+                <span id="gooeyText1">MODA MONTEQUINTO</span>
+                <span id="gooeyText2">SEVILLA</span>
             </div>
         </div>
-    </main>
+        <div class="hero-desc">Edición limitada — Moda urbana con esencia andaluza</div>
+    </section>
 
+    <!-- CARRUSEL LOOKBOOK -->
+    <section class="carousel-section">
+        <div class="carousel-label">LIVE COLLECTION CAROUSEL // AUTO SCROLL</div>
+        <div class="carousel-track" id="carouselTrack">
+            <!-- Los items se generan por JS -->
+        </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section class="catalog" id="catalog">
+        <div class="catalog-header">
+            <div class="label">LOOKBOOK / CATALOG</div>
+            <h2>THE 2026 EDITION</h2>
+            <div class="filter-bar" id="filterBar"></div>
+        </div>
+        <div class="catalog-list" id="catalogList"></div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()">
+        <img id="modalImage" src="" alt="">
+    </div>
+    <button class="modal-close" id="modalClose" onclick="closeModal()">✕</button>
+
+    <!-- FOOTER -->
     <footer>
         <div>© 2026 Moda Montequinto</div>
         <div>Instagram / WhatsApp</div>
         <div>Sevilla, España</div>
     </footer>
 
-    <div class="cart-backdrop" id="cart-backdrop" onclick="toggleCart()"></div>
-    <div class="cart-overlay" id="cart-drawer">
-        <button class="close-btn" onclick="toggleCart()">✕</button>
-        <h2>Tu Carrito</h2>
-        <div id="cart-items"><p class="empty-msg">No hay productos aún.</p></div>
-        <div class="total" id="cart-total">Total: 0 €</div>
-    </div>
-
     <script>
-        // === GooeyText ===
-        (function() {
-            const texts = ["MODA MONTEQUINTO", "SEVILLA", "COLECCIÓN 2026", "EDICIÓN LIMITADA"];
-            const el1 = document.getElementById("gooeyText1");
-            const el2 = document.getElementById("gooeyText2");
-            if (!el1 || !el2) return;
+    // === PRODUCT DATA ===
+    const PRODUCTS = [
+        { id: 1, code: "LV001", name: "Zapatillas LV Trainer", category: "FOOTWEAR", price: 710, stock: { S: 1, M: 3, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" },
+        { id: 2, code: "NK001", name: "Nike Waffle", category: "FOOTWEAR", price: 120, stock: { S: 2, M: 4, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-42_terwta.jpg" },
+        { id: 3, code: "NK002", name: "Nike TN", category: "FOOTWEAR", price: 160, stock: { S: 0, M: 2, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-44_rxbdew.jpg" },
+        { id: 4, code: "LC001", name: "Sudadera Lacoste", category: "HOODIES", price: 95, stock: { S: 3, M: 5, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-45_lptsjb.jpg" },
+        { id: 5, code: "LC002", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-48_bpjxor.jpg" },
+        { id: 6, code: "LC003", name: "Camiseta Lacoste Negra", category: "OUTERWEAR", price: 45, stock: { S: 5, M: 8, L: 4 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-50_pbjqlp.jpg" },
+        { id: 7, code: "LC004", name: "Polo Lacoste", category: "OUTERWEAR", price: 75, stock: { S: 2, M: 4, L: 2 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-52_eet7ck.jpg" },
+        { id: 8, code: "AS001", name: "Camiseta Entreno Asics", category: "OUTERWEAR", price: 55, stock: { S: 1, M: 3, L: 1 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-54_vkklwy.jpg" },
+        { id: 9, code: "HB001", name: "Camiseta Gris", category: "OUTERWEAR", price: 35, stock: { S: 6, M: 9, L: 5 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-49-57_nds3cc.jpg" },
+        { id: 10, code: "LC005", name: "Camiseta Lacoste Gris", category: "OUTERWEAR", price: 45, stock: { S: 4, M: 6, L: 3 }, image: "https://res.cloudinary.com/dmuxgamms/image/upload/v1782921075/photo_2026-07-01_17-50-00_aoslfk.jpg" }
+    ];
 
-            let textIndex = texts.length - 1;
-            let morphTime = 1;
-            let cooldownTime = 0.25;
-            let time = new Date();
-            let morph = 0;
-            let cooldown = cooldownTime;
+    const categories = ["ALL", "HOODIES", "OUTERWEAR", "FOOTWEAR"];
+    let currentCategory = "ALL";
 
-            function setMorph(fraction) {
-                el2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-                el2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-                fraction = 1 - fraction;
-                el1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-                el1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-            }
+    // === GOOEYTEXT ===
+    (function() {
+        const texts = ["MODA MONTEQUINTO", "SEVILLA"];
+        const el1 = document.getElementById("gooeyText1");
+        const el2 = document.getElementById("gooeyText2");
+        if (!el1 || !el2) return;
 
-            function doCooldown() {
-                morph = 0;
-                el2.style.filter = "";
-                el2.style.opacity = "100%";
-                el1.style.filter = "";
-                el1.style.opacity = "0%";
-            }
+        let textIndex = 0;
+        const morphTime = 3;
+        const cooldownTime = 1.5;
+        let time = new Date();
+        let morph = 0;
+        let cooldown = cooldownTime;
 
-            function doMorph() {
-                morph -= cooldown;
-                cooldown = 0;
-                let fraction = morph / morphTime;
-                if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
-                setMorph(fraction);
-            }
+        function setMorph(fraction) {
+            el2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+            el2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+            fraction = 1 - fraction;
+            el1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+            el1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+        }
 
-            function animate() {
-                requestAnimationFrame(animate);
-                const newTime = new Date();
-                const shouldIncrementIndex = cooldown > 0;
-                const dt = (newTime.getTime() - time.getTime()) / 1000;
-                time = newTime;
-                cooldown -= dt;
-                if (cooldown <= 0) {
-                    if (shouldIncrementIndex) {
-                        textIndex = (textIndex + 1) % texts.length;
-                        el1.textContent = texts[textIndex % texts.length];
-                        el2.textContent = texts[(textIndex + 1) % texts.length];
-                    }
-                    doMorph();
-                } else {
-                    doCooldown();
+        function doCooldown() {
+            morph = 0;
+            el2.style.filter = ""; el2.style.opacity = "100%";
+            el1.style.filter = ""; el1.style.opacity = "0%";
+        }
+
+        function doMorph() {
+            morph -= cooldown;
+            cooldown = 0;
+            let fraction = morph / morphTime;
+            if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
+            setMorph(fraction);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const newTime = new Date();
+            const shouldInc = cooldown > 0;
+            const dt = (newTime.getTime() - time.getTime()) / 1000;
+            time = newTime;
+            cooldown -= dt;
+            if (cooldown <= 0) {
+                if (shouldInc) {
+                    textIndex = (textIndex + 1) % texts.length;
+                    el1.textContent = texts[textIndex % texts.length];
+                    el2.textContent = texts[(textIndex + 1) % texts.length];
                 }
-            }
-            animate();
-        })();
+                doMorph();
+            } else { doCooldown(); }
+        }
+        animate();
+    })();
 
-        // === Cart ===
-        let cart = [];
-        let cartCount = 0;
+    // === RENDER CARRUSEL ===
+    function renderCarousel() {
+        const track = document.getElementById('carouselTrack');
+        if (!track) return;
+        const reps = 4;
+        let html = '';
+        for (let r = 0; r < reps; r++) {
+            PRODUCTS.forEach(p => {
+                const totalStock = Object.values(p.stock).reduce((a, b) => a + b, 0);
+                html += `
+                    <div class="carousel-item" onclick="openModal('${p.image}')">
+                        <img src="${p.image}" alt="${p.name}" loading="lazy">
+                        <div class="carousel-ref">REF ${p.code}</div>
+                        <div class="carousel-info">
+                            <div class="cat">${p.category}</div>
+                            <div class="name">${p.name}</div>
+                            <div class="price">$${p.price} USD</div>
+                            <div class="explore">[ EXPLORE ]</div>
+                        </div>
+                    </div>`;
+            });
+        }
+        track.innerHTML = html;
+    }
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            cartCount++;
-            document.getElementById('cart-count').innerText = cartCount;
-            renderCart();
-            if (!document.getElementById('cart-drawer').classList.contains('open')) {
-                toggleCart();
-            }
+    // === RENDER CATÁLOGO ===
+    function renderCatalog(category) {
+        const list = document.getElementById('catalogList');
+        const filtered = category === 'ALL' ? PRODUCTS : PRODUCTS.filter(p => p.category === category);
+
+        if (filtered.length === 0) {
+            list.innerHTML = '<div class="empty-msg">No articles found in this segment.</div>';
+            return;
         }
 
-        function toggleCart() {
-            document.getElementById('cart-drawer').classList.toggle('open');
-            document.getElementById('cart-backdrop').classList.toggle('open');
-        }
+        list.innerHTML = filtered.map(p => {
+            const totalStock = Object.values(p.stock).reduce((a, b) => a + b, 0);
+            const status = totalStock === 0 ? '[ ARCHIVED ]' : '[ AVAILABLE ]';
+            const statusColor = totalStock === 0 ? '#bbb' : '#999';
+            return `
+                <div class="catalog-item" onclick="openModal('${p.image}')">
+                    <img class="thumb" src="${p.image}" alt="${p.name}" loading="lazy">
+                    <div class="info">
+                        <div class="ref">REF: ${p.code} <span class="cat">| ${p.category}</span></div>
+                        <div class="name">${p.name}</div>
+                        <div class="status" style="color:${statusColor}">${status}</div>
+                        <div style="text-align:right;display:flex;align-items:center;gap:12px;">
+                            <span class="price">$${p.price} USD</span>
+                            <span class="view-btn" onclick="event.stopPropagation(); openModal('${p.image}')">VIEW +</span>
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
+    }
 
-        function renderCart() {
-            const container = document.getElementById('cart-items');
-            if (cart.length === 0) {
-                container.innerHTML = '<p class="empty-msg">No hay productos aún.</p>';
-            } else {
-                container.innerHTML = cart.map((item, i) =>
-                    `<div style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #eee;font-size:0.85rem;">
-                        <span>${item.name}</span>
-                        <span>${item.price} €</span>
-                    </div>`
-                ).join('');
-            }
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            document.getElementById('cart-total').innerText = 'Total: ' + total + ' €';
-        }
+    // === RENDER FILTROS ===
+    function renderFilters() {
+        const bar = document.getElementById('filterBar');
+        bar.innerHTML = categories.map(cat =>
+            `<button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`
+        ).join('');
+    }
 
-        // === Reveal ===
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    function setFilter(cat) {
+        currentCategory = cat;
+        renderFilters();
+        renderCatalog(cat);
+    }
+
+    // === MODAL ===
+    function openModal(src) {
+        document.getElementById('modalImage').src = src;
+        document.getElementById('modalBackdrop').classList.add('open');
+        document.getElementById('modalClose').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modalBackdrop').classList.remove('open');
+        document.getElementById('modalClose').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // === INIT ===
+    renderCarousel();
+    renderFilters();
+    renderCatalog("ALL");
     </script>
 </body>
 </html>
