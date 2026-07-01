@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moda Montequinto | Sevilla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
@@ -213,24 +213,34 @@
         /* === SHIPPING === */
         .shipping-section { padding: 5rem 4rem; background: #fff; border-top: 1px solid #eee; }
         .shipping-section .grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
-        .shipping-section .col h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem; color: #111; font-weight: 700; }
+        .shipping-col {
+            opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .shipping-col.revealed { opacity: 1; transform: translateY(0); }
+        .shipping-col:nth-child(2) { transition-delay: 0.12s; }
+        .shipping-col:nth-child(3) { transition-delay: 0.24s; }
+        .shipping-section .col h4 { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.2rem; color: #111; font-weight: 700; }
         .shipping-section .col p { font-size: 0.75rem; color: #666; line-height: 1.6; }
-        .shipping-section .info-item { display: flex; gap: 10px; margin-bottom: 1rem; font-size: 10px; font-family: monospace; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
-        .shipping-section .info-item svg { flex-shrink: 0; margin-top: 2px; }
-        .shipping-section .info-item .title { color: #111; font-weight: 600; display: block; font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 1px; }
-        .newsletter-form { display: flex; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-top: 1rem; background: #fafafa; }
-        .newsletter-form input { flex: 1; padding: 0.7rem; border: none; outline: none; font-size: 0.7rem; font-family: monospace; text-transform: uppercase; background: transparent; }
-        .newsletter-form input:focus { background: #fff; }
-        .newsletter-form button { background: #111; color: #fff; border: none; padding: 0 1rem; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; }
-        .newsletter-form button:hover { background: #333; }
-        .newsletter-msg { font-size: 8px; color: #16a34a; font-weight: 700; letter-spacing: 2px; margin-top: 0.5rem; display: none; }
+        .shipping-section .info-item { display: flex; gap: 10px; margin-bottom: 0.7rem; font-size: 9px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: #888; letter-spacing: 0.5px; line-height: 1.5; }
+        .shipping-section .info-item svg { flex-shrink: 0; margin-top: 1px; }
+        .newsletter-form { border-bottom: 1px solid #ddd; display: flex; margin-top: 0.8rem; padding-bottom: 4px; transition: border-color 0.2s; }
+        .newsletter-form:focus-within { border-color: #111; }
+        .newsletter-form input { flex: 1; padding: 0.5rem 0; border: none; outline: none; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; background: transparent; letter-spacing: 1px; }
+        .newsletter-form button { background: none; border: none; cursor: pointer; padding: 0 0 0 8px; color: #111; display: flex; align-items: center; }
+        .newsletter-msg { font-size: 7px; color: #16a34a; font-weight: 700; letter-spacing: 2px; margin-top: 0.6rem; display: none; font-family: 'JetBrains Mono', monospace; }
         .newsletter-msg.show { display: block; }
-        .seal { background: #F8F8FA; border: 1px solid #eee; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; font-family: monospace; font-size: 9px; text-transform: uppercase; color: #888; }
+        .seal {
+            background: rgba(248,248,250,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; padding: 1.5rem;
+            display: flex; flex-direction: column; justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace; font-size: 8px; text-transform: uppercase; color: #888;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
         .seal .head { display: flex; justify-content: space-between; align-items: flex-start; }
-        .seal .head span:first-child { font-weight: 700; color: #222; font-size: 11px; font-family: 'Inter', sans-serif; }
-        .seal .body { margin: 1rem 0; line-height: 1.8; }
-        .seal .body .bold { color: #111; font-weight: 700; font-family: 'Inter', sans-serif; margin-top: 0.5rem; display: block; }
-        .seal .stripe { height: 20px; width: 100%; overflow: hidden; opacity: 0.12; background: repeating-linear-gradient(-45deg, #000, #000 6px, transparent 6px, transparent 12px); }
+        .seal .head span:first-child { font-weight: 700; color: #222; font-size: 10px; font-family: 'Inter', sans-serif; }
+        .seal .body { margin: 1rem 0; line-height: 2; }
+        .seal .body .bold { color: #111; font-weight: 700; font-family: 'Inter', sans-serif; margin-top: 0.5rem; display: block; letter-spacing: 1px; }
+        .seal .stripe { height: 20px; width: 100%; overflow: hidden; opacity: 0.08; background: repeating-linear-gradient(-45deg, #000, #000 6px, transparent 6px, transparent 12px); }
 
         .contact-section { padding: 5rem 4rem; background: #fafafa; border-top: 1px solid #eee; }
         .contact-section .inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
@@ -396,9 +406,9 @@
         </div>
     </section>
 
-    <section class="shipping-section">
+    <section class="shipping-section" id="shippingSection">
         <div class="grid">
-            <div class="col">
+            <div class="shipping-col col">
                 <h4>RED DE LOGÍSTICA DIRECTA</h4>
                 <div class="info-item">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -413,8 +423,8 @@
                     <div><span class="title">CAMBIOS Y DEVOLUCIONES</span><span class="desc">HASTA 14 DÍAS PARA DEVOLUCIÓN DE ENTRADAS EXCLUSIVAS</span></div>
                 </div>
             </div>
-            <div class="col">
-                <h4>CORRESPONDENCIA DIGITAL</h4>
+            <div class="shipping-col col">
+                <h4>ACCESO PRIVADO / LISTA DE ESPERA</h4>
                 <p style="font-size:0.75rem;color:#888;line-height:1.6;margin-bottom:1rem;text-transform:none;">Regístrate para recibir preventas privadas, documentación de lanzamientos y drops exclusivos de edición limitada.</p>
                 <div class="newsletter-form">
                     <input type="email" id="newsletterEmail" placeholder="DESTINATARIO@DOMINIO.COM">
@@ -422,7 +432,7 @@
                 </div>
                 <div class="newsletter-msg" id="newsletterMsg">REGISTRO DE SISTEMA CONFIRMADO. REVISA TU BANDEJA.</div>
             </div>
-            <div class="col">
+            <div class="shipping-col col">
                 <div class="seal">
                     <div class="head"><span>SELLO MONTEQUINTO™</span><span>MM-2026</span></div>
                     <div class="body">
@@ -784,6 +794,12 @@ function subscribeNewsletter() {
     document.getElementById('newsletterEmail').value = '';
     setTimeout(() => msg.classList.remove('show'), 4000);
 }
+
+// === SHIPPING SCROLL REVEAL ===
+const shipObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+}, { threshold: 0.2 });
+document.querySelectorAll('.shipping-col').forEach(el => shipObserver.observe(el));
 
 // === INIT ===
 renderCarousel();
