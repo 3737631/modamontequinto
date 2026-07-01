@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moda Montequinto | Sevilla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
         .hero-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: url('https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg') center/cover no-repeat;
-            opacity: 0.35;
+            opacity: 0.3;
         }
 
         header {
             display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 2rem 4rem;
-            position: sticky; top: 0; background: #fff; z-index: 100; border-bottom: 1px solid #eee;
+            position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid #eee;
             font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
         }
         header .logo { font-weight: 700; text-align: center; letter-spacing: 3px; font-size: 0.9rem; }
@@ -26,13 +26,9 @@
 
         .hero {
             height: 85vh; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
-            padding: 0 4rem; opacity: 0; animation: intro 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            padding: 0 4rem;
         }
-        @keyframes intro {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hero img { width: 100%; object-fit: contain; }
+        .hero-img { width: 100%; object-fit: contain; }
         .hero .left { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
         .hero .right { text-align: right; }
         .hero .right .price { font-size: 1.5rem; font-weight: 600; display: block; margin: 0.5rem 0; }
@@ -42,6 +38,24 @@
             cursor: pointer; padding: 0; color: inherit;
         }
         .add-btn:hover { opacity: 0.5; }
+
+        .gooey-wrapper {
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            height: 100%;
+        }
+        .gooey-text {
+            display: flex; align-items: center; justify-content: center;
+            filter: url(#goo);
+        }
+        .gooey-text span {
+            position: absolute;
+            display: inline-block; text-align: center; user-select: none;
+            font-size: 2.8rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .gooey-text .t1 { color: #111; }
+        .gooey-text .t2 { color: #111; }
 
         .section-title {
             padding: 4rem 4rem 1.5rem; font-size: 0.7rem; letter-spacing: 3px;
@@ -103,8 +117,9 @@
 
         @media (max-width: 768px) {
             header, .hero, .section-title, .product-grid, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .hero { grid-template-columns: 1fr; height: auto; min-height: 70vh; gap: 2rem; text-align: center; }
+            .hero { grid-template-columns: 1fr; height: auto; min-height: 70vh; gap: 1.5rem; text-align: center; }
             .hero .right { text-align: center; }
+            .gooey-text span { font-size: 1.8rem; }
             .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .cart-overlay { width: 100%; right: -100%; }
         }
@@ -113,6 +128,21 @@
 <body>
 
     <div class="hero-bg"></div>
+
+    <svg class="absolute h-0 w-0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                <feColorMatrix
+                    in="blur"
+                    type="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"
+                    result="goo"
+                />
+                <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+        </defs>
+    </svg>
 
     <header>
         <div>Catálogo / Contacto</div>
@@ -123,7 +153,12 @@
     <main>
         <section class="hero">
             <div class="left">C/O 2026<br><span style="font-size:0.6rem;color:#888;">Edición Limitada</span></div>
-            <img src="https://res.cloudinary.com/dmuxgamms/image/upload/v1782921067/photo_2026-07-01_17-49-39_tcdrgy.jpg" alt="Zapatillas LV Trainer">
+            <div class="gooey-wrapper">
+                <div class="gooey-text" id="gooeyContainer">
+                    <span class="t1" id="gooeyText1">MODA MONTEQUINTO</span>
+                    <span class="t2" id="gooeyText2">SEVILLA</span>
+                </div>
+            </div>
             <div class="right">
                 <span style="font-size:0.65rem;color:#888;">Louis Vuitton</span><br>
                 Zapatillas LV Trainer<br>
@@ -258,6 +293,66 @@
     </div>
 
     <script>
+        // === GooeyText ===
+        (function() {
+            const texts = ["MODA MONTEQUINTO", "SEVILLA", "COLECCIÓN 2026", "EDICIÓN LIMITADA"];
+            const el1 = document.getElementById("gooeyText1");
+            const el2 = document.getElementById("gooeyText2");
+            if (!el1 || !el2) return;
+
+            let textIndex = texts.length - 1;
+            let morphTime = 1;
+            let cooldownTime = 0.25;
+            let time = new Date();
+            let morph = 0;
+            let cooldown = cooldownTime;
+
+            function setMorph(fraction) {
+                el2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+                el2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+                fraction = 1 - fraction;
+                el1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+                el1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+            }
+
+            function doCooldown() {
+                morph = 0;
+                el2.style.filter = "";
+                el2.style.opacity = "100%";
+                el1.style.filter = "";
+                el1.style.opacity = "0%";
+            }
+
+            function doMorph() {
+                morph -= cooldown;
+                cooldown = 0;
+                let fraction = morph / morphTime;
+                if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
+                setMorph(fraction);
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const newTime = new Date();
+                const shouldIncrementIndex = cooldown > 0;
+                const dt = (newTime.getTime() - time.getTime()) / 1000;
+                time = newTime;
+                cooldown -= dt;
+                if (cooldown <= 0) {
+                    if (shouldIncrementIndex) {
+                        textIndex = (textIndex + 1) % texts.length;
+                        el1.textContent = texts[textIndex % texts.length];
+                        el2.textContent = texts[(textIndex + 1) % texts.length];
+                    }
+                    doMorph();
+                } else {
+                    doCooldown();
+                }
+            }
+            animate();
+        })();
+
+        // === Cart ===
         let cart = [];
         let cartCount = 0;
 
@@ -292,6 +387,7 @@
             document.getElementById('cart-total').innerText = 'Total: ' + total + ' €';
         }
 
+        // === Reveal ===
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
         }, { threshold: 0.1 });
