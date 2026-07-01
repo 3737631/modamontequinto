@@ -28,20 +28,29 @@
             height: 80vh; display: flex; flex-direction: column; align-items: center;
             justify-content: center; background: #fff; text-align: center; padding: 2rem;
         }
-        .hero-main {
+        .hero-gooey {
+            position: relative; display: flex; align-items: center; justify-content: center;
+            height: 120px; width: 100%; margin-bottom: 0.5rem;
+        }
+        .hero-gooey .goo-text {
+            display: flex; align-items: center; justify-content: center;
+            filter: url(#goo);
+        }
+        .hero-gooey .goo-text span {
+            position: absolute; display: inline-block; text-align: center; user-select: none;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 5rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
-            color: #111; line-height: 1.1; opacity: 0; transform: translateY(20px);
-            animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            line-height: 1.1; color: #111; opacity: 0;
         }
-        @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
-        .hero-sub {
-            margin-top: 1.5rem; font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase;
-            color: #999; font-weight: 400; height: 1.2rem; position: relative;
+        .hero-gooey .goo-text .g1 { opacity: 1; }
+        .hero-gooey .goo-text .g2 { opacity: 0; }
+        .hero-final {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
+            color: #111; line-height: 1.1; display: none;
         }
-        .hero-sub span { position: absolute; left: 50%; transform: translateX(-50%); transition: opacity 0.6s ease; white-space: nowrap; }
-        .hero-sub span.hidden { opacity: 0; }
         .hero-desc { margin-top: 2.5rem; font-size: 0.75rem; color: #bbb; letter-spacing: 3px; text-transform: uppercase; max-width: 500px; opacity: 0; animation: heroIn 1s 0.3s forwards; }
+        @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
         .carousel-section {
             padding: 2rem 0; background: #fff; border-top: 1px solid #eee;
@@ -254,7 +263,8 @@
         @media (max-width: 768px) {
             header { padding: 1rem 1.5rem; }
             .hero { height: 60vh; }
-            .hero-main { font-size: 2.4rem; letter-spacing: 2px; }
+            .hero-gooey .goo-text span, .hero-final { font-size: 2.4rem; letter-spacing: 2px; }
+            .hero-gooey { height: 70px; }
             .carousel-item { width: 180px; }
             .catalog { padding: 3rem 1.5rem; }
             .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
@@ -313,13 +323,24 @@
 
     <div class="toast-container" id="toastContainer"></div>
 
+    <svg style="position:absolute;width:0;height:0;" aria-hidden="true">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo" />
+                <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+        </defs>
+    </svg>
+
     <section class="hero">
-        <div class="hero-main">MODA MONTEQUINTO</div>
-        <div class="hero-sub" id="heroSub">
-            <span id="sub1" style="opacity:1;">SEVILLA</span>
-            <span id="sub2" class="hidden">COLECCIÓN 2026</span>
-            <span id="sub3" class="hidden">EDICIÓN LIMITADA</span>
+        <div class="hero-gooey" id="heroGooey">
+            <div class="goo-text" id="gooWrap">
+                <span class="g1" id="goo1">MODA MONTEQUINTO</span>
+                <span class="g2" id="goo2">SEVILLA</span>
+            </div>
         </div>
+        <div class="hero-final" id="heroFinal">MODA MONTEQUINTO</div>
         <div class="hero-desc">Moda urbana con esencia andaluza</div>
     </section>
 
@@ -483,16 +504,90 @@ const PRODUCTS = [
 const categories = ["ALL", "HOODIES", "OUTERWEAR", "FOOTWEAR"];
 let currentCategory = "ALL";
 
-// === HERO SUBTITLE ===
+// === HERO GOOEY ANIMATION (cycles once, settles on MODA MONTEQUINTO) ===
 (function() {
-    const subs = ["SEVILLA", "COLECCIÓN 2026", "EDICIÓN LIMITADA", "SEVILLA"];
-    let idx = 0;
-    const all = [document.getElementById("sub1"), document.getElementById("sub2"), document.getElementById("sub3")];
-    if (!all[0]) return;
-    setInterval(() => {
-        idx = (idx + 1) % subs.length;
-        all.forEach((el, i) => { if (el) { i === idx ? (el.textContent = subs[idx], el.classList.remove("hidden")) : el.classList.add("hidden"); } });
-    }, 2500);
+    const texts = ["MODA MONTEQUINTO", "SEVILLA", "COLECCIÓN 2026", "EDICIÓN LIMITADA", "MODA MONTEQUINTO"];
+    const el1 = document.getElementById("goo1");
+    const el2 = document.getElementById("goo2");
+    const gooWrap = document.getElementById("gooWrap");
+    const finalEl = document.getElementById("heroFinal");
+    const heroGooey = document.getElementById("heroGooey");
+    if (!el1 || !el2) return;
+
+    let textIndex = 0;
+    let morphTime = 0.6;
+    let cooldownTime = 0.4;
+    let time = new Date();
+    let morph = 0;
+    let cooldown = 0;
+    let cycleCount = 0;
+    const maxCycles = texts.length - 1;
+    let settled = false;
+
+    function setMorph(fraction) {
+        el2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+        el2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+        fraction = 1 - fraction;
+        el1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+        el1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+    }
+
+    function doCooldown() {
+        morph = 0;
+        el2.style.filter = ""; el2.style.opacity = "100%";
+        el1.style.filter = ""; el1.style.opacity = "0%";
+    }
+
+    function doMorph() {
+        morph -= cooldown;
+        cooldown = 0;
+        let fraction = morph / morphTime;
+        if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
+        setMorph(fraction);
+    }
+
+    function settle() {
+        settled = true;
+        gooWrap.style.filter = "none";
+        el1.textContent = "MODA MONTEQUINTO";
+        el1.style.filter = "";
+        el1.style.opacity = "1";
+        el2.style.display = "none";
+        el1.style.position = "static";
+        // After brief display in goo, fade it out and show final
+        setTimeout(() => {
+            heroGooey.style.display = "none";
+            finalEl.style.display = "block";
+            finalEl.style.animation = "heroIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards";
+        }, 600);
+    }
+
+    function animate() {
+        if (settled) return;
+        requestAnimationFrame(animate);
+        const newTime = new Date();
+        const shouldInc = cooldown > 0;
+        const dt = (newTime.getTime() - time.getTime()) / 1000;
+        time = newTime;
+        cooldown -= dt;
+        if (cooldown <= 0) {
+            if (shouldInc) {
+                textIndex = (textIndex + 1) % texts.length;
+                if (textIndex >= maxCycles) { settle(); return; }
+                el1.textContent = texts[textIndex % texts.length];
+                el2.textContent = texts[(textIndex + 1) % texts.length];
+            }
+            doMorph();
+        } else { doCooldown(); }
+    }
+    // Start with first morph immediately
+    setTimeout(() => {
+        textIndex = 0;
+        el1.textContent = texts[0];
+        el2.textContent = texts[1];
+        cooldown = 0.01; // trigger first morph
+        animate();
+    }, 500);
 })();
 
 // === CARRUSEL ===
